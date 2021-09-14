@@ -170,8 +170,8 @@ NOTE: THis file is a mess, but it''s the best I could do without any form of rea
 from smbus2 import SMBus
 # import threading
 from legacy.client import settings
-from warehouse.math import percent_in
-from warehouse.logs import JournalD
+from math import percent_in
+from logs import JournalD
 import numpy as np
 
 log = JournalD(settings).log
