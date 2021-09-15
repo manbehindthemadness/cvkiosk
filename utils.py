@@ -116,9 +116,9 @@ def evaluate_expression(expression, style: dict, constants: dict):
     """
     result = expression
     lookup = style
-    if '$' in expression:
+    if '$' in str(expression):
         sp = expression.split(':')
-        keys = sp[0].split('$')
+        keys = sp[0].split('$')[1:]
         if keys[-1][0] == '_':
             lookup = constants
         lookup_value = list_key_lookup(keys, lookup)
@@ -136,13 +136,12 @@ def evaluate_expression(expression, style: dict, constants: dict):
                 result = np.divide(lookup_value, num(formula))
             else:
                 result = lookup_value
-                print('warning, style formula unknown')
         except IndexError:
             result = lookup_value
     return result
 
 
-def style_parser(style: dict, constants: dict, r_style: [dict, None] = None, r_result: [dict, None] = None) -> dict:
+def style_parser(style: dict, constants: dict, r_style: [dict, None] = None) -> dict:
     """
     This will take all the variable expressions in our style, figure the math and return the result.
 
@@ -150,13 +149,9 @@ def style_parser(style: dict, constants: dict, r_style: [dict, None] = None, r_r
         sub-keys.
     """
     result = dict()
-    skeys = style.keys()
-    ckeys = constants.keys()
-    if not r_style:  # Check to see if we are iterating a child dictionary and pass the style.
-        r_style = style
     for key in style:
         if isinstance(style[key], dict):
-            result[key] = style_parser(style[key], style)
+            result[key] = style_parser(style[key], constants)
         else:
             result[key] = evaluate_expression(style[key], style, constants)
     return result
