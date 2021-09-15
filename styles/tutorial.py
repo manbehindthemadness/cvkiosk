@@ -15,11 +15,20 @@ Its important to note that some of these values are in markup and will be transl
 in this instance we will get a calculated value of 100% of the screen width. The underscore tells us that the value
     we are calculating against is outside of the style, alternatively we are able to calculate against other fields in
     the style as such: '$price_canvas_height:50%'. This will give us a calculated value of half of whatever the
-    field 'price_canvas_height' contains.
+    field 'price_canvas_height' contains. These statements can be chained to access subkeys as well:
+    '$main$price_canvas_height:25%'.
 
 Be aware that many of the naming conventions for the various parameters here are defined by third party logic and
     a result of this there is no standard naming convention. This will be corrected in a future build.
 """
+
+example_constants = {  # This is an example of the constants dictionary (not the one we actually use ;).
+    '_screen_size': '400x500',
+    '_screen_height': 400,
+    '_screen_width': 500,
+    '_price_matrix': 'example from chart-to-pix',
+}
+
 
 style_base = {
     'main': {
