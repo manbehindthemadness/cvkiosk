@@ -10,6 +10,7 @@ Please see the license file for more details.
 import os
 import re
 import configparser
+import importlib
 
 
 WORKING_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__)))
@@ -155,4 +156,15 @@ def style_parser(style: dict, constants: dict) -> dict:
             result[key] = style_parser(style[key], constants)
         else:
             result[key] = evaluate_expression(style[key], style, constants)
+    return result
+
+
+def constants_parser(constants_str: [str, dict], geometries: dict) -> dict:
+    """
+    This will get the constants for a specific display type and add in whatever geometry we want to call in the style.
+    """
+    constants = importlib.import_module('constants.' + constants_str)
+    # noinspection PyUnresolvedReferences
+    result: dict = constants.constants
+    result.update(geometries)
     return result
