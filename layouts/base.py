@@ -72,15 +72,12 @@ class Layout(gp.Diagram):
         """
         This will take our style and use it to set up all of our widgets.
         """
-        # utils.clean_args(
-        #     ['draw', 'purge']
-        # )
-        self. assets = list()
+        self.assets = list()
         for asset in style:
-            cmd = 'self.' + asset + ','
+            cmd = 'self.' + asset + ',configure(' + str(style[asset]) + ')'
+            exec(cmd)
 
-
-    def draw(self):
+    def draw_widgets(self):
         """
         This will draw all the visual assets we have configured into
         :return:

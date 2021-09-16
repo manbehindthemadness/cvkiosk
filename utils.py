@@ -11,10 +11,6 @@ import os
 import re
 import configparser
 import importlib
-import tkinter as tk
-
-dummys = [tk]
-
 
 WORKING_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__)))
 
@@ -148,7 +144,7 @@ def evaluate_expression(expression, style: dict, constants: dict):
     return result
 
 
-def style_parser(style: dict, constants: dict) -> dict:
+def style_iter(style: dict, constants: dict) -> dict:
     """
     This will take all the variable expressions in our style, figure the math and return the result.
 
@@ -158,9 +154,22 @@ def style_parser(style: dict, constants: dict) -> dict:
     result = dict()
     for key in style:
         if isinstance(style[key], dict):
-            result[key] = style_parser(style[key], constants)
+            result[key] = style_iter(style[key], constants)
         else:
             result[key] = evaluate_expression(style[key], style, constants)
+    return result
+
+
+def style_parser(style: str, constants: dict):
+    """
+    This uses style_iter and the above functions to construct a fully evaluated style sheet.
+    """
+    cmd = 'styles.' + str(style)
+    print('CMD', cmd)
+    style = importlib.import_module(cmd)
+    # noinspection PyUnresolvedReferences
+    style = style.style
+    result = style_iter(style, constants)
     return result
 
 
@@ -173,3 +182,12 @@ def constants_parser(constants_str: [str, dict], geometries: dict) -> dict:
     result: dict = constants.constants
     result.update(geometries)
     return result
+
+
+def layout_parser(layout: str):
+    """
+    This will pull us a layout based on what we pass from settings.
+    """
+    layout = importlib.import_module('layouts.' + layout)
+    # noinspection PyUnresolvedReferences
+    return layout.Format

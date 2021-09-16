@@ -24,12 +24,6 @@ Be aware that many of the naming conventions for the various parameters here are
 
 EXAMPLE:
 
-from styles.tutorial import style; from utils import constants_parser, style_parser
-a = {'_triggers1': {}}
-b = constants_parser('example_400x500', a)
-c = style_parser(style, b)
-print(c)
-
 """
 # NOTE: The constants are held in an alternate location by screen properties, these are only here for easy reference.
 constants = {  # This is an example of the constants dictionary (not the one we actually use ;).
