@@ -21,15 +21,15 @@ in this instance we will get a calculated value of 100% of the screen width. The
 Be aware that many of the naming conventions for the various parameters here are defined by third party logic and
     a result of this there is no standard naming convention. This will be corrected in a future build.
 """
-
-example_constants = {  # This is an example of the constants dictionary (not the one we actually use ;).
+# NOTE: The constants are held in an alternate location by screen properties, these are only here for easy reference.
+constants = {  # This is an example of the constants dictionary (not the one we actually use ;).
     '_screen_size': '400x500',
     '_screen_height': 400,
     '_screen_width': 500,
     '_price_matrix': 'example from chart-to-pix',
 }
 
-style_base = {
+style = {
     'main': {  # The elements in the 'main' section must be defined for the style to parse.
         'style_name': 'tutorial',  # Name style for organization.
         # Configure global settings in relation to screen size and what have you.
