@@ -17,7 +17,7 @@ WORKING_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__)))
 
 def get_math():
     """
-    This imports eaither numpy or cupy depending on what's around.
+    This imports either numpy or cupy depending on what's around.
     :return: math module
     """
     try:
@@ -45,6 +45,7 @@ def nparray(lst: [list, np.array]) -> np.array:
         if not isinstance(_lst, list):
             _lst = list(lst)
         for idx, item in enumerate(_lst):
+            # Bro, what were we thinking here... This is improper type checking.
             if str(type(item)) == "<class 'cupy._core.core.ndarray'>" or str(type(item)) == "<class 'numpy.ndarray'>":
                 _lst[idx] = _iter(item)
         return _lst
@@ -141,7 +142,7 @@ def evaluate_expression(expression, style: dict, constants: dict):
     return result
 
 
-def style_parser(style: dict, constants: dict, r_style: [dict, None] = None) -> dict:
+def style_parser(style: dict, constants: dict) -> dict:
     """
     This will take all the variable expressions in our style, figure the math and return the result.
 
@@ -155,4 +156,3 @@ def style_parser(style: dict, constants: dict, r_style: [dict, None] = None) -> 
         else:
             result[key] = evaluate_expression(style[key], style, constants)
     return result
-

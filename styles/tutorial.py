@@ -29,11 +29,10 @@ example_constants = {  # This is an example of the constants dictionary (not the
     '_price_matrix': 'example from chart-to-pix',
 }
 
-
 style_base = {
-    'main': {
+    'main': {  # The elements in the 'main' section must be defined for the style to parse.
         'style_name': 'tutorial',  # Name style for organization.
-        # Configure global settings in relation to streen size and what have you.
+        # Configure global settings in relation to screen size and what have you.
         'geometry': "$_screen_size:",  # This is our screen size.
         'price_canvas_width:': '$_screen_width:100%',  # The size of the graphiend canvas.
         'price_canvas_height': 350,
@@ -46,8 +45,8 @@ style_base = {
         'bar_width': 8,  # The width of one candlestick in pixels.
         'geometry': '$_price_matrix:',
         'height': '$_screen_height:50%',
-        'color_1': 'green',
-        'color_2': 'red',
+        'color1': 'green',
+        'color2': 'red',
         'alpha': 0.75,
         'hollow': ['red']  # This can hole one none or both of the colors.
     },
@@ -55,16 +54,42 @@ style_base = {
         'geometry': '$_price_matrix:',
         'height': 75,
         'fill': 'aqua',
-        'grad': ('deepskyblue', 'black', 'v'),
+        'grad': ('deepskyblue', 'black', 'v'),  # Gradient.
         'graph_type': 'volume',
-        'tb': 'b',
+        'tb': 'b',  # Top or bottom style.
         'outline': 'white',
-        'smooth': 5,
-        'lineinterpol': 3,
+        'smooth': 5,  # Smooths average out the measurements.
+        'lineinterpol': 3,  # Linear interpolation adds points and then rounds off the edges.
         'offset': 300,
         'padding': (47, 47, 0, 0),  # left, right, top, bottom.
-        'alpha': 0.2,
-        'alphamask': True,
+        'alpha': 0.2,  # Transparency.
+        'alphamask': True,  # Transparency following a gradient.
+        'aa': (10, 0)  # Antialiasing (sample_size, passes).
+    },
+    'smoothi_top': {
+        'geometry': '$_price_matrix',
+        'height': 50,
+        'fill': 'red',
+        'graph_type': 'volume',
+        'tb': 't',
+        'smooth': 1,
+        'lineinterpol': 2,
+        'offset': 350,
+        'padding': (47, 47, 0, 0),
+        'alpha': 0.6,
         'aa': (10, 0)
+    },
+    'volume': {
+        'geometry': '$_price_matrix',
+        'height': 75,
+        'top': 200,
+        'bottom': 200,
+        'offset': 125,
+        'alpha': 0.7,
+        'aa': (10, 0),
+        'color1': 'green',
+        'color2': 'red',
+        'graph_type': 'volume',
+        'tb': 'b'
     }
 }
