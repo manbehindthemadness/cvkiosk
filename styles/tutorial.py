@@ -17,9 +17,19 @@ in this instance we will get a calculated value of 100% of the screen width. The
     the style as such: '$price_canvas_height:50%'. This will give us a calculated value of half of whatever the
     field 'price_canvas_height' contains. These statements can be chained to access subkeys as well:
     '$main$price_canvas_height:25%'.
+    (EXPERIMENTAL: an @ at the beginning will cause the expression to be evaluated as a literal.)
 
 Be aware that many of the naming conventions for the various parameters here are defined by third party logic and
     a result of this there is no standard naming convention. This will be corrected in a future build.
+
+EXAMPLE:
+
+from styles.tutorial import style; from utils import constants_parser, style_parser
+a = {'_triggers1': {}}
+b = constants_parser('example_400x500', a)
+c = style_parser(style, b)
+print(c)
+
 """
 # NOTE: The constants are held in an alternate location by screen properties, these are only here for easy reference.
 constants = {  # This is an example of the constants dictionary (not the one we actually use ;).
@@ -91,5 +101,20 @@ style = {
         'color2': 'red',
         'graph_type': 'volume',
         'tb': 'b'
+    },
+    'top_arrows': {
+        'geometry': '$_price_matrix',
+        'height': 10,
+        'offset': 10,  # This is the distance the arrow will appear from the coordinate.
+        'fill': 'deepskyblue',
+        'thickness': 1,  # Line thickness.
+        'arrow': 'first',  # This is the end of the line that thhe arrow will attach.
+        'arrowshape': (4, 4, 1),  # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
+        'matrix_override': '$_triggers1',  # This allows us to pass alternate alert "triggers" instead of just geometry.
+        'tb': 't',
+        'icon': 'img/icons/minus_circle.png',  # Schematic view icon.
+        'icon_fill': 'green',  # Icon color.
+        'tag_fill': 'black',  # Schematic text color.
+        'use_schematic': True  # Toggle schematics.
     }
 }

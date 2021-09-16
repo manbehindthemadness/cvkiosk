@@ -11,6 +11,9 @@ import os
 import re
 import configparser
 import importlib
+import tkinter as tk
+
+dummys = [tk]
 
 
 WORKING_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__)))
@@ -140,6 +143,8 @@ def evaluate_expression(expression, style: dict, constants: dict):
                 result = lookup_value
         except IndexError:
             result = lookup_value
+    elif '@' in str(expression):
+        result = eval(expression.replace('@', ''))
     return result
 
 
