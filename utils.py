@@ -165,7 +165,6 @@ def style_parser(style: str, constants: dict):
     This uses style_iter and the above functions to construct a fully evaluated style sheet.
     """
     cmd = 'styles.' + str(style)
-    print('CMD', cmd)
     style = importlib.import_module(cmd)
     # noinspection PyUnresolvedReferences
     style = style.style

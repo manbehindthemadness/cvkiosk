@@ -84,4 +84,6 @@ base.configure(
 )
 
 layout.configure_widgets(style)
+layout.draw_widgets()
 print('done!')
+gui.mainloop()

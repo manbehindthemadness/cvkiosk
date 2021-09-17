@@ -93,10 +93,10 @@ class Layout(gp.Diagram):
         """
         assets = self.style['asset_order']
         for asset in assets:
-            exec(asset + '.draw()')
+            exec('self.' + asset + '.draw()')
         actors = self.style['actor_order']
         for actor in actors:  # TODO: I don't think this is gonna work.
-            exec(actor + '.animate()')
+            exec('self.' + actor + '.animate()')
 
     def purge(self):
         """
