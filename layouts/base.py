@@ -67,7 +67,8 @@ class Layout(gp.Diagram):
         self.tics4 = gp.TicArray(self)
         self.tics5 = gp.TicArray(self)
         self.volume_ruler_top = gp.VolumeRuler(self, cache)
-        self.volume_ruler_bottom = gp.VolumeRuler(self, cache)
+        self.volume_ruler_bottom1 = gp.VolumeRuler(self, cache)
+        self.volume_ruler_bottom2 = gp.VolumeRuler(self, cache)
         self.date_ruler = gp.DateRuler(self, cache)
         self.icon_alerts_1 = gp.IconAlert(self, cache)
         self.icon_alerts_2 = gp.IconAlert(self, cache)
@@ -97,7 +98,6 @@ class Layout(gp.Diagram):
         for asset in style:
             if asset in inventory and asset in style['asset_order']:
                 cmd = 'self.' + asset
-                print(cmd)
                 self.asset = eval(cmd)
                 self.asset.canvas_width = width
                 self.asset.canvas_height = height
@@ -105,7 +105,6 @@ class Layout(gp.Diagram):
             elif asset in inventory and asset in style['actor_order']:
                 actor = asset
                 cmd = 'self.' + actor
-                print(cmd)
                 self.actor = eval(cmd)
                 self.actor.build_content(
                     **style[actor]

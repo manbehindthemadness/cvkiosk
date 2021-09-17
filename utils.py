@@ -243,5 +243,10 @@ def matrix_sorter(price_matrix, matrices: dict) -> dict:
     coords = ['lu', 'cu', 'ru', 'rt', 'rc', 'rb', 'rl', 'cl', 'll', 'lb', 'lc', 'lt', 'ac']
     for coord, matrix in zip(coords, price_matrix.price_matrix):
         matrices['_' + coord] = matrix
+
     matrices['_price_matrix'] = price_matrix
+    matrices['_volume'] = price_matrix.volume
+    matrices['_prices'] = price_matrix.prices
+    matrices['_volume_quote'] = [price_matrix.volume[-1]]
+    matrices['_price_quote'] = [price_matrix.prices[-1]]
     return matrices
