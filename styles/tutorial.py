@@ -165,7 +165,7 @@ style = {
                 'height': 25,
                 'width': '$_screen_width:100%',
                 'x': 0,
-                'y': 475
+                'y': 375
             },
         'clear': True,
         'content': '&_alerts',
