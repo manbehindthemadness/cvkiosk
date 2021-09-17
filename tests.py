@@ -52,9 +52,6 @@ layout_uninit = layout_parser(  # Get layout widgets.
     config['layout']
 )
 
-layout = layout_uninit(gui, cache, config)  # Init the layout.
-
-
 constants = constants_parser(  # Get screen and geometry constants.
     config['constants'],
 )
@@ -67,9 +64,26 @@ style = style_parser(  # Get style sheet.
 
 mstyle = style['main']
 gui.geometry = mstyle['geometry']  # Configure the UX size.
-layout.configure(bg=mstyle['background'], width=mstyle['price_canvas_width'], height=mstyle['price_canvas_height'])  # Configure the price chart size.
-layout.pack(expand=True, fill='both')  # Need to refresh the values.
-layout.update()
+
+base = tk.Frame(
+    gui,
+    width=constants['_screen_width'],
+    height=constants['_screen_height'],
+    bg='blue',
+    bd=0,
+    highlightthickness=0
+)
+base.pack(expand=True, fill='both')
+
+layout = layout_uninit(base, cache, config)  # Init the layout.
+layout.configure(
+    bg=mstyle['background'],
+    width=mstyle['price_canvas_width'],
+    height=mstyle['price_canvas_height'],
+    bd=0,
+    highlightthickness=0
+)  # Configure the price chart size.
+
 
 price_matrix = gp.ChartToPix(layout, *mstyle['price_matrix_offsets'])  # Init matrices.
 price_matrix.solve(price_data=gp.samples.price_data, increment=mstyle['price_increment'], timequote='1H:BTC/USDT')  # TODO: Build timequote from settings.
@@ -81,13 +95,6 @@ matrices = {
 }
 
 style = matrix_parser(style, matrices)  # Update geometry into style.
-
-base = gp.Diagram(gui)
-base.configure(
-    width=mstyle['price_canvas_width'],
-    height=mstyle['price_canvas_height'],
-    bg='orange'  # We do this, as if we properly wrote the style, we won't see it.
-)
 
 layout.configure_widgets(style)
 layout.draw_widgets()

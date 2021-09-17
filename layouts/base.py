@@ -74,7 +74,8 @@ class Layout(gp.Diagram):
         """
         This will take our style and use it to set up all of our widgets.
         """
-        self.pack(expand=True, fill='both')  # Need to refresh the values.
+        # self.pack(expand=True, fill='both')  # Need to refresh the values.
+        self.place(x=0, y=0)
         self.update()
         width, height = self.winfo_width(), self.winfo_height()
         self.style = style

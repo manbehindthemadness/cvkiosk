@@ -38,7 +38,7 @@ style = {
         # Configure global settings in relation to screen size and what have you.
         'geometry': "$_screen_size:",  # This is our screen size.
         'price_canvas_width': '$_screen_width:100%',  # The size of the graphiend canvas.
-        'price_canvas_height': '$_screen_height:100%',
+        'price_canvas_height': '$_screen_height:25-',
         # This scales the candlestick matrix in order to make room for the other widgets.
         'price_matrix_offsets': (50, 50, 35, 150),  # left, right, top, bottom.
         'price_increment': 8,  # The width of one candlestick in pixels.
@@ -74,7 +74,7 @@ style = {
         'outline': 'white',
         'smooth': 5,  # Smooths average out the measurements.
         'lineinterpol': 3,  # Linear interpolation adds points and then rounds off the edges.
-        'offset': 300,
+        'offset': 275,
         'padding': (47, 47, 0, 0),  # left, right, top, bottom.
         'alpha': 0.2,  # Transparency.
         'alphamask': True,  # Transparency following a gradient.
@@ -82,13 +82,13 @@ style = {
     },
     'smoothi_top': {
         'geometry': '&_price_matrix',
-        'height': 50,
+        'height': 30,
         'fill': 'red',
         'graph_type': 'volume',
         'tb': 't',
         'smooth': 1,
         'lineinterpol': 2,
-        'offset': 350,
+        'offset': 345,
         'padding': (47, 47, 0, 0),
         'alpha': 0.6,
         'aa': (10, 0)
@@ -98,7 +98,7 @@ style = {
         'height': 75,
         'top': 200,
         'bottom': 200,
-        'offset': 125,
+        'offset': 100,
         'alpha': 0.7,
         'aa': (10, 0),
         'color1': 'green',
