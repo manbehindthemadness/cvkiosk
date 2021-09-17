@@ -42,7 +42,6 @@ style = {
         # This scales the candlestick matrix in order to make room for the other widgets.
         'price_matrix_offsets': (50, 50, 35, 150),  # left, right, top, bottom.
         'price_increment': 8,  # The width of one candlestick in pixels.
-        'matrices': {},  # These get filled in by the matrix_parser.
         'background': 'grey',
     },
     'asset_order': [  # This is our draw_order widgets will be drawn starting with the farthest back into the foreground.
@@ -50,9 +49,11 @@ style = {
         'smoothi_top',
         'volume',
         'top_arrows',
-        'candlesticks'
+        'bottom_arrows',
+        'candlesticks',
     ],
     'actor_order': [  # Animate order for moving actors.
+        'ticker'
     ],
     # From this point we wil divide this style into sections including the relational configuration respectively.
     'candlesticks': {
@@ -114,12 +115,61 @@ style = {
         'thickness': 1,  # Line thickness.
         'arrow': 'first',  # This is the end of the line that thhe arrow will attach.
         'arrowshape': (4, 4, 1),  # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
-        'matrix_override': '&_coords1',  # This allows us to pass alternate alert "triggers" instead of just geometry.
+        'matrix_override': '&_cu',  # This allows us to pass alternate alert "triggers" instead of just geometry.
         'triggers': '&_triggers1',
         'tb': 't',
         'icon': 'img/icons/minus_circle.png',  # Schematic view icon.
         'icon_fill': 'green',  # Icon color.
         'tag_fill': 'black',  # Schematic text color.
         'use_schematic': False  # Toggle schematics.
+    },
+    'bottom_arrows': {
+        'geometry': '&_price_matrix',
+        'height': 10,
+        'offset': 10,  # This is the distance the arrow will appear from the coordinate.
+        'fill': 'magenta',
+        'thickness': 1,  # Line thickness.
+        'arrow': 'first',  # This is the end of the line that thhe arrow will attach.
+        'arrowshape': (5, 5, 2),  # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
+        'matrix_override': '&_cl',  # This allows us to pass alternate alert "triggers" instead of just geometry.
+        'triggers': '&_triggers2',
+        'tb': 'b',
+        'icon': 'img/icons/x1.png',  # Schematic view icon.
+        'icon_fill': 'red',  # Icon color.
+        'tag_fill': 'black',  # Schematic text color.
+        'use_schematic': False  # Toggle schematics.
+    },
+    'ticker': {
+        'style': {
+                'background': 'black',
+                'colorup': 'green',
+                'colordown': 'red',
+                'tickerfont': 'Arial 9 normal normal',
+                'tickerfontcolorup': 'white',
+                'tickerfontcolordown': 'white',
+                'tickerbgup': 'black',
+                'tickerbgdown': 'black',
+                'quotefont': 'Arial 10 normal bold',
+                'quotefontcolorup': 'green',
+                'quotebgdown': 'black',
+                'quotebgup': 'black',
+                'quotefontcolordown': 'red',
+                'iconup': None,
+                'icondown': None,
+                'symbolup': '▲',
+                'symboldown': '▼',
+                'symbolwidth': None,
+                'pix_per_step': 2,
+                'step_delay': 50,
+                'spacing': 1,
+                'height': 25,
+                'width': '$_screen_width:100%',
+                'x': 0,
+                'y': 475
+            },
+        'clear': True,
+        'content': '&_alerts',
+        'content_type': 'alerts'
     }
+
 }

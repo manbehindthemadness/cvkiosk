@@ -224,3 +224,24 @@ def matrix_parser(style: dict, matrices: dict) -> dict:
     main = style['main']
     style = matrix_iter(style, main)
     return style
+
+
+def matrix_sorter(price_matrix, matrices: dict) -> dict:
+    """
+    This will sort all the coords from the prixe matrix and add them to the matrices dictionary.
+    Output coordinate map:
+                    lu -- cu -- ru
+                    |           |
+                    lt          rt
+                    |           |
+                    lc    ac    rc
+                    |           |
+                    lb          rb
+                    |           |
+                    ll -- cl -- rl
+    """
+    coords = ['lu', 'cu', 'ru', 'rt', 'rc', 'rb', 'rl', 'cl', 'll', 'lb', 'lc', 'lt', 'ac']
+    for coord, matrix in zip(coords, price_matrix.price_matrix):
+        matrices['_' + coord] = matrix
+    matrices['_price_matrix'] = price_matrix
+    return matrices

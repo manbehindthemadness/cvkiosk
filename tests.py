@@ -18,6 +18,7 @@ from utils import (
     constants_parser,
     layout_parser,
     matrix_parser,
+    matrix_sorter,
 )
 
 
@@ -63,6 +64,7 @@ style = style_parser(  # Get style sheet.
 
 
 mstyle = style['main']
+mstyle['_alerts'] = gp.samples.alerts['alert_data']  # Pull sample alert data for the ticker tape.
 gui.geometry = mstyle['geometry']  # Configure the UX size.
 
 base = tk.Frame(
@@ -87,14 +89,31 @@ layout.configure(
 
 price_matrix = gp.ChartToPix(layout, *mstyle['price_matrix_offsets'])  # Init matrices.
 price_matrix.solve(price_data=gp.samples.price_data, increment=mstyle['price_increment'], timequote='1H:BTC/USDT')  # TODO: Build timequote from settings.
-coords1 = price_matrix.price_matrix[1]
-matrices = {
-    '_price_matrix': price_matrix,
-    '_coords1': coords1,
-    '_triggers1': test_o_random(coords1, 20)
-}
+matrices = matrix_sorter(price_matrix, dict())
+matrices.update({
+    '_triggers1': test_o_random(matrices['_cu'], 20),
+    '_triggers2': test_o_random(matrices['_cl'], 20),
+    '_triggers3': test_o_random(matrices['_cu'], 20),
+    '_triggers4': test_o_random(matrices['_cu'], 20),
+    '_triggers5': test_o_random(matrices['_cu'], 20),
+    '_triggers6': test_o_random(matrices['_cu'], 20),
+})
 
 style = matrix_parser(style, matrices)  # Update geometry into style.
+
+if 'ticker' in style.keys():
+    t = style['ticker']['style']
+    ticker = layout.ticker
+    ticker.configure(
+        width=constants['_screen_width'],
+        height=constants['_screen_height'],
+        bg=t['background']
+    )
+    ticker.place(
+        x=t['x'],
+        y=t['y']
+    )
+
 
 layout.configure_widgets(style)
 layout.draw_widgets()

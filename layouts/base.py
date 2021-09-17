@@ -35,6 +35,7 @@ class Layout(gp.Diagram):
         self.assets = list()  # Visual assets
         self.asset = None
         self.actors = list()  # Active elements (moving).
+        self.actor = None
         self.style = None
 
         # Get widgets.
@@ -82,13 +83,21 @@ class Layout(gp.Diagram):
         self.assets = list()  # TODO: We need to figure out how to keep the ordering intact...it's a dict...
         inventory = self.__dict__.keys()
         for asset in style:
-            if asset in inventory:
+            if asset in inventory and asset in style['asset_order']:
                 cmd = 'self.' + asset
                 print(cmd)
                 self.asset = eval(cmd)
                 self.asset.canvas_width = width
                 self.asset.canvas_height = height
                 self.asset.configure(**style[asset])
+            elif asset in inventory and asset in style['actor_order']:
+                actor = asset
+                cmd = 'self.' + actor
+                print(cmd)
+                self.actor = eval(cmd)
+                self.actor.build_content(
+                    **style[actor]
+                )
 
     def draw_widgets(self):
         """
