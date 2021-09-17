@@ -42,7 +42,7 @@ style = {
         # This scales the candlestick matrix in order to make room for the other widgets.
         'price_matrix_offsets': (50, 50, 35, 150),  # left, right, top, bottom.
         'price_increment': 8,  # The width of one candlestick in pixels.
-        'background': 'grey',
+        'background': 'white',
     },
     'asset_order': [  # This is our draw_order widgets will be drawn starting with the farthest back into the foreground.
         'smoothi_bottom',
@@ -51,6 +51,10 @@ style = {
         'top_arrows',
         'bottom_arrows',
         'candlesticks',
+        'icing_top',
+        'icing_bottom',
+        'onions1',
+        'points1'
     ],
     'actor_order': [  # Animate order for moving actors.
         'ticker'
@@ -121,7 +125,7 @@ style = {
         'icon': 'img/icons/minus_circle.png',  # Schematic view icon.
         'icon_fill': 'green',  # Icon color.
         'tag_fill': 'black',  # Schematic text color.
-        'use_schematic': False  # Toggle schematics.
+        'use_schematic': True  # Toggle schematics.
     },
     'bottom_arrows': {
         'geometry': '&_price_matrix',
@@ -137,22 +141,75 @@ style = {
         'icon': 'img/icons/x1.png',  # Schematic view icon.
         'icon_fill': 'red',  # Icon color.
         'tag_fill': 'black',  # Schematic text color.
-        'use_schematic': False  # Toggle schematics.
+        'use_schematic': True  # Toggle schematics.
+    },
+    'onions1': {
+        'geometry': '&_price_matrix',
+        'matrix_override': '&_ac',
+        'triggers': '&_triggers3',
+        'color': 'cyan',
+        'thickness': 2,
+        'outline': 'steelblue',
+        'alpha': 0.6,
+        'aa': (10, 1),
+        'multiplier': 2,  # This is the multiplication of the radius versus the trigger value.
+        'cutoff': 20,  # This is the maximum size limit.
+        'tb': 'c',  # Center objects.
+        'icon': 'img/icons/heavy_circle.png',
+        'icon_fill': 'steelblue',
+        'tag_fill': 'black',
+        'signal': 'M',
+        'use_schematic': True
+    },
+    'icing_top': {
+        'geometry': '&_price_matrix',
+        'triggers': '&_triggers1',
+        'thickness': 1,
+        'smooth': False,
+        'dash': (1, 1),
+        'color1': 'magenta',
+        'color2': 'cyan',
+        'tb': 't'
+    },
+    'icing_bottom': {
+        'geometry': '&_price_matrix',
+        'triggers': '&_triggers2',
+        'thickness': 1,
+        'smooth': False,
+        'dash': (1, 1),
+        'color1': 'magenta',
+        'color2': 'cyan',
+        'tb': 'b'
+    },
+    'points1': {
+        'geometry': '&_price_matrix',
+        'triggers': '&_triggers4',
+        'color': 'blueviolet',
+        'rad': 3,
+        'alpha': 0.5,
+        'offset': 5,  # This is how far from the candlestick we will show the point.
+        'tb': 't',
+        'direction': 'up',  # This tells the schematic pointers what direction to travel.
+        'icon': 'img/icons/lightbulb.png',
+        'icon_fill': 'black',
+        'tag_fill': 'black',
+        'signal': 'ID',
+        'use_schematic': True
     },
     'ticker': {
         'style': {
-                'background': 'black',
+                'background': 'white',
                 'colorup': 'green',
                 'colordown': 'red',
-                'tickerfont': 'Arial 9 normal normal',
-                'tickerfontcolorup': 'white',
-                'tickerfontcolordown': 'white',
-                'tickerbgup': 'black',
-                'tickerbgdown': 'black',
+                'tickerfont': 'Arial 9 normal bold',
+                'tickerfontcolorup': 'black',
+                'tickerfontcolordown': 'black',
+                'tickerbgup': 'white',
+                'tickerbgdown': 'white',
                 'quotefont': 'Arial 10 normal bold',
                 'quotefontcolorup': 'green',
-                'quotebgdown': 'black',
-                'quotebgup': 'black',
+                'quotebgdown': 'white',
+                'quotebgup': 'white',
                 'quotefontcolordown': 'red',
                 'iconup': None,
                 'icondown': None,
@@ -165,7 +222,7 @@ style = {
                 'height': 25,
                 'width': '$_screen_width:100%',
                 'x': 0,
-                'y': 375
+                'y': 377
             },
         'clear': True,
         'content': '&_alerts',

@@ -49,18 +49,30 @@ class Layout(gp.Diagram):
         self.top_arrows = gp.ArrowAlert(self, cache)
         self.bottom_arrows = gp.ArrowAlert(self, cache)
         self.onions1 = gp.OnionRingAlert(self, cache)
+        self.onions2 = gp.OnionRingAlert(self, cache)
+        self.onions3 = gp.OnionRingAlert(self, cache)
         self.icing_top = gp.IcingAlert(self, cache)
-        self.icing_bottomm = gp.IcingAlert(self, cache)
+        self.icing_bottom = gp.IcingAlert(self, cache)
         self.line_1 = gp.Line(self, cache)
         self.line_2 = gp.Line(self, cache)
         self.line_3 = gp.Line(self, cache)
+        self.points1 = gp.PointAlert(self, cache)
+        self.points2 = gp.PointAlert(self, cache)
+        self.points3 = gp.PointAlert(self, cache)
+        self.points4 = gp.PointAlert(self, cache)
         self.price_ruler = gp.PriceRuler(self, cache)
-        self.price_tics = gp.TicArray(self)
+        self.tics1 = gp.TicArray(self)
+        self.tics2 = gp.TicArray(self)
+        self.tics3 = gp.TicArray(self)
+        self.tics4 = gp.TicArray(self)
+        self.tics5 = gp.TicArray(self)
         self.volume_ruler_top = gp.VolumeRuler(self, cache)
         self.volume_ruler_bottom = gp.VolumeRuler(self, cache)
         self.date_ruler = gp.DateRuler(self, cache)
         self.icon_alerts_1 = gp.IconAlert(self, cache)
         self.icon_alerts_2 = gp.IconAlert(self, cache)
+        self.icon_alerts_3 = gp.IconAlert(self, cache)
+        self.icon_alerts_4 = gp.IconAlert(self, cache)
         self.chart_background = gp.Background(self, cache)
 
         # Widgets attached to parent (stuff attached to the master frame).
@@ -80,7 +92,7 @@ class Layout(gp.Diagram):
         self.update()
         width, height = self.winfo_width(), self.winfo_height()
         self.style = style
-        self.assets = list()  # TODO: We need to figure out how to keep the ordering intact...it's a dict...
+        self.assets = list()
         inventory = self.__dict__.keys()
         for asset in style:
             if asset in inventory and asset in style['asset_order']:

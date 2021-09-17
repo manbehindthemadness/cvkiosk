@@ -71,7 +71,7 @@ base = tk.Frame(
     gui,
     width=constants['_screen_width'],
     height=constants['_screen_height'],
-    bg='blue',
+    bg=mstyle['background'],
     bd=0,
     highlightthickness=0
 )
@@ -93,9 +93,9 @@ matrices = matrix_sorter(price_matrix, dict())
 matrices.update({
     '_triggers1': test_o_random(matrices['_cu'], 20),
     '_triggers2': test_o_random(matrices['_cl'], 20),
-    '_triggers3': test_o_random(matrices['_cu'], 20),
+    '_triggers3': test_o_random(matrices['_ac'], 20),
     '_triggers4': test_o_random(matrices['_cu'], 20),
-    '_triggers5': test_o_random(matrices['_cu'], 20),
+    '_triggers5': test_o_random(matrices['_cl'], 20),
     '_triggers6': test_o_random(matrices['_cu'], 20),
 })
 
