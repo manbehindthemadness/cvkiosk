@@ -74,6 +74,9 @@ class Layout(gp.Diagram):
         """
         This will take our style and use it to set up all of our widgets.
         """
+        self.pack(expand=True, fill='both')  # Need to refresh the values.
+        self.update()
+        width, height = self.winfo_width(), self.winfo_height()
         self.style = style
         self.assets = list()  # TODO: We need to figure out how to keep the ordering intact...it's a dict...
         inventory = self.__dict__.keys()
@@ -82,6 +85,8 @@ class Layout(gp.Diagram):
                 cmd = 'self.' + asset
                 print(cmd)
                 self.asset = eval(cmd)
+                self.asset.canvas_width = width
+                self.asset.canvas_height = height
                 self.asset.configure(**style[asset])
 
     def draw_widgets(self):

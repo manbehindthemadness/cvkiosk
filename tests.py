@@ -68,6 +68,8 @@ style = style_parser(  # Get style sheet.
 mstyle = style['main']
 gui.geometry = mstyle['geometry']  # Configure the UX size.
 layout.configure(bg=mstyle['background'], width=mstyle['price_canvas_width'], height=mstyle['price_canvas_height'])  # Configure the price chart size.
+layout.pack(expand=True, fill='both')  # Need to refresh the values.
+layout.update()
 
 price_matrix = gp.ChartToPix(layout, *mstyle['price_matrix_offsets'])  # Init matrices.
 price_matrix.solve(price_data=gp.samples.price_data, increment=mstyle['price_increment'], timequote='1H:BTC/USDT')  # TODO: Build timequote from settings.

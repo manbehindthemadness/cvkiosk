@@ -66,7 +66,7 @@ style = {
     },
     'smoothi_bottom': {
         'geometry': '&_price_matrix',
-        'height': 200,
+        'height': 75,
         'fill': 'aqua',
         'grad': ('deepskyblue', 'black', 'v'),  # Gradient.
         'graph_type': 'volume',
@@ -74,8 +74,8 @@ style = {
         'outline': 'white',
         'smooth': 5,  # Smooths average out the measurements.
         'lineinterpol': 3,  # Linear interpolation adds points and then rounds off the edges.
-        'offset': 50,
-        'padding': (47, 0, 0, 0),  # left, right, top, bottom.
+        'offset': 300,
+        'padding': (47, 47, 0, 0),  # left, right, top, bottom.
         'alpha': 0.2,  # Transparency.
         'alphamask': True,  # Transparency following a gradient.
         'aa': (10, 0)  # Antialiasing (sample_size, passes).
@@ -89,7 +89,7 @@ style = {
         'smooth': 1,
         'lineinterpol': 2,
         'offset': 350,
-        'padding': (0, 47, 0, 0),
+        'padding': (47, 47, 0, 0),
         'alpha': 0.6,
         'aa': (10, 0)
     },
