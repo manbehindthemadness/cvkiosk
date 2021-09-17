@@ -173,14 +173,13 @@ def style_parser(style: str, constants: dict):
     return result
 
 
-def constants_parser(constants_str: [str, dict], geometries: dict) -> dict:
+def constants_parser(constants_str: [str, dict]) -> dict:
     """
     This will get the constants for a specific display type and add in whatever geometry we want to call in the style.
     """
     constants = importlib.import_module('constants.' + constants_str)
     # noinspection PyUnresolvedReferences
     result: dict = constants.constants
-    result.update(geometries)
     return result
 
 
@@ -191,3 +190,36 @@ def layout_parser(layout: str):
     layout = importlib.import_module('layouts.' + layout)
     # noinspection PyUnresolvedReferences
     return layout.Format
+
+
+def evaluate_matrix(expression: str, main: dict):
+    """
+    This will take a matrix expression and populate it based on the calculated values in style['main']
+    """
+    result = expression
+    if '&' in str(expression):
+        result = main[expression.replace('&', '')]
+    return result
+
+
+def matrix_iter(style: dict, main: dict) -> dict:
+    """
+    This will iterate the style and fill in the requested matrices.
+    """
+    result = dict()
+    for key in style:
+        if isinstance(style[key], dict):
+            result[key] = matrix_iter(style[key], main)
+        else:
+            result[key] = evaluate_matrix(style[key], main)
+    return result
+
+
+def matrix_parser(style: dict, matrices: dict) -> dict:
+    """
+    This will update the style['main'] with the newly constructed matrices and then update the style accordingly.
+    """
+    style['main'].update(matrices)
+    main = style['main']
+    style = matrix_iter(style, main)
+    return style

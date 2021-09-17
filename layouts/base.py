@@ -33,11 +33,13 @@ class Layout(gp.Diagram):
         self.cache = cache
         self.config = settings
         self.assets = list()  # Visual assets
+        self.asset = None
         self.actors = list()  # Active elements (moving).
+        self.style = None
 
         # Get widgets.
 
-        self.sticks = gp.CandleSticks(self, cache)
+        self.candlesticks = gp.CandleSticks(self, cache)
         self.smoothi_top = gp.SmoothiVolumeH(self, cache)
         self.smoothi_bottom = gp.SmoothiVolumeH(self, cache)
         self.schematic = gp.SchematicRuler(self, cache)
@@ -72,21 +74,29 @@ class Layout(gp.Diagram):
         """
         This will take our style and use it to set up all of our widgets.
         """
-        self.assets = list()
+        self.style = style
+        self.assets = list()  # TODO: We need to figure out how to keep the ordering intact...it's a dict...
+        inventory = self.__dict__.keys()
         for asset in style:
-            cmd = 'self.' + asset + ',configure(' + str(style[asset]) + ')'
-            exec(cmd)
+            if asset in inventory:
+                # cmd = 'self.' + asset + ',configure(**' + str(style[asset]) + ')'
+                # print(cmd)
+                # exec(cmd)
+                cmd = 'self.' + asset
+                print(cmd)
+                self.asset = eval(cmd)
+                self.asset.configure(**style[asset])
 
     def draw_widgets(self):
         """
         This will draw all the visual assets we have configured into
-        :return:
         """
-        for asset in self.assets:
-            asset.draw()
-        for actor in self.actors:
-            actor.animate()
-        return self
+        assets = self.style['asset_order']
+        for asset in assets:
+            exec(asset + '.draw()')
+        actors = self.style['actor_order']
+        for actor in actors:  # TODO: I don't think this is gonna work.
+            exec(actor + '.animate()')
 
     def purge(self):
         """

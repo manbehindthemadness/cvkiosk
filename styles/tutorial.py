@@ -30,7 +30,6 @@ constants = {  # This is an example of the constants dictionary (not the one we 
     '_screen_size': '400x500',
     '_screen_height': 400,
     '_screen_width': 500,
-    '_price_matrix': 'example from chart-to-pix',
 }
 
 style = {
@@ -38,16 +37,26 @@ style = {
         'style_name': 'tutorial',  # Name style for organization.
         # Configure global settings in relation to screen size and what have you.
         'geometry': "$_screen_size:",  # This is our screen size.
-        'price_canvas_width:': '$_screen_width:100%',  # The size of the graphiend canvas.
+        'price_canvas_width': '$_screen_width:100%',  # The size of the graphiend canvas.
         'price_canvas_height': 350,
         # This scales the candlestick matrix in order to make room for the other widgets.
         'price_matrix_offsets': (50, 50, 35, 150),  # left, right, top, bottom.
+        'price_increment': 8,  # The width of one candlestick in pixels.
+        'matrices': {}  # These get filled in by the matrix_parser.
     },
+    'asset_order': [  # This is our draw_order widgets will be drawn starting with the farthest back into the foreground.
+        'smoothi_bottom',
+        'smoothi_top',
+        'volume',
+        'top_arrows',
+        'candlesticks'
+    ],
+    'actor_order': [  # Animate order for moving actors.
+    ],
     # From this point we wil divide this style into sections including the relational configuration respectively.
     'candlesticks': {
         # The bar_width will alter the X coordinates of all the price related widgets.
-        'bar_width': 8,  # The width of one candlestick in pixels.
-        'geometry': '$_price_matrix:',
+        'geometry': '&_price_matrix',
         'height': '$_screen_height:50%',
         'color1': 'green',
         'color2': 'red',
@@ -55,7 +64,7 @@ style = {
         'hollow': ['red']  # This can hole one none or both of the colors.
     },
     'smoothi_bottom': {
-        'geometry': '$_price_matrix:',
+        'geometry': '&_price_matrix',
         'height': 75,
         'fill': 'aqua',
         'grad': ('deepskyblue', 'black', 'v'),  # Gradient.
@@ -71,7 +80,7 @@ style = {
         'aa': (10, 0)  # Antialiasing (sample_size, passes).
     },
     'smoothi_top': {
-        'geometry': '$_price_matrix',
+        'geometry': '&_price_matrix',
         'height': 50,
         'fill': 'red',
         'graph_type': 'volume',
@@ -84,7 +93,7 @@ style = {
         'aa': (10, 0)
     },
     'volume': {
-        'geometry': '$_price_matrix',
+        'geometry': '&_price_matrix',
         'height': 75,
         'top': 200,
         'bottom': 200,
@@ -97,18 +106,19 @@ style = {
         'tb': 'b'
     },
     'top_arrows': {
-        'geometry': '$_price_matrix',
+        'geometry': '&_price_matrix',
         'height': 10,
         'offset': 10,  # This is the distance the arrow will appear from the coordinate.
         'fill': 'deepskyblue',
         'thickness': 1,  # Line thickness.
         'arrow': 'first',  # This is the end of the line that thhe arrow will attach.
         'arrowshape': (4, 4, 1),  # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
-        'matrix_override': '$_triggers1',  # This allows us to pass alternate alert "triggers" instead of just geometry.
+        'matrix_override': '&_coords1',  # This allows us to pass alternate alert "triggers" instead of just geometry.
+        'triggers': '&_triggers1',
         'tb': 't',
         'icon': 'img/icons/minus_circle.png',  # Schematic view icon.
         'icon_fill': 'green',  # Icon color.
         'tag_fill': 'black',  # Schematic text color.
-        'use_schematic': True  # Toggle schematics.
+        'use_schematic': False  # Toggle schematics.
     }
 }
