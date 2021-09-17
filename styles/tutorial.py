@@ -27,7 +27,7 @@ EXAMPLE:
 """
 # NOTE: The constants are held in an alternate location by screen properties, these are only here for easy reference.
 constants = {  # This is an example of the constants dictionary (not the one we actually use ;).
-    '_screen_size': '400x500',
+    '_screen_size': '500x400',
     '_screen_height': 400,
     '_screen_width': 500,
 }
@@ -43,7 +43,7 @@ style = {
         'price_matrix_offsets': (50, 50, 35, 150),  # left, right, top, bottom.
         'price_increment': 8,  # The width of one candlestick in pixels.
         'matrices': {},  # These get filled in by the matrix_parser.
-        'background': 'white',
+        'background': 'grey',
     },
     'asset_order': [  # This is our draw_order widgets will be drawn starting with the farthest back into the foreground.
         'smoothi_bottom',
@@ -66,7 +66,7 @@ style = {
     },
     'smoothi_bottom': {
         'geometry': '&_price_matrix',
-        'height': 75,
+        'height': 200,
         'fill': 'aqua',
         'grad': ('deepskyblue', 'black', 'v'),  # Gradient.
         'graph_type': 'volume',
@@ -74,8 +74,8 @@ style = {
         'outline': 'white',
         'smooth': 5,  # Smooths average out the measurements.
         'lineinterpol': 3,  # Linear interpolation adds points and then rounds off the edges.
-        'offset': 300,
-        'padding': (47, 47, 0, 0),  # left, right, top, bottom.
+        'offset': 50,
+        'padding': (47, 0, 0, 0),  # left, right, top, bottom.
         'alpha': 0.2,  # Transparency.
         'alphamask': True,  # Transparency following a gradient.
         'aa': (10, 0)  # Antialiasing (sample_size, passes).
@@ -89,7 +89,7 @@ style = {
         'smooth': 1,
         'lineinterpol': 2,
         'offset': 350,
-        'padding': (47, 47, 0, 0),
+        'padding': (0, 47, 0, 0),
         'alpha': 0.6,
         'aa': (10, 0)
     },

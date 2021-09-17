@@ -9,7 +9,7 @@ Please see the license file for more details.
 """
 
 constants = {  # This is an example of the constants dictionary (not the one we actually use ;).
-    '_screen_size': '400x500',
+    '_screen_size': '500x400',
     '_screen_height': 400,
     '_screen_width': 500,
     '_price_matrix': None,  # Note that this will be added during the run-time later on.
