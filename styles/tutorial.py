@@ -38,11 +38,12 @@ style = {
         # Configure global settings in relation to screen size and what have you.
         'geometry': "$_screen_size:",  # This is our screen size.
         'price_canvas_width': '$_screen_width:100%',  # The size of the graphiend canvas.
-        'price_canvas_height': 350,
+        'price_canvas_height': '$_screen_height:100%',
         # This scales the candlestick matrix in order to make room for the other widgets.
         'price_matrix_offsets': (50, 50, 35, 150),  # left, right, top, bottom.
         'price_increment': 8,  # The width of one candlestick in pixels.
-        'matrices': {}  # These get filled in by the matrix_parser.
+        'matrices': {},  # These get filled in by the matrix_parser.
+        'background': 'white',
     },
     'asset_order': [  # This is our draw_order widgets will be drawn starting with the farthest back into the foreground.
         'smoothi_bottom',

@@ -125,8 +125,10 @@ def evaluate_expression(expression, style: dict, constants: dict):
         lookup_value = list_key_lookup(keys, lookup)
         try:
             formula = sp[1]
+            print(formula)
             if "%" in formula:  # Get percentage.
-                result = percent_in(num(formula), lookup_value)
+                result = percent_of(num(formula), lookup_value)
+                pass
             elif '-' in formula:  # Subtract.
                 result = np.subtract(lookup_value, num(formula))
             elif '+' in formula:  # Add.

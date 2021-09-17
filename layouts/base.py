@@ -79,9 +79,6 @@ class Layout(gp.Diagram):
         inventory = self.__dict__.keys()
         for asset in style:
             if asset in inventory:
-                # cmd = 'self.' + asset + ',configure(**' + str(style[asset]) + ')'
-                # print(cmd)
-                # exec(cmd)
                 cmd = 'self.' + asset
                 print(cmd)
                 self.asset = eval(cmd)

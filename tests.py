@@ -54,6 +54,7 @@ layout_uninit = layout_parser(  # Get layout widgets.
 
 layout = layout_uninit(gui, cache, config)  # Init the layout.
 
+
 constants = constants_parser(  # Get screen and geometry constants.
     config['constants'],
 )
@@ -63,7 +64,10 @@ style = style_parser(  # Get style sheet.
     constants
 )
 
+
 mstyle = style['main']
+layout.configure(bg=mstyle['background'], width=mstyle['price_canvas_width'], height=mstyle['price_canvas_height'])
+
 price_matrix = gp.ChartToPix(layout, *mstyle['price_matrix_offsets'])  # Init matrices.
 price_matrix.solve(price_data=gp.samples.price_data, increment=mstyle['price_increment'], timequote='1H:BTC/USDT')  # TODO: Build timequote from settings.
 coords1 = price_matrix.price_matrix[1]
