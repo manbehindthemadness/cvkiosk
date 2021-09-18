@@ -357,7 +357,7 @@ style = {
         }
     },
     'tics2': {
-        'coords': (0, 0, 0, 375),
+        'coords': (50, 0, 50, 375),
         'tics': [2, 4, 9],
         'style': {
             'fill': 'grey',

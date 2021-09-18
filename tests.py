@@ -91,12 +91,12 @@ price_matrix = gp.ChartToPix(layout, *mstyle['price_matrix_offsets'])  # Init ma
 price_matrix.solve(price_data=gp.samples.price_data, increment=mstyle['price_increment'], timequote='1H:BTC/USDT')  # TODO: Build timequote from settings.
 matrices = matrix_sorter(price_matrix, dict())
 matrices.update({
-    '_triggers1': test_o_random(matrices['_cu'], 20),
-    '_triggers2': test_o_random(matrices['_cl'], 20),
-    '_triggers3': test_o_random(matrices['_ac'], 20),
-    '_triggers4': test_o_random(matrices['_cu'], 20),
-    '_triggers5': test_o_random(matrices['_cl'], 20),
-    '_triggers6': test_o_random(matrices['_cu'], 20),
+    '_triggers1': test_o_random(matrices['_cu'], 5),
+    '_triggers2': test_o_random(matrices['_cl'], 5),
+    '_triggers3': test_o_random(matrices['_ac'], 5),
+    '_triggers4': test_o_random(matrices['_cu'], 5),
+    '_triggers5': test_o_random(matrices['_cl'], 5),
+    '_triggers6': test_o_random(matrices['_cu'], 5),
 })
 
 style = matrix_parser(style, matrices)  # Update geometry into style.
