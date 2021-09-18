@@ -18,6 +18,7 @@ from utils import (
     layout_parser,
     matrix_parser,
     matrix_sorter,
+    test_o_random,
 )
 from uxutils import setup
 
@@ -77,17 +78,27 @@ class OnScreen:
         timequote = self.timeframes[ctime] + ':' + focus + '/' + pair
 
         s = self.style
-        matrix = self.matrix_solver.solve(
+        mat = gp.ChartToPix(self.layout, *self.style['main']['price_matrix_offsets'])
+        mat.solve(
             price_data=matrix,
             increment=s['main']['price_increment'],
             timequote=timequote
         )
         matrix_sorter(
-            matrix,
+            mat,
             self.matrices,
             prefix
         )
-        return matrix
+        if self.settings['style'] == 'tutorial':  # This is for the example setup only.
+            self.matrices.update({
+                '_triggers1': test_o_random(self.matrices['_cu'], 5),
+                '_triggers2': test_o_random(self.matrices['_cl'], 5),
+                '_triggers3': test_o_random(self.matrices['_ac'], 5),
+                '_triggers4': test_o_random(self.matrices['_cu'], 5),
+                '_triggers5': test_o_random(self.matrices['_cl'], 5),
+                '_triggers6': test_o_random(self.matrices['_cu'], 5),
+            })
+        return mat
 
     def update_style_matrices(self):
         """
@@ -133,8 +144,6 @@ class OnScreen:
             bd=0,
             highlightthickness=0
         )  # Configure the price chart size.
-        if not self.matrix_solver:
-            self.matrix_solver = gp.ChartToPix(self.layout, self.style['main']['price_matrix_offsets'])
         self.price_matrix = self.solve_matrices(self.price_chart)
         self.feed_matrix = self.solve_matrices(self.feed_chart, 'feed')
         self.update_style_matrices()  # Add the values into the style.
@@ -156,7 +165,7 @@ class OnScreen:
         """
         This will configure the widgets with our new style information.
         """
-        self.layout.configure(self.style)
+        self.layout.configure_widgets(self.style)
         return self
 
     def draw(self):
@@ -164,5 +173,21 @@ class OnScreen:
         This will draw our widgets against the parent user interface.
         """
         # TODO: We need to figure out how we are going to clear the data and such for update here.
-        self.layout.draw()
+        self.layout.draw_widgets()
         return self
+
+    def mainloop(self):
+        """
+        runs out UX mainloop.
+        """
+        self.parent.mainloop()
+        return self
+
+    def run(self):
+        """
+        Experimental runtime setup.
+        """
+        self.parse()
+        self.configure()
+        self.draw()
+        self.mainloop()

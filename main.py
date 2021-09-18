@@ -7,8 +7,10 @@ This program is experimental and proprietary, redistribution is prohibited.
 Please see the license file for more details.
 ------------------------------------------------------------------------------------------------------------------------
 """
-
+# import threading
 from utils import config
-
+from ux import OnScreen
 
 config = config('settings')
+oc = OnScreen()
+oc.run()

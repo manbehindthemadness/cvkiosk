@@ -9,7 +9,6 @@ Please see the license file for more details.
 
 This is full of aptly named test code.
 """
-import random
 import tkinter as tk
 import graphiend as gp
 from utils import (
@@ -19,29 +18,8 @@ from utils import (
     layout_parser,
     matrix_parser,
     matrix_sorter,
+    test_o_random,
 )
-
-
-def test_o_random(view_arry: list, alerts: int) -> list:
-    """
-    This creates random alert arrays for testing.
-    """
-    def rand_val(randstat: float) -> float:
-        """
-        Throws out a random value from 1-25
-        """
-        res = 0
-        if not random.randint(0, int(randstat)):
-            res = random.randint(1, 25)
-        return res
-
-    ll = len(view_arry)
-    rand_stat = ll / alerts
-    sett: list = [0] * ll
-    for idx, s in enumerate(sett):
-        s = rand_val(rand_stat)
-        sett[idx] = s
-    return sett
 
 
 cache = gp.ImgCache().refresh()

@@ -21,11 +21,11 @@ from PIL import (
     ImageEnhance,
     ImageFilter
 )
-
-# from pathlib import Path
-from utils import percent_of
-from utils import system_command
-from logs import JournalD
+from utils import (
+    percent_of,
+    system_command,
+    log,
+)
 from _tkinter import TclError
 
 pys = None
@@ -38,13 +38,11 @@ def setup(settings, display_override: str = None):
     :param display_override: Use this if you want to use an alternative display.
     """
 
-    log = JournalD(settings).log
-
     def dbg(*args):
         """
         ajust a debug return method.
         """
-        if settings.debug_startup:
+        if settings['debug_startup']:
             log(args)
 
     dbg('starting display setup', '*dbug*')

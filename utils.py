@@ -14,10 +14,88 @@ import time
 import configparser
 import importlib
 import datetime
+import logging
+import random
 from subprocess import Popen, PIPE
 import numpy as np
 
 WORKING_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__)))
+logging.getLogger().setLevel(logging.INFO)
+
+
+def test_o_random(view_arry: list, alerts: int) -> list:
+    """
+    This creates random alert arrays for testing.
+    """
+    def rand_val(randstat: float) -> float:
+        """
+        Throws out a random value from 1-25
+        """
+        res = 0
+        if not random.randint(0, int(randstat)):
+            res = random.randint(1, 25)
+        return res
+
+    ll = len(view_arry)
+    rand_stat = ll / alerts
+    sett: list = [0] * ll
+    for idx, s in enumerate(sett):
+        s = rand_val(rand_stat)
+        sett[idx] = s
+    return sett
+
+
+def clean_args(args: list, kwargs: dict, exclusive: bool = False) -> dict:
+    """
+    Removes keys top prevent errors.
+    """
+    kargs = list(kwargs.keys())
+    if exclusive:
+        for arg in kargs:
+            if arg not in args:
+                del kwargs[arg]
+    else:
+        for arg in args:
+            try:
+                del kwargs[arg]
+            except KeyError:
+                pass
+    return kwargs
+
+
+def get_args(args: list, kwargs: dict, clean: bool = False) -> list:
+    """
+    This will fetch arguments and jazz.
+    """
+    values = list()
+    for arg in args:
+        if arg in kwargs:
+            values.append(kwargs[arg])
+        else:
+            values.append(None)
+    if clean:
+        clean_args(args, kwargs)
+    if len(values) == 1:
+        values = values[0]
+    return values
+
+
+def log(*args, **kwargs):
+    """
+    Really simple-ass logger.
+    """
+
+    message = str()
+    for arg in args:
+        message += str(arg) + ' '
+    level = get_args(
+        ['level'],
+        kwargs
+    )
+    if not level:
+        level = 'info'
+    cmd = 'logging.' + level + '(message)'
+    exec(cmd)
 
 
 def system_command(params):
