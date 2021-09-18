@@ -54,8 +54,8 @@ class GetChart:
                 padding = [feed_data[0]] * pad_to
                 padding.extend(feed_data)
                 feed_data = padding
-            for bar in price_data:
-                bar[0] = ticks_to_chart_time(bar[0])
+            # for bar in price_data:
+            #     bar[0] = ticks_to_chart_time(bar[0])
             self.alerts, self.chart, self.feed = alert_data, price_data, feed_data
         else:
             print('unable to fetch chart data, retrying')

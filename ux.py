@@ -7,6 +7,7 @@ This program is experimental and proprietary, redistribution is prohibited.
 Please see the license file for more details.
 ------------------------------------------------------------------------------------------------------------------------
 """
+import random
 import numpy as np
 import tkinter as tk
 import graphiend as gp
@@ -28,6 +29,7 @@ class OnScreen:
     This will configure, refresh and draw our user interface.
     """
     base = None
+    base_style = None
     ticker = None
     header = None
     layout = None
@@ -41,6 +43,7 @@ class OnScreen:
     alerts = None
     chart_data = None
     matrix_solver = None
+    delay = None
 
     timeframes = {
         '15minute': '15M',
@@ -50,11 +53,12 @@ class OnScreen:
         '1day': '1D'
     }
 
-    def __init__(self):
+    def __init__(self, debug_mode: bool = False):
         self.parent = tk.Tk()
         self.cache = gp.ImgCache().refresh()  # Init the cache.
         self.settings = config('settings')  # Grab our settings.
         self.api = GetChart()
+        self.debug_mode = debug_mode
 
         setup(self.settings)  # Prep environment for display.
 
@@ -62,8 +66,17 @@ class OnScreen:
         """
         This will refresh the imformation from the api.
         """
-        cd = self.chart_data = self.api.get_chart()
-        self.alerts, self.price_chart, self.feed_chart = cd.alerts, cd.chart, cd.feed
+        if not self.debug_mode:
+            self.chart_data = self.api.get_chart()
+            cd = self.chart_data
+            self.alerts, self.price_chart, self.feed_chart = cd.alerts, cd.chart, cd.feed
+        else:
+            data = gp.samples.price_data
+            random.shuffle(data)
+            self.price_chart = list(data)
+            random.shuffle(data)
+            self.feed_chart = list(data)
+            self.alerts = gp.samples.alerts
         return self
 
     def solve_matrices(self, matrix: [list, np.array], prefix: str = None) -> np.array:
@@ -78,7 +91,10 @@ class OnScreen:
         timequote = self.timeframes[ctime] + ':' + focus + '/' + pair
 
         s = self.style
-        mat = gp.ChartToPix(self.layout, *self.style['main']['price_matrix_offsets'])
+        mat = gp.ChartToPix(self.layout, *self.style['main']['price_matrix_offsets'], w_h=(
+            s['main']['price_canvas_width'],
+            s['main']['price_canvas_height']
+        ))
         mat.solve(
             price_data=matrix,
             increment=s['main']['price_increment'],
@@ -89,7 +105,17 @@ class OnScreen:
             self.matrices,
             prefix
         )
+        return mat
+
+    def update_style_matrices(self):
+        """
+        This updates the price and volume matrices in our style so it can bbe passed to the widgets.
+        """
+        self.matrices = dict()
+        self.price_matrix = self.solve_matrices(self.price_chart)
+        self.feed_matrix = self.solve_matrices(self.feed_chart, 'feed')
         if self.settings['style'] == 'tutorial':  # This is for the example setup only.
+            print('drawing example randoms')
             self.matrices.update({
                 '_triggers1': test_o_random(self.matrices['_cu'], 5),
                 '_triggers2': test_o_random(self.matrices['_cl'], 5),
@@ -98,12 +124,6 @@ class OnScreen:
                 '_triggers5': test_o_random(self.matrices['_cl'], 5),
                 '_triggers6': test_o_random(self.matrices['_cu'], 5),
             })
-        return mat
-
-    def update_style_matrices(self):
-        """
-        This updates the price and volume matrices in our style so it can bbe passed to the widgets.
-        """
         self.style = matrix_parser(self.style, self.matrices)
         return self
 
@@ -144,11 +164,11 @@ class OnScreen:
             bd=0,
             highlightthickness=0
         )  # Configure the price chart size.
-        self.price_matrix = self.solve_matrices(self.price_chart)
-        self.feed_matrix = self.solve_matrices(self.feed_chart, 'feed')
+
+        self.base_style = dict(self.style)
         self.update_style_matrices()  # Add the values into the style.
 
-        if 'ticker' in self.style.keys():
+        if 'ticker' in self.style.keys() and not self.ticker:
             t = self.style['ticker']['style']
             self.ticker = self.layout.ticker
             self.ticker.configure(
@@ -172,7 +192,6 @@ class OnScreen:
         """
         This will draw our widgets against the parent user interface.
         """
-        # TODO: We need to figure out how we are going to clear the data and such for update here.
         self.layout.draw_widgets()
         return self
 
@@ -183,11 +202,48 @@ class OnScreen:
         self.parent.mainloop()
         return self
 
+    def purge(self):
+        """
+        Removes all our variables in order to redraw.
+        """
+        self.layout.delete('all')
+        self.layout.purge()
+        self.price_chart = None
+        self.feed_matrix = None
+        self.price_matrix = None
+        self.feed_chart = None
+        self.alerts = None
+        self.chart_data = None
+        self.matrix_solver = None
+        self.style = dict(self.base_style)
+        return self
+
+    def refresh(self):
+        """
+        This will refresh our chart data.
+        """
+        self.purge()
+        self.refresh_api()  # Launching this here will fire off the api twice really fast.... need to fix this.
+        self.update_style_matrices()
+        self.configure()
+        self.draw()  # Test to see if we are properly clearing the images.
+
+    def cycle(self):
+        """
+        This will loop our refresh cycle.
+        """
+        if not self.delay:
+            self.delay = int(np.multiply(np.multiply(self.settings['update_time'], 60), 1000))
+        self.refresh()
+        print('refreshing!', self.style['main']['_price_quote'])
+        self.parent.after(self.delay, self.cycle)
+
     def run(self):
         """
         Experimental runtime setup.
         """
         self.parse()
-        self.configure()
-        self.draw()
+        self.cycle()
+        self.layout.configure_actors()
+        self.layout.animate_actors()
         self.mainloop()

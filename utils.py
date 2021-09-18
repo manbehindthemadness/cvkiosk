@@ -348,7 +348,7 @@ def matrix_parser(style: dict, matrices: dict) -> dict:
 
 def matrix_sorter(price_matrix, matrices: dict, prefix: str = None) -> dict:
     """
-    This will sort all the coords from the prixe matrix and add them to the matrices dictionary.
+    This will sort all the coords from the price matrix and add them to the matrices dictionary.
     Output coordinate map:
                     lu -- cu -- ru
                     |           |

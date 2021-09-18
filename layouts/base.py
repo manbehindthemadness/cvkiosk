@@ -88,7 +88,6 @@ class Layout(gp.Diagram):
         """
         This will take our style and use it to set up all of our widgets.
         """
-        # self.pack(expand=True, fill='both')  # Need to refresh the values.
         self.place(x=0, y=0)
         self.update()
         width, height = self.winfo_width(), self.winfo_height()
@@ -102,13 +101,23 @@ class Layout(gp.Diagram):
                 self.asset.canvas_width = width
                 self.asset.canvas_height = height
                 self.asset.configure(**style[asset])
-            elif asset in inventory and asset in style['actor_order']:
-                actor = asset
+                self.assets.append(eval(cmd))
+        return self
+
+    def configure_actors(self):
+        """
+        Same as above but for the animted acrots.
+        """
+        self.actors = list()
+        inventory = self.__dict__.keys()
+        for actor in self.style:
+            if actor in inventory and actor in self.style['actor_order']:
                 cmd = 'self.' + actor
                 self.actor = eval(cmd)
                 self.actor.build_content(
-                    **style[actor]
+                    **self.style[actor]
                 )
+        return self
 
     def draw_widgets(self):
         """
@@ -117,14 +126,24 @@ class Layout(gp.Diagram):
         assets = self.style['asset_order']
         for asset in assets:
             exec('self.' + asset + '.draw()')
+        return self
+
+    def animate_actors(self):
+        """
+        animates our moving actors.
+        """
         actors = self.style['actor_order']
-        for actor in actors:  # TODO: I don't think this is gonna work.
+        for actor in actors:
             exec('self.' + actor + '.animate()')
 
     def purge(self):
         """
         This will burn all the visual elements across all the widgets
         """
+        self.style = None
         for asset in self.assets:
-            asset.burn()  # This is going to need some compat.
+            # try:
+            asset.burn_all()  # This is going to need some compat.
+            # except AttributeError:
+            #     pass
         return self
