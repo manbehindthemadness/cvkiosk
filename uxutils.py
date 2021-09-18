@@ -14,6 +14,7 @@ Scrolling text: https://www.codespeedy.com/move-text-from-right-to-left-in-tkint
 import time
 import os
 import tkinter as tk
+import numpy as np
 from colour import Color
 from PIL import (
     Image,
@@ -23,17 +24,15 @@ from PIL import (
 
 from pathlib import Path
 from utils import percent_of
-from warehouse.utils import system_command
-from warehouse.logs import JournalD
+from utils import system_command
+from logs import JournalD
 from _tkinter import TclError
 
-np = get_math()
 pys = None
 
 
 def setup(settings, display_override: str = None):
     """
-    TODO: I am pretty sure that something in here is causing our slowdown on the Jetson...
     This readies our environment for a bar-metal tkinter user interface.
     :param settings: Pass the configs from out app.
     :param display_override: Use this if you want to use an alternative display.

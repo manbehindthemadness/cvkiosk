@@ -268,7 +268,7 @@ def matrix_parser(style: dict, matrices: dict) -> dict:
     return style
 
 
-def matrix_sorter(price_matrix, matrices: dict) -> dict:
+def matrix_sorter(price_matrix, matrices: dict, prefix: str = None) -> dict:
     """
     This will sort all the coords from the prixe matrix and add them to the matrices dictionary.
     Output coordinate map:
@@ -283,14 +283,18 @@ def matrix_sorter(price_matrix, matrices: dict) -> dict:
                     ll -- cl -- rl
     """
     coords = ['lu', 'cu', 'ru', 'rt', 'rc', 'rb', 'rl', 'cl', 'll', 'lb', 'lc', 'lt', 'ac']
+    if not prefix:
+        prefix = '_'
+    else:
+        prefix = '_' + prefix + '_'
     for coord, matrix in zip(coords, price_matrix.price_matrix):
-        matrices['_' + coord] = matrix
+        matrices[prefix + coord] = matrix
 
-    matrices['_price_matrix'] = price_matrix
-    matrices['_volume'] = price_matrix.volume
-    matrices['_prices'] = price_matrix.prices
-    matrices['_volume_quote'] = [price_matrix.volume[-1]]
-    matrices['_price_quote'] = [price_matrix.prices[-1]]
+    matrices[prefix + 'price_matrix'] = price_matrix
+    matrices[prefix + 'volume'] = price_matrix.volume
+    matrices[prefix + 'prices'] = price_matrix.prices
+    matrices[prefix + 'volume_quote'] = [price_matrix.volume[-1]]
+    matrices[prefix + 'price_quote'] = [price_matrix.prices[-1]]
     return matrices
 
 

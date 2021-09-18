@@ -49,6 +49,7 @@ gui = tk.Tk()
 
 config = config('settings')  # Grab our settings.
 
+# noinspection DuplicatedCode
 layout_uninit = layout_parser(  # Get layout widgets.
     config['layout']
 )

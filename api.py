@@ -28,6 +28,7 @@ class GetChart:
         self.feed = None
         self.stamp = None
         self.dummy = None
+        self.alerts = None
 
     def get_chart(self):
         """
@@ -47,6 +48,7 @@ class GetChart:
         if 'chart_data' in data.keys():
             feed_data = data['chart_data']
             price_data = data['price_data']
+            alert_data = data['alert_data']
             pad_to = np.subtract(len(price_data), len(feed_data))
             if pad_to:
                 padding = [feed_data[0]] * pad_to
@@ -54,7 +56,7 @@ class GetChart:
                 feed_data = padding
             for bar in price_data:
                 bar[0] = ticks_to_chart_time(bar[0])
-            self.chart, self.feed = price_data, feed_data
+            self.alerts, self.chart, self.feed = alert_data, price_data, feed_data
         else:
             print('unable to fetch chart data, retrying')
             time.sleep(5)
