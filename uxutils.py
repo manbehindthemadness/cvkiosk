@@ -22,7 +22,7 @@ from PIL import (
     ImageFilter
 )
 
-from pathlib import Path
+# from pathlib import Path
 from utils import percent_of
 from utils import system_command
 from logs import JournalD
@@ -48,7 +48,7 @@ def setup(settings, display_override: str = None):
             log(args)
 
     dbg('starting display setup', '*dbug*')
-    display = settings.display
+    display = settings['display']
     try:
         # This crap is for tunneling the app over ssh
         dbg('setting display variable', '*dbug*')
@@ -59,7 +59,7 @@ def setup(settings, display_override: str = None):
             dbg('configuring xhost', '*dbug*')
             system_command(['/usr/bin/xhost', '+'])
             system_command(['echo', '$DISPLAY'])
-            if 'localhost' not in settings.display:  # This will disable screen blackouts.
+            if 'localhost' not in display:  # This will disable screen blackouts.
                 dbg('configuring display: s off')
                 system_command(['xset', 's', 'off', '-display', display])
                 dbg('configuring display: -dpms off')

@@ -19,14 +19,9 @@ from utils import (
     matrix_parser,
     matrix_sorter,
 )
-# from uxutils import setup
-
-cache = gp.ImgCache().refresh()  # Init the cache.
-config = config('settings')  # Grab our settings.
-gui = tk.Tk()  # Fire up UX root.
+from uxutils import setup
 
 
-# noinspection DuplicatedCode
 class OnScreen:
     """
     This will configure, refresh and draw our user interface.
@@ -54,11 +49,13 @@ class OnScreen:
         '1day': '1D'
     }
 
-    def __init__(self, parent: tk.Tk, image_cache: gp.ImgCache, settings: config):
-        self.parent = parent
-        self.cache = image_cache
-        self.settings = settings
+    def __init__(self):
+        self.parent = tk.Tk()
+        self.cache = gp.ImgCache().refresh()  # Init the cache.
+        self.settings = config('settings')  # Grab our settings.
         self.api = GetChart()
+
+        setup(self.settings)  # Prep environment for display.
 
     def refresh_api(self):
         """

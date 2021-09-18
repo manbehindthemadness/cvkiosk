@@ -287,7 +287,7 @@ def matrix_sorter(price_matrix, matrices: dict, prefix: str = None) -> dict:
         prefix = '_'
     else:
         prefix = '_' + prefix + '_'
-    for coord, matrix in zip(coords, price_matrix.price_matrix):
+    for coord, matrix in zip(coords, np.array(price_matrix.price_matrix)):
         matrices[prefix + coord] = matrix
 
     matrices[prefix + 'price_matrix'] = price_matrix
