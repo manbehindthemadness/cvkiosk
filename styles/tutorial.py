@@ -23,6 +23,7 @@ Be aware that many of the naming conventions for the various parameters here are
     a result of this there is no standard naming convention. This will be corrected in a future build.
 
 EXAMPLE:
+    NOTE: Provide example...
 
 """
 # NOTE: The constants are held in an alternate location by screen properties, these are only here for easy reference.
@@ -60,7 +61,9 @@ style = {
         'volume_ruler_bottom2',
         'tics1',
         'price_ruler',
-        'date_ruler'
+        'date_ruler',
+        'tics2',
+        'schematic',
     ],
     'actor_order': [  # Animate order for moving actors.
         'ticker'
@@ -347,6 +350,37 @@ style = {
             'anchor': 'e',
             'time_increment': 5,
             'use_local_time': True,
+        },
+        'background': {
+            'fill': 'white',
+            'alpha': 0.1
+        }
+    },
+    'tics2': {
+        'coords': (0, 0, 0, 375),
+        'tics': [2, 4, 9],
+        'style': {
+            'fill': 'grey',
+            'anchor': 'e',
+            'width': 1,
+        }
+    },
+    'schematic': {
+        'geometry': '&_price_matrix',
+        'coords': (0, 0),
+        'width': 50,
+        'height': 375,
+        'path_spacing': 20,
+        'path_relief': 15,
+        'pointer_relief': -5,
+        'font': 'Arial 7 normal bold',
+        'linetype': 'line',
+        'style': {
+            'smooth': True,
+            'dash': (1, 2),
+            'arrow': 'last',
+            'arrowshape': (5, 5, 2),
+            'tag_fill': 'grey',
         },
         'background': {
             'fill': 'white',

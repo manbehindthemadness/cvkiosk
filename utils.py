@@ -125,7 +125,6 @@ def evaluate_expression(expression, style: dict, constants: dict):
         lookup_value = list_key_lookup(keys, lookup)
         try:
             formula = sp[1]
-            print(formula)
             if "%" in formula:  # Get percentage.
                 result = percent_of(num(formula), lookup_value)
                 pass
