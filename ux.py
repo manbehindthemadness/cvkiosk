@@ -208,13 +208,13 @@ class OnScreen:
         """
         self.layout.delete('all')
         self.layout.purge()
-        self.price_chart = None
-        self.feed_matrix = None
-        self.price_matrix = None
-        self.feed_chart = None
-        self.alerts = None
-        self.chart_data = None
-        self.matrix_solver = None
+        # self.price_chart = None
+        # self.feed_matrix = None
+        # self.price_matrix = None
+        # self.feed_chart = None
+        # self.alerts = None
+        # self.chart_data = None
+        # self.matrix_solver = None
         self.style = dict(self.base_style)
         return self
 

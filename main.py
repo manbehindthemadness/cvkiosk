@@ -12,5 +12,5 @@ from utils import config
 from ux import OnScreen
 
 config = config('settings')
-oc = OnScreen(debug_mode=True)
+oc = OnScreen()
 oc.run()
