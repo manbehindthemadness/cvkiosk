@@ -13,6 +13,7 @@ import signal
 import time
 import configparser
 import importlib
+import datetime
 from subprocess import Popen, PIPE
 import numpy as np
 
@@ -291,3 +292,11 @@ def matrix_sorter(price_matrix, matrices: dict) -> dict:
     matrices['_volume_quote'] = [price_matrix.volume[-1]]
     matrices['_price_quote'] = [price_matrix.prices[-1]]
     return matrices
+
+
+def ticks_to_chart_time(ticks: int) -> str:
+    """
+    This converts datetime ticks into a timestamp that can be used in our charting files.
+    """
+    stamp = datetime.datetime.now() + datetime.timedelta(microseconds=np.divide(ticks, 10))
+    return stamp.strftime("%Y-%m-%d-%H-%M")
