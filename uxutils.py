@@ -22,7 +22,7 @@ from PIL import (
 )
 
 from pathlib import Path
-from warehouse.math import get_math, percent_of
+from utils import percent_of
 from warehouse.utils import system_command
 from warehouse.logs import JournalD
 from _tkinter import TclError

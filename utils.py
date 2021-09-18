@@ -9,26 +9,68 @@ Please see the license file for more details.
 """
 import os
 import re
+import signal
+import time
 import configparser
 import importlib
+from subprocess import Popen, PIPE
+import numpy as np
 
 WORKING_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__)))
 
 
-def get_math():
+def system_command(params):
     """
-    This imports either numpy or cupy depending on what's around.
-    :return: math module
+    Use this to execute a system level command.
+
+    NOTE: Use with caution.
+    :param params: List of commands and args to execute.
+    :type params: list
+    :return: stout.
+    :rtype: PIPE
     """
-    try:
-        # noinspection PyPackageRequirements
-        import cupy as mm  # This is for brutal math performance in the event we are running on a jetson.
-    except ImportError:
-        import numpy as mm  # This is the standard shit for everything else.
-    return mm
+    process = Popen(params, stdout=PIPE)
+    output, _error = process.communicate()
+    output = output.decode("utf8")
+    return output
 
 
-np = get_math()
+def safelaunch(operation, kwargs, condition: bool):
+    """
+    Safe launches a thread, but skips for development testing based on 'condition'
+    """
+    if condition:
+        operation(**kwargs)
+    else:
+        if __name__ == '__main__':
+            operation(**kwargs)
+
+
+class Term:
+    """
+    This watches for a service termination signal
+    """
+    term = False
+
+    def __init__(self):
+        signal.signal(signal.SIGINT, self.signal)
+        signal.signal(signal.SIGTERM, self.signal)
+
+    # noinspection PyUnusedLocal
+    def signal(self, *args):
+        """
+        Signal callback.
+        """
+        self.term = True
+
+
+def safesleep(sig: Term, duration: int):
+    """
+    A sleep loop that can be terminated with a closure switch
+    """
+    while duration and not sig.term:
+        time.sleep(1)
+        duration -= 1
 
 
 def nparray(lst: [list, np.array]) -> np.array:
@@ -37,7 +79,7 @@ def nparray(lst: [list, np.array]) -> np.array:
     :param lst: List to be converted.
     :return: array
     """
-    def _iter(_lst: list) -> list:  # TODO: We changed this, keep an eye on it.
+    def _iter(_lst: list) -> list:
         """
         This iterates down sublists.
         :param _lst: Sublist.
@@ -45,7 +87,7 @@ def nparray(lst: [list, np.array]) -> np.array:
         if not isinstance(_lst, list):
             _lst = list(lst)
         for idx, item in enumerate(_lst):
-            # Bro, what were we thinking here... This is improper type checking.
+            # This type checking is totally improper, but as only one of these imports exist we are forced...
             if str(type(item)) == "<class 'cupy._core.core.ndarray'>" or str(type(item)) == "<class 'numpy.ndarray'>":
                 _lst[idx] = _iter(item)
         return _lst
