@@ -70,6 +70,25 @@ style = {
         'ticker'
     ],
     # From this point we wil divide this style into sections including the relational configuration respectively.
+    'statbar': {
+        'height': 25,
+        'width': '$_screen_width:100%',
+        'coords': (0, 0),  # Uppr left hand corner.
+        'boarder': 0,
+        'text_color': 'grey',
+        'meter_color_left': "@gp.color_range(0, 100, 'red', 'green')",  # This is an eval statement, it can pass anything in utils.py
+        'meter_color_right': "@gp.color_range(0, 100, 'red', 'green')",
+        'meter_label_left': 'BAT',
+        'meter_label_right': 'WFI',
+        'meter_label_width_left': 30,
+        'meter_label_width_right': 30,
+        'font': 'Arial 7 normal normal',
+        'average': 3,   # This averages the readout across a few samples (useful for noisy sensors).
+        'background': 'white',
+        # NOTE: The number of extra lebels is controlled by the constants as they aill depend on sreen width.
+                # Take care to add the most important data first in the event it's trimmed for a smaller screen.
+                # Also, be sure to populate all the labels so the style will work across all sizes.
+    },
     'candlesticks': {
         # The bar_width will alter the X coordinates of all the price related widgets.
         'geometry': '&_price_matrix',

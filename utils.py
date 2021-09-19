@@ -19,6 +19,8 @@ import random
 from subprocess import Popen, PIPE
 import numpy as np
 
+import graphiend as gp # noqa
+
 WORKING_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__)))
 logging.getLogger().setLevel(logging.INFO)
 
@@ -244,7 +246,7 @@ def evaluate_expression(expression, style: dict, constants: dict):
         if keys[-1][0] == '_':
             lookup = constants
         lookup_value = list_key_lookup(keys, lookup)
-        try:
+        try:  # TODO: We need to add static arithmatic into the base_style as we don't need to process it each redraw.
             formula = sp[1]
             if "%" in formula:  # Get percentage.
                 result = percent_of(num(formula), lookup_value)
@@ -261,8 +263,10 @@ def evaluate_expression(expression, style: dict, constants: dict):
                 result = lookup_value
         except IndexError:
             result = lookup_value
-    elif '@' in str(expression):
+    elif '@' in str(expression):  # TODO: Probably need to evaluate these for security reasons.
         result = eval(expression.replace('@', ''))
+    elif '@@' in str(expression):
+        result = exec(expression.replace('@@', ''))
     return result
 
 
