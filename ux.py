@@ -143,7 +143,7 @@ class OnScreen:
             self.constants
         )
         mstyle = self.style['main']
-        mstyle['_alerts'] = gp.samples.alerts['alert_data']  # Pull sample alert data for the ticker tape.
+        mstyle['_alerts'] = self.alerts  # Pull sample alert data for the ticker tape.
         self.parent.geometry = mstyle['geometry']  # Configure the UX size.
 
         self.base = tk.Frame(
@@ -186,6 +186,7 @@ class OnScreen:
         This will configure the widgets with our new style information.
         """
         self.layout.configure_widgets(self.style)
+        self.layout.configure_actors()
         return self
 
     def draw(self):

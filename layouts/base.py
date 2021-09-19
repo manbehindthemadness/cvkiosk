@@ -142,8 +142,5 @@ class Layout(gp.Diagram):
         """
         self.style = None
         for asset in self.assets:
-            # try:
             asset.burn_all()  # This is going to need some compat.
-            # except AttributeError:
-            #     pass
         return self
