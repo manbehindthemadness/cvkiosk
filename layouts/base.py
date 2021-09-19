@@ -143,4 +143,5 @@ class Layout(gp.Diagram):
         self.style = None
         for asset in self.assets:
             asset.burn_all()  # This is going to need some compat.
+        # TODO: Reset actors here.
         return self

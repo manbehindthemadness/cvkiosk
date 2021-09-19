@@ -111,6 +111,7 @@ class OnScreen:
         """
         This updates the price and volume matrices in our style so it can bbe passed to the widgets.
         """
+        self.style['main']['_alerts'] = self.alerts  # Pull sample alert data for the ticker tape.
         self.matrices = dict()
         self.price_matrix = self.solve_matrices(self.price_chart)
         self.feed_matrix = self.solve_matrices(self.feed_chart, 'feed')
@@ -143,7 +144,7 @@ class OnScreen:
             self.constants
         )
         mstyle = self.style['main']
-        mstyle['_alerts'] = self.alerts  # Pull sample alert data for the ticker tape.
+        # mstyle['_alerts'] = self.alerts  # Pull sample alert data for the ticker tape.
         self.parent.geometry = mstyle['geometry']  # Configure the UX size.
 
         self.base = tk.Frame(
