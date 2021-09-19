@@ -67,6 +67,7 @@ style = {
         'schematic',
     ],
     'actor_order': [  # Animate order for moving actors.
+        'statbar',
         'ticker'
     ],
     # From this point we wil divide this style into sections including the relational configuration respectively.
@@ -74,20 +75,23 @@ style = {
         'height': 25,
         'width': '$_screen_width:100%',
         'coords': (0, 0),  # Uppr left hand corner.
-        'boarder': 0,
-        'text_color': 'grey',
-        'meter_color_left': "@gp.color_range(0, 100, 'red', 'green')",  # This is an eval statement, it can pass anything in utils.py
-        'meter_color_right': "@gp.color_range(0, 100, 'red', 'green')",
-        'meter_label_left': 'BAT',
-        'meter_label_right': 'WFI',
-        'meter_label_width_left': 30,
-        'meter_label_width_right': 30,
-        'font': 'Arial 7 normal normal',
+        'border': 0,
+        'text_color': 'black',
+        'meter_colors_left': "@gp.color_range(0, 100, 'red', 'green')",  # This is an eval statement, it can pass anything in utils.py
+        'meter_colors_right': "@gp.color_range(0, 100, 'red', 'green')",
+        'meter_label_width_left': 50,
+        'meter_label_width_right': 50,
+        'meter_background': 'white',
+        'font': 'Arial 9 normal bold',
         'average': 3,   # This averages the readout across a few samples (useful for noisy sensors).
         'background': 'white',
         # NOTE: The number of extra lebels is controlled by the constants as they aill depend on sreen width.
                 # Take care to add the most important data first in the event it's trimmed for a smaller screen.
                 # Also, be sure to populate all the labels so the style will work across all sizes.
+        'extra_labels': '$_extra_labels',
+        'labels': '$_labels',
+        'vars': '$_stat_variables',
+        'text': '$_stat_text',
     },
     'candlesticks': {
         # The bar_width will alter the X coordinates of all the price related widgets.
@@ -109,7 +113,7 @@ style = {
         'smooth': 5,  # Smooths average out the measurements.
         'lineinterpol': 3,  # Linear interpolation adds points and then rounds off the edges.
         'offset': 250,
-        'padding': (47, 47, 0, 0),  # left, right, top, bottom.
+        'padding': (46, 46, 0, 0),  # left, right, top, bottom.
         'alpha': 0.2,  # Transparency.
         'alphamask': True,  # Transparency following a gradient.
         'aa': (10, 0)  # Antialiasing (sample_size, passes).
@@ -123,7 +127,7 @@ style = {
         'smooth': 1,
         'lineinterpol': 2,
         'offset': 320,
-        'padding': (47, 47, 0, 0),  # left, right, top, bottom.
+        'padding': (46, 46, 0, 0),  # left, right, top, bottom.
         'alpha': 0.6,
         'aa': (10, 0)
     },
@@ -244,7 +248,7 @@ style = {
             'quotetextcolor': 'grey',
             'quoteheight': 6,
             'quoteoffset': 3,
-            'outlinestyle': (0, 0, 0, 1),  # left, right, top, bottom.
+            'outlinestyle': (0, 0, 1, 1),  # left, right, top, bottom.
         },
         'background': {
             'fill': 'white',
@@ -280,7 +284,7 @@ style = {
     'volume_ruler_bottom2': {
         'geometry': '&_price_matrix',
         'coords': (450, 300),
-        'height': 50,
+        'height': 48,
         'width': 50,
         'price_range': '&_volume',
         'quotes': '&_volume_quote',
@@ -296,7 +300,7 @@ style = {
             'quotetextcolor': 'grey',
             'quoteheight': 6,
             'quoteoffset': 3,
-            'outlinestyle': (0, 0, 1, 0),  # left, right, top, bottom.
+            'outlinestyle': (0, 0, 1, 1),  # left, right, top, bottom.
         },
         'background': {
             'fill': 'white',
@@ -307,7 +311,7 @@ style = {
         'coords': (450, 35, 450, 190),  # top x, y, bottom x, y
         'tics': [2, 4, 9],
         'style': {
-            'fill': 'white',
+            'fill': 'grey',
             'anchor': 'w',
             'width': 1,
         }
