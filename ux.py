@@ -247,30 +247,33 @@ class OnScreen:
         self.parent.mainloop()
         return self
 
-    def purge(self):
+    def purge(self, prep: bool = False):
         """
         Removes all our variables in order to redraw.
         """
-        self.layout.delete('all')
-        self.layout.purge()
-        self.price_chart = None
-        self.feed_matrix = None
-        self.price_matrix = None
-        self.feed_chart = None
-        self.alerts = None
-        self.chart_data = None
-        self.matrix_solver = None
-        self.style = dict(self.base_style)
+        if prep:  # TODO: This will need to be evaluated to maximize our redraw speeds.
+            self.price_chart = None
+            self.feed_matrix = None
+            self.price_matrix = None
+            self.feed_chart = None
+            self.alerts = None
+            self.chart_data = None
+            self.matrix_solver = None
+            self.style = dict(self.base_style)
+            self.layout.purge()
+        else:
+            self.layout.delete('all')
         return self
 
     def refresh(self):
         """
         This will refresh our chart data.
         """
-        self.purge()
+        self.purge(prep=True)
         self.refresh_api()  # Launching this here will fire off the api twice really fast.... need to fix this.
         self.update_style_matrices()
         self.configure()
+        self.purge()
         self.draw()  # Test to see if we are properly clearing the images.
 
     def cycle(self):

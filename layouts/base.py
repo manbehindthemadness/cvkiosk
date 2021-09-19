@@ -15,6 +15,7 @@ In the style dictionary we will pass visual configurations key-named to their re
 import tkinter as tk
 import graphiend as gp
 from utils import config
+from widgets import StatBar
 
 
 class Layout(gp.Diagram):
@@ -78,6 +79,7 @@ class Layout(gp.Diagram):
 
         # Widgets attached to parent (stuff attached to the master frame).
 
+        self.statbar = StatBar(self.parent)
         self.ticker = gp.TickerTape(parent, cache)
         self.header_bar = tk.Frame(self.parent)
         self.footer_bar = tk.Frame(self.parent)
@@ -144,5 +146,4 @@ class Layout(gp.Diagram):
         self.style = None
         for asset in self.assets:
             asset.burn_all()  # This is going to need some compat.
-        # TODO: Reset actors here.
         return self
