@@ -88,7 +88,8 @@ class Layout(gp.Diagram):
         """
         This will take our style and use it to set up all of our widgets.
         """
-        self.place(x=0, y=0)
+        x, y = style['main']['price_canvas_offset_coord']
+        self.place(x=x, y=y)
         self.update()
         width, height = self.winfo_width(), self.winfo_height()
         self.style = style

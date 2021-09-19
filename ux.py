@@ -144,7 +144,6 @@ class OnScreen:
             self.constants
         )
         mstyle = self.style['main']
-        # mstyle['_alerts'] = self.alerts  # Pull sample alert data for the ticker tape.
         self.parent.geometry = mstyle['geometry']  # Configure the UX size.
 
         self.base = tk.Frame(

@@ -38,10 +38,11 @@ style = {
         'style_name': 'tutorial',  # Name style for organization.
         # Configure global settings in relation to screen size and what have you.
         'geometry': "$_screen_size:",  # This is our screen size.
+        'price_canvas_offset_coord': (0, 25),  # This is the coordinate of the upper left cornet of the price canvas.
         'price_canvas_width': '$_screen_width:100%',  # The size of the graphiend canvas.
-        'price_canvas_height': '$_screen_height:25-',
+        'price_canvas_height': '$_screen_height:50-',
         # This scales the candlestick matrix in order to make room for the other widgets.
-        'price_matrix_offsets': (50, 50, 35, 150),  # left, right, top, bottom.
+        'price_matrix_offsets': (50, 50, 35, 155),  # left, right, top, bottom.
         'price_increment': 8,  # The width of one candlestick in pixels.
         'background': 'white',
     },
@@ -88,7 +89,7 @@ style = {
         'outline': 'white',
         'smooth': 5,  # Smooths average out the measurements.
         'lineinterpol': 3,  # Linear interpolation adds points and then rounds off the edges.
-        'offset': 275,
+        'offset': 250,
         'padding': (47, 47, 0, 0),  # left, right, top, bottom.
         'alpha': 0.2,  # Transparency.
         'alphamask': True,  # Transparency following a gradient.
@@ -102,8 +103,8 @@ style = {
         'tb': 't',
         'smooth': 1,
         'lineinterpol': 2,
-        'offset': 345,
-        'padding': (47, 47, 0, 0),
+        'offset': 320,
+        'padding': (47, 47, 0, 0),  # left, right, top, bottom.
         'alpha': 0.6,
         'aa': (10, 0)
     },
@@ -112,7 +113,7 @@ style = {
         'height': 75,
         'top': 200,
         'bottom': 200,
-        'offset': 100,
+        'offset': 75,
         'alpha': 0.7,
         'aa': (10, 0),
         'color1': 'green',
@@ -224,7 +225,7 @@ style = {
             'quotetextcolor': 'grey',
             'quoteheight': 6,
             'quoteoffset': 3,
-            'outlinestyle': (0, 0, 0, 1),
+            'outlinestyle': (0, 0, 0, 1),  # left, right, top, bottom.
         },
         'background': {
             'fill': 'white',
@@ -233,7 +234,7 @@ style = {
     },
     'volume_ruler_bottom1': {
         'geometry': '&_price_matrix',
-        'coords': (450, 275),
+        'coords': (450, 250),
         'height': 50,
         'width': 50,
         'price_range': '&_volume',
@@ -250,7 +251,7 @@ style = {
             'quotetextcolor': 'grey',
             'quoteheight': 6,
             'quoteoffset': 3,
-            'outlinestyle': (0, 0, 1, 0),
+            'outlinestyle': (0, 0, 1, 0),  # left, right, top, bottom.
         },
         'background': {
             'fill': 'white',
@@ -259,7 +260,7 @@ style = {
     },
     'volume_ruler_bottom2': {
         'geometry': '&_price_matrix',
-        'coords': (450, 325),
+        'coords': (450, 300),
         'height': 50,
         'width': 50,
         'price_range': '&_volume',
@@ -276,7 +277,7 @@ style = {
             'quotetextcolor': 'grey',
             'quoteheight': 6,
             'quoteoffset': 3,
-            'outlinestyle': (0, 0, 1, 0),
+            'outlinestyle': (0, 0, 1, 0),  # left, right, top, bottom.
         },
         'background': {
             'fill': 'white',
@@ -284,10 +285,10 @@ style = {
         }
     },
     'tics1': {
-        'coords': (450, 35, 450, 215),
+        'coords': (450, 35, 450, 190),  # top x, y, bottom x, y
         'tics': [2, 4, 9],
         'style': {
-            'fill': 'grey',
+            'fill': 'white',
             'anchor': 'w',
             'width': 1,
         }
@@ -295,7 +296,7 @@ style = {
     'price_ruler': {
         'geometry': '&_price_matrix',
         'coords': (450, 35),
-        'height': 185,
+        'height': 160,
         'width': 50,
         'price_range': '&_prices',
         'quotes': '&_price_quote',
@@ -313,7 +314,7 @@ style = {
             'quotetextcolor': None,
             'quoteheight': 7,
             'quoteoffset': -7,
-            'outlinestyle': (0, 0, 0, 1),
+            'outlinestyle': (0, 0, 0, 1),  # left, right, top, bottom.
             'anchor': 'ne',
         },
         'background': {
@@ -323,7 +324,7 @@ style = {
     },
     'date_ruler': {
         'geometry': '&_price_matrix',
-        'coords': (450, 220),
+        'coords': (450, 195),
         'time_coord': 50,
         'height': 50,
         'width': 50,
@@ -342,8 +343,8 @@ style = {
             'markerstyle': 'default',
             'markersize': 10,
             'linethickness': 1,
-            'outlinestyle': (0, 0, 0, 0),
-            'timeoutlinestyle': (0, 0, 1, 0),
+            'outlinestyle': (0, 0, 0, 0),  # left, right, top, bottom (of the quote box).
+            'timeoutlinestyle': (0, 0, 1, 0),  # left, right, top, bottom (of the date ruler).
             'timeoutline_extras': {'dash': (1, 1)},
             'quoteoffset': 6,
             'quotetextcolor': 'grey',
@@ -357,7 +358,7 @@ style = {
         }
     },
     'tics2': {
-        'coords': (50, 0, 50, 375),
+        'coords': (50, 0, 50, 350),
         'tics': [2, 4, 9],
         'style': {
             'fill': 'grey',
@@ -369,7 +370,7 @@ style = {
         'geometry': '&_price_matrix',
         'coords': (0, 0),
         'width': 50,
-        'height': 375,
+        'height': 350,
         'path_spacing': 20,
         'path_relief': 15,
         'pointer_relief': -5,
