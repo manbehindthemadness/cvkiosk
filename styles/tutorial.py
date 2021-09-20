@@ -390,7 +390,7 @@ style = {
         'geometry': '&_price_matrix',
         'coords': (0, 0),
         'width': 50,
-        'height': 350,
+        'height': 349,
         'path_spacing': 20,
         'path_relief': 15,
         'pointer_relief': -5,
@@ -402,6 +402,9 @@ style = {
             'arrow': 'last',
             'arrowshape': (5, 5, 2),
             'tag_fill': 'grey',
+            'outlinestyle': (0, 0, 1, 1),
+            'linecolor': 'grey',
+            'linethickness': 1,
         },
         'background': {
             'fill': 'white',
