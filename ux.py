@@ -50,7 +50,8 @@ class OnScreen:
         'BAT': int(),
         'FGI': int(),
         'UTC': int(),
-        'QUO': int()
+        'QUO': int(),
+        'REF': int(),
     }
 
     timeframes = {
@@ -140,11 +141,16 @@ class OnScreen:
         """
         This is where we will iterate through the layout.labels dict and pass the statbar variables.
         We can loop this method in an alternate thread for faster updates.
+
+        THIS IS SETUP FOR TESTING AND NEEDS REAL VARIABLES.
         """
         self.statvars['WFI'] = random.randint(50, 100)  # TODO: For testing only
         self.statvars['BAT'] = random.randint(50, 100)
         for var in self.statvars:
-            if var in self.layout.labels.keys():
+            if var in self.layout.labels.keys() and var not in ['WFI', 'BAT']:
+                rnd = var + ': ' + str(random.randint(50, 100))  # noqa
+                exec('self.layout.statbar.' + var + '.set(rnd)')
+            elif var in self.layout.labels.keys() and var in ['WFI', 'BAT']:
                 self.layout.labels[var].set(self.statvars[var])
         self.layout.statbar.refresh()
         return self
