@@ -304,9 +304,9 @@ style = {
             'alpha': 0.1
         }
     },
-    'tics1': {
+    'tics1': {  # These are the little ruler ticks that run down the edges.
         'coords': (450, 35, 450, 190),  # top x, y, bottom x, y
-        'tics': [2, 4, 9],
+        'tics': [2, 4, 9],  # shorts, longs, increment.
         'style': {
             'fill': 'grey',
             'anchor': 'w',
@@ -377,25 +377,25 @@ style = {
             'alpha': 0.1
         }
     },
-    'tics2': {
-        'coords': (50, 0, 50, 350),
-        'tics': [2, 4, 9],
+    'tics2': {  # These are the little ruler ticks that run down the edges.
+        'coords': (49, 0, 49, 350),  # top x, y, bottom x, y
+        'tics': [2, 4, 9],  # shorts, longs, increment.
         'style': {
             'fill': 'grey',
             'anchor': 'e',
             'width': 1,
         }
     },
-    'schematic': {
+    'schematic': {  # This is where all the fancy pointer lines go to show information.
         'geometry': '&_price_matrix',
         'coords': (0, 0),
         'width': 50,
         'height': 349,
-        'path_spacing': 20,
-        'path_relief': 15,
-        'pointer_relief': -5,
+        'path_spacing': 20,  # This is how close the lines are allowed to get to one another.
+        'path_relief': 5,  # Distance from the target pointer to the start of the line.
+        'pointer_relief': -5,  # Distance between line end and the ruler.
         'font': 'Arial 7 normal bold',
-        'linetype': 'line',
+        'linetype': 'line',  # More options to come in the future.
         'style': {
             'smooth': True,
             'dash': (1, 2),
