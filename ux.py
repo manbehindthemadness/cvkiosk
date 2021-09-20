@@ -44,9 +44,9 @@ class OnScreen:
     chart_data = None
     matrix_solver = None
     delay = None
-    meter_vars = list()
-    labels = list()
-    meter_text = None
+    # meter_vars = list()
+    # labels = list()
+    # meter_text = None
 
     timeframes = {
         '15minute': '15M',
@@ -143,47 +143,9 @@ class OnScreen:
             self.settings['constants'],
         )
 
-        # Get the values for the stat bar.
-
-        self.meter_vars = list()
-        self.labels = list()  # minus the left and right stat meter.
-        extras = np.add(self.constants['_extra_labels'], 2)  # Add 2 to account for the battery ans wifi meters.
-        if extras > 10:
-            raise ValueError
-        for idx in range(0, extras):
-            if idx < 2:
-                self.meter_vars.append(tk.IntVar())
-            else:
-                self.meter_vars.append(tk.StringVar())
-            self.labels.append(tk.Label())
-
-        self.meter_text = [
-            'BAT',
-            'WFI',
-            'fgi',
-            'quo',
-            'ext',
-            'ext',
-            'ext',
-            'ext',
-            'ext',
-            'ext',
-        ]
-        # TODO: Remove after testing.
-        self.meter_vars[0].set(75)
-        self.meter_vars[1].set(75)
-        for tvar, txt in zip(self.meter_vars[2:], self.meter_text[2:]):
-            tvar.set(txt)
-
-        self.constants.update({
-            '_labels': self.labels,
-            '_stat_variables': self.meter_vars,
-            '_stat_text': self.meter_text,
-        })
-
-        self.style = style_parser(  # Get style sheet.
-            'tutorial',  # TODO: THis has to come from config.
-            self.constants
+        self.style = style_parser(
+            self.settings['style'],  # Get style sheet.
+            self.constants  # Get style constants.
         )
 
         mstyle = self.style['main']

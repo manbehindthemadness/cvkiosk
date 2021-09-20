@@ -25,6 +25,9 @@ class Layout(gp.Diagram):
     style = dict()
     data = dict()
 
+    widgets = list()
+    labels = dict()
+
     def __init__(self, parent: tk.Frame, cache: gp.ImgCache, settings: config):
         """
         Basically we are going to init all the visual elements we plan to use here and just call them when needed.
@@ -79,7 +82,7 @@ class Layout(gp.Diagram):
 
         # Widgets attached to parent (stuff attached to the master frame).
 
-        self.statbar = StatBar(self.parent)
+        self.statbar = StatBar(self.parent, self)
         self.ticker = gp.TickerTape(parent, cache)
         self.header_bar = tk.Frame(self.parent)
         self.footer_bar = tk.Frame(self.parent)
@@ -90,6 +93,16 @@ class Layout(gp.Diagram):
         """
         This will take our style and use it to set up all of our widgets.
         """
+        self.labels.update({
+            'BAT': tk.IntVar(),
+            'WFI': tk.IntVar()
+        })
+
+        # TODO: Remove after testing.
+        import random
+        for var in self.labels:
+            self.labels[var].set(random.randint(10, 90))
+
         x, y = style['main']['price_canvas_offset_coord']
         self.place(x=x, y=y)
         self.update()
@@ -98,7 +111,7 @@ class Layout(gp.Diagram):
         self.assets = list()
         inventory = self.__dict__.keys()
         for asset in style:
-            if asset in inventory and asset in style['asset_order']:
+            if asset in inventory and asset in style['asset_order'] and asset in self.widgets:
                 cmd = 'self.' + asset
                 self.asset = eval(cmd)
                 self.asset.canvas_width = width
@@ -114,7 +127,7 @@ class Layout(gp.Diagram):
         self.actors = list()
         inventory = self.__dict__.keys()
         for actor in self.style:
-            if actor in inventory and actor in self.style['actor_order']:
+            if actor in inventory and actor in self.style['actor_order'] and actor in self.widgets:
                 cmd = 'self.' + actor
                 self.actor = eval(cmd)
                 self.actor.build_content(

@@ -19,3 +19,30 @@ class Format(Layout):
     """
     def __init__(self, parent: tk.Frame, cache: gp.ImgCache, settings: config):
         Layout.__init__(self, parent, cache, settings)
+        self.widgets = [  # This is the list of included widgets for this layout,
+            'smoothi_bottom',
+            'smoothi_top',
+            'volume',
+            'top_arrows',
+            'bottom_arrows',
+            'candlesticks',
+            'icing_top',
+            'icing_bottom',
+            'onions1',
+            'points1',
+            'volume_ruler_top',
+            'volume_ruler_bottom1',
+            'volume_ruler_bottom2',
+            'tics1',
+            'price_ruler',
+            'date_ruler',
+            'tics2',
+            'schematic',
+            'statbar',
+            'ticker'
+        ]
+        self.labels = {  # This specifies the extra labels to be included in the statbar.
+            'FGI': tk.StringVar(),
+            'UTC': tk.StringVar(),
+            'REFRESH': tk.StringVar(),
+        }

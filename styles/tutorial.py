@@ -22,6 +22,11 @@ in this instance we will get a calculated value of 100% of the screen width. The
 Be aware that many of the naming conventions for the various parameters here are defined by third party logic and
     a result of this there is no standard naming convention. This will be corrected in a future build.
 
+**IMPORTANT**: In order for a widget to be drawn on screen it needs to have the following:
+                1. A style entry matching it's name.
+                2. An entry in either asset_order or actor_order.
+                3. an entry in the layouts.widgets array.
+
 EXAMPLE:
     NOTE: Provide example...
 
@@ -85,13 +90,6 @@ style = {
         'font': 'Arial 9 normal bold',
         'average': 3,   # This averages the readout across a few samples (useful for noisy sensors).
         'background': 'white',
-        # NOTE: The number of extra lebels is controlled by the constants as they aill depend on sreen width.
-                # Take care to add the most important data first in the event it's trimmed for a smaller screen.
-                # Also, be sure to populate all the labels so the style will work across all sizes.
-        'extra_labels': '$_extra_labels',
-        'labels': '$_labels',
-        'vars': '$_stat_variables',
-        'text': '$_stat_text',
     },
     'candlesticks': {
         # The bar_width will alter the X coordinates of all the price related widgets.

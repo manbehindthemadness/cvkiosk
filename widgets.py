@@ -24,14 +24,13 @@ class StatBar(tk.Frame):
     w_lab = None
     b_var = tk.IntVar()
     b_lab = None
-    vars = None
-    text = None
     labels = None
     show_labels = None
 
-    def __init__(self, parent: tk.Frame):
+    def __init__(self, parent: tk.Frame, base):
         tk.Frame.__init__(self, parent)
         self.parent = parent
+        self.base = base
         self.b_meter = gp.StatBar(self)
         self.w_meter = gp.StatBar(self)
         self.l_frame = tk.Frame(self)
@@ -45,10 +44,7 @@ class StatBar(tk.Frame):
         if self.init:
             s = self.style = style
 
-            self.vars = s['vars']
-            self.labels = s['labels']
-            self.text = s['text']
-            self.show_labels = s['extra_labels']
+            self.labels = self.base.labels  # noqa
 
             x, y = s['coords']
             self.configure(
@@ -61,7 +57,7 @@ class StatBar(tk.Frame):
                 width=s['width'],
                 height=s['height']
             )
-            d_width = np.divide(s['width'], len(self.vars))
+            d_width = np.divide(s['width'], np.add(len(self.labels), 2))
             self.b_meter.params(  # Battery meter.
                 width=d_width,
                 height=s['height'],
@@ -71,8 +67,8 @@ class StatBar(tk.Frame):
                 border=s['border'],
                 meter_colors=s['meter_colors_left'],
                 meter_border=s['border'],
-                meter_var=self.vars[0],
-                meter_label=self.text[0],
+                meter_var=self.labels['BAT'],
+                meter_label='BAT',
                 meter_label_width=s['meter_label_width_left'],
                 font_override=s['font'],
                 average_samples=s['average']
@@ -83,7 +79,7 @@ class StatBar(tk.Frame):
                 width=d_width,
                 height=s['height'],
             )
-            w_x = np.multiply(d_width, np.subtract(len(self.vars), 1))
+            w_x = np.multiply(d_width, np.add(len(self.labels), 1))
             self.w_meter.params(  # Wifi Meter.
                 mirror=True,
                 width=d_width,
@@ -94,8 +90,8 @@ class StatBar(tk.Frame):
                 border=s['border'],
                 meter_colors=s['meter_colors_right'],
                 meter_border=s['border'],
-                meter_var=self.vars[1],
-                meter_label=self.text[1],
+                meter_var=self.labels['WFI'],
+                meter_label='WFI',
                 meter_label_width=s['meter_label_width_right'],
                 font_override=s['font'],
                 average_samples=s['average']
