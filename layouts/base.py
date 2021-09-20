@@ -93,15 +93,10 @@ class Layout(gp.Diagram):
         """
         This will take our style and use it to set up all of our widgets.
         """
-        self.labels.update({
+        self.labels.update({  # These are the static wifi and battery meters.
             'BAT': tk.IntVar(),
             'WFI': tk.IntVar()
         })
-
-        # TODO: Remove after testing.
-        import random
-        for var in self.labels:
-            self.labels[var].set(random.randint(10, 90))
 
         x, y = style['main']['price_canvas_offset_coord']
         self.place(x=x, y=y)

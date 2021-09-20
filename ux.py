@@ -44,9 +44,14 @@ class OnScreen:
     chart_data = None
     matrix_solver = None
     delay = None
-    # meter_vars = list()
-    # labels = list()
-    # meter_text = None
+
+    statvars = {
+        'WFI': int(),
+        'BAT': int(),
+        'FGI': int(),
+        'UTC': int(),
+        'QUO': int()
+    }
 
     timeframes = {
         '15minute': '15M',
@@ -129,6 +134,27 @@ class OnScreen:
                 '_triggers6': test_o_random(self.matrices['_cu'], 5),
             })
         self.style = matrix_parser(self.style, self.matrices)
+        return self
+
+    def update_variables(self):
+        """
+        This is where we will iterate through the layout.labels dict and pass the statbar variables.
+        We can loop this method in an alternate thread for faster updates.
+        """
+        self.statvars['WFI'] = random.randint(10, 90)  # TODO: For testing only
+        self.statvars['BAT'] = random.randint(10, 90)
+        for var in self.statvars:
+            if var in self.layout.labels.keys():
+                self.layout.labels[var].set(self.statvars[var])
+        self.layout.statbar.refresh()
+        return self
+
+    def cycle_variables(self):
+        """
+        This is the statbar refresh loop.
+        """
+        self.update_variables()
+        self.parent.after(self.settings['stats_refresh'], self.cycle_variables)
         return self
 
     def parse(self):
@@ -237,6 +263,7 @@ class OnScreen:
         self.configure()
         self.purge()
         self.draw()  # Test to see if we are properly clearing the images.
+        return self
 
     def cycle(self):
         """
@@ -245,8 +272,8 @@ class OnScreen:
         if not self.delay:
             self.delay = int(np.multiply(np.multiply(self.settings['update_time'], 60), 1000))
         self.refresh()
-        print('refreshing!', self.style['main']['_price_quote'])
         self.parent.after(self.delay, self.cycle)
+        return self
 
     def run(self):
         """
@@ -256,4 +283,6 @@ class OnScreen:
         self.cycle()
         self.layout.configure_actors()
         self.layout.animate_actors()
+        self.cycle_variables()
         self.mainloop()
+        return self
