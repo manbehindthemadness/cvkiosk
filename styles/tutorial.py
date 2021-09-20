@@ -48,7 +48,7 @@ style = {
         'price_canvas_height': '$_screen_height:50-',
         # This scales the candlestick matrix in order to make room for the other widgets.
         'price_matrix_offsets': (50, 50, 35, 155),  # left, right, top, bottom.
-        'price_increment': 6,  # The width of one candlestick in pixels.
+        'price_increment': 4,  # The width of one candlestick in pixels.
         'background': 'white',
     },
     'asset_order': [  # This is our draw_order widgets will be drawn starting with the farthest back into the foreground.

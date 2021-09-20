@@ -60,7 +60,7 @@ class StatBar(tk.Frame):
             width=s['width'],
             height=s['height']
         )
-        d_width = np.divide(s['width'], np.add(len(self.base.labels), 2))
+        d_width = int(np.divide(s['width'], len(self.base.labels)))
         self.b_meter.params(  # Battery meter.
             width=d_width,
             height=s['height'],
@@ -81,7 +81,7 @@ class StatBar(tk.Frame):
             width=d_width,
             height=s['height'],
         )
-        w_x = np.multiply(d_width, np.add(len(self.base.labels), 1))
+        w_x = int(np.multiply(d_width, np.add(len(self.base.labels), -1)))
         self.w_meter.params(  # Wifi Meter.
             mirror=True,
             width=d_width,
@@ -103,13 +103,35 @@ class StatBar(tk.Frame):
             width=d_width,
             height=s['height'],
         )
+        for idx, label in enumerate(self.base.labels):
+            if label not in ['WFI', 'BAT']:
+                exec('self.' + label + ' = tk.StringVar()')
+                exec('self.' + label + '.set("' + label + ': 0")')
+
+                lbl = tk.Label(self)
+                lbl.configure(
+                    bg=s['background'],
+                    fg=s['text_color'],
+                    font=s['font'],
+                    border=s['border'],
+                    width=d_width,
+                    height=s['height'],
+                    textvar=eval('self.' + label)
+                )
+                x = int(np.multiply(d_width, np.add(idx, 1)))
+                lbl.place(
+                    x=x,
+                    y=y,
+                    width=d_width,
+                    height=s['height'],
+                )
+                exec('self.' + label + '_label = lbl')
         return self
 
     def refresh(self):
         """
         This will refresh our contents.
         """
-        # print('statbar refreshing')
         for sbar in self.statbars:
             sbar.refresh()
 
