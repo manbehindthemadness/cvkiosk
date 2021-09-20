@@ -48,7 +48,7 @@ class StatBar(tk.Frame):
         if self.init:
             s = self.style = style
 
-            # self.labels = self.base.labels  # noqa
+            self.labels = self.base.labels  # noqa
 
             x, y = s['coords']
             self.configure(
@@ -120,8 +120,5 @@ class StatBar(tk.Frame):
         """
         This is a dummy so we work with the layout main logic.
         """
-        print('passed labels')
-        for label in self.base.labels:
-            print(label, self.base.labels[label].get())
         return self
 

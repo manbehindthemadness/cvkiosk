@@ -141,8 +141,8 @@ class OnScreen:
         This is where we will iterate through the layout.labels dict and pass the statbar variables.
         We can loop this method in an alternate thread for faster updates.
         """
-        self.statvars['WFI'] = random.randint(10, 90)  # TODO: For testing only
-        self.statvars['BAT'] = random.randint(10, 90)
+        self.statvars['WFI'] = random.randint(50, 100)  # TODO: For testing only
+        self.statvars['BAT'] = random.randint(50, 100)
         for var in self.statvars:
             if var in self.layout.labels.keys():
                 self.layout.labels[var].set(self.statvars[var])
