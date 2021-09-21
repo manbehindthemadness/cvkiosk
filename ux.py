@@ -90,7 +90,7 @@ class OnScreen:
             self.alerts = gp.samples.alerts
         return self
 
-    def solve_matrices(self, matrix: [list, np.array], prefix: str = None, extras: bool = False) -> np.array:
+    def solve_matrices(self, matrix: [list, np.array], prefix: str = None) -> np.array:
         """
         This will convert price data into sweet sweet pixels.
 
@@ -140,7 +140,9 @@ class OnScreen:
             })
 
         self.filters.configure(self.feed_matrix)
-        self.filters.normalize(self.feed_matrix.adjusted_price_points, 30, 9)
+        normal = self.filters.normalize(self.feed_matrix.adjusted_price_points, 30, 9)
+        self.filters.zero_point(self.feed_matrix.adjusted_price_points, 1)
+        self.filters.trender(normal)
         self.style = self.filters.style
 
         self.style = matrix_parser(self.style, self.matrices)

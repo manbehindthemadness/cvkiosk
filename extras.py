@@ -23,6 +23,7 @@ class Filters:
     """
     matrix = None
     vrange = None
+    polarity = None
 
     def __init__(self, style: dict):
         self.style = style
@@ -67,7 +68,6 @@ class Filters:
         name = '_ema_' + str(spread)
         average = self.inkeys(name)
         if isinstance(average, NoneType):
-            # average = self.trim(points)
             average = points
             average = gp.smooth_y(np.array(average), spread)
             self.mstyle[name] = average
@@ -86,3 +86,89 @@ class Filters:
             normal[1::2] = np.subtract(normal[1::2], ema[1::2])
             self.mstyle[name] = normal
         return np.array(normal)
+
+    def find_polarity(self, points: np.array):
+        """
+        Merely discovers if we are moving isn a positive or negitive direction.
+        """
+        self.polarity = list()
+        for idx, point in enumerate(points):
+            if not idx:  # Skip the first iteration.
+                pass
+            else:
+                ls = np.subtract(idx, 1)
+                last = np.abs(points[ls])
+                this = np.abs(point)
+                polarity = 1
+                if last > this:
+                    polarity = 0
+                self.polarity.append(polarity)
+        return self
+
+    def zero_point(
+            self, points: np.array,
+            trigger_point: [int, float],
+    ) -> np.array:
+        """
+        This makes a volatility graph that starts at plus or minus the trigger point and
+            spikes the closer we get to zero.
+            This doesn't work at all... and I think I am going to table it until the next release.
+        """
+
+        xs = np.array(points[0::2])
+        ys = [0]
+        yt = np.array(points[1::2])
+        last_nonzero = np.add(trigger_point, 1)  # Use this to prevent zerodivision.
+        for idx, point in enumerate(yt):
+            if not idx:  # Skip the first iteration.
+                pass
+            else:
+                pt = 0
+                ls = np.subtract(idx, 1)
+                last = np.abs(yt[ls])
+                this = np.abs(point)
+                lr = [last, this]
+                mx, mn = np.amax(lr), np.amin(lr)
+                drift = np.subtract(mx, mn)
+                if drift <= trigger_point:
+                    if not drift:
+                        drift = 0.1
+                    if drift > 0:
+                        pt = np.divide(trigger_point, drift)
+                        if pt > trigger_point:
+                            pt = trigger_point
+                        last_nonzero = pt
+                # print('point', pt, 'drift', drift, 'this', this, 'last', last)
+                if not pt:
+                    pt = last_nonzero
+                ys.append(pt)
+        result = np.concatenate(np.transpose([
+            xs,
+            ys
+        ]))
+
+        self.find_polarity(np.array(result[1::2]))
+        name = '_zero_point_' + str(trigger_point)
+        self.style['main'][name] = result
+        return result
+
+    def trender(self, points:np.array) -> np.array:
+        """
+        This identifies the trend cycle direction of the supplied points.
+        """
+        ys = [0]
+        points = np.array(points)
+        pts = points[1::2]
+        for idx, point in enumerate(pts):
+            if not idx:
+                pass
+            else:
+                ls = np.subtract(idx, 1)
+                last = pts[ls]
+                pt = 0
+                if last < point:
+                    pt = 1
+                ys.append(pt)
+        name = '_trend'
+        self.style['main'][name] = ys
+        return ys
