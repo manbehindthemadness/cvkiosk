@@ -8,6 +8,9 @@ Please see the license file for more details.
 ------------------------------------------------------------------------------------------------------------------------
 This file is where we store various price and chart post processing utilities,
     think of it as a pluggable math playground.
+
+TODO: Even though this is all kinds of fun we are going to eventually have to transfer these calculations
+    to source the original feed data in order to remain accurate when it comes to smaller screens.
 """
 
 import numpy as np
@@ -138,7 +141,6 @@ class Filters:
                         if pt > trigger_point:
                             pt = trigger_point
                         last_nonzero = pt
-                # print('point', pt, 'drift', drift, 'this', this, 'last', last)
                 if not pt:
                     pt = last_nonzero
                 ys.append(pt)
@@ -152,7 +154,7 @@ class Filters:
         self.style['main'][name] = result
         return result
 
-    def trender(self, points:np.array) -> np.array:
+    def trender(self, points: np.array) -> np.array:
         """
         This identifies the trend cycle direction of the supplied points.
         """
@@ -175,3 +177,43 @@ class Filters:
         ys = np.add(np.multiply(ys, -1), 1)
         self.style['main'][name] = np.array(ys)
         return ys
+
+    def oscillator(self, points: np.array) -> np.array:
+        """
+        This will identify the points of trend shifts from negative and positive.
+
+        This expects the output of trender.
+        """
+        utrends = [0]
+        dtrends = [0]
+        pts = np.array(points)
+        for idx, point in enumerate(pts):
+            if idx < 1:
+                pass
+            else:
+                chk = 7
+                if idx < 7:
+                    chk = idx
+                start, end, check = np.subtract(idx, 1), np.add(idx, 4), np.subtract(idx, chk)
+
+                holder = pts[start: idx]
+                teller = pts[idx: end]
+                ut = dt = 0
+                # print(holder, pts[idx], idx, teller)
+                if 0 not in holder and pts[idx] == 0 and 1 not in teller:
+                    seer = utrends[check: idx]
+                    # print('utrend', seer)
+                    if 1 not in seer:
+                        ut = 1
+                elif 1 not in holder and pts[idx] == 1 and 0 not in teller:
+                    seer = dtrends[check: idx]
+                    # print('dtrend', seer)
+                    if 1 not in seer:
+                        dt = 1
+                utrends.append(ut)
+                dtrends.append(dt)
+        name = '_utrends'
+        self.style['main'][name] = np.array(utrends)
+        name = '_dtrends'
+        self.style['main'][name] = np.array(dtrends)
+        return [utrends, dtrends]

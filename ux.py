@@ -142,7 +142,8 @@ class OnScreen:
         self.filters.configure(self.feed_matrix)
         normal = self.filters.normalize(self.feed_matrix.adjusted_price_points, 30, 9)
         self.filters.zero_point(self.feed_matrix.adjusted_price_points, 1)
-        self.filters.trender(normal)
+        trend = self.filters.trender(normal)
+        self.filters.oscillator(trend)
         self.style = self.filters.style
 
         self.style = matrix_parser(self.style, self.matrices)
