@@ -170,5 +170,8 @@ class Filters:
                     pt = 1
                 ys.append(pt)
         name = '_trend'
-        self.style['main'][name] = ys
+        self.style['main'][name] = np.array(ys)
+        name = '_anti_trend'
+        ys = np.add(np.multiply(ys, -1), 1)
+        self.style['main'][name] = np.array(ys)
         return ys
