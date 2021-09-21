@@ -22,6 +22,7 @@ from utils import (
     test_o_random,
 )
 from uxutils import setup
+from extras import Filters
 
 
 class OnScreen:
@@ -68,6 +69,7 @@ class OnScreen:
         self.settings = config('settings')  # Grab our settings.
         self.api = GetChart()
         self.debug_mode = debug_mode
+        self.filters = None
 
         setup(self.settings)  # Prep environment for display.
 
@@ -88,16 +90,18 @@ class OnScreen:
             self.alerts = gp.samples.alerts
         return self
 
-    def solve_matrices(self, matrix: [list, np.array], prefix: str = None) -> np.array:
+    def solve_matrices(self, matrix: [list, np.array], prefix: str = None, extras: bool = False) -> np.array:
         """
         This will convert price data into sweet sweet pixels.
+
+        NOTE: The extras options will allow us to add in custom post processing for our feed values
         """
         focus = self.settings['chart_focus']
         if not focus:
             focus = 'BTC'
         pair = self.settings['chart_pair']
         ctime = self.settings['chart_time']
-        timequote = self.timeframes[ctime] + ':' + focus + '/' + pair
+        timequote = self.timeframes[ctime] + ':' + focus.upper() + '/' + pair.upper()
 
         s = self.style
         mat = gp.ChartToPix(self.layout, *self.style['main']['price_matrix_offsets'], w_h=(
@@ -134,6 +138,11 @@ class OnScreen:
                 '_triggers5': test_o_random(self.matrices['_cl'], 5),
                 '_triggers6': test_o_random(self.matrices['_cu'], 5),
             })
+
+        self.filters.configure(self.feed_matrix)
+        self.filters.normalize(self.feed_matrix.adjusted_price_points, 30, 9)
+        self.style = self.filters.style
+
         self.style = matrix_parser(self.style, self.matrices)
         return self
 
@@ -182,6 +191,7 @@ class OnScreen:
 
         mstyle = self.style['main']
         self.parent.geometry = mstyle['geometry']  # Configure the UX size.
+        self.filters = Filters(self.style)
 
         self.base = tk.Frame(
             self.parent,
