@@ -53,15 +53,15 @@ style = {
     },
     'asset_order': [  # This is our draw_order widgets will be drawn starting with the farthest back into the foreground.
         'smoothi_bottom',
-        'smoothi_top',
+        # 'smoothi_top',
         'volume',
         'top_arrows',
         'bottom_arrows',
         'candlesticks',
         'icing_top',
         'icing_bottom',
-        'onions1',
-        'points1',
+        # 'onions1',
+        # 'points1',
         'volume_ruler_top',
         'volume_ruler_bottom1',
         'volume_ruler_bottom2',
@@ -97,18 +97,19 @@ style = {
         'color1': 'green',
         'color2': 'red',
         'alpha': 0.75,
-        'hollow': ['red']  # This can hole one none or both of the colors.
+        'hollow': []  # ['red']  # This can hole one none or both of the colors.
     },
     'smoothi_bottom': {
-        'geometry': '&_price_matrix',
+        'geometry': '&_feed_price_matrix',
+        'matrix_override': '&_normal_30_9',
         'height': 75,
         'fill': 'aqua',
         'grad': ('deepskyblue', 'black', 'v'),  # Gradient.
-        'graph_type': 'volume',
+        'graph_type': 'prices',
         'tb': 'b',  # Top or bottom style.
         'outline': 'white',
-        'smooth': 5,  # Smooths average out the measurements.
-        'lineinterpol': 3,  # Linear interpolation adds points and then rounds off the edges.
+        'smooth': 1,  # Smooths average out the measurements.
+        'lineinterpol': 2,  # Linear interpolation adds points and then rounds off the edges.
         'offset': 250,
         'padding': (46, 46, 0, 0),  # left, right, top, bottom.
         'alpha': 0.2,  # Transparency.
@@ -150,8 +151,9 @@ style = {
         'arrow': 'first',  # This is the end of the line that thhe arrow will attach.
         'arrowshape': (4, 4, 1),  # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
         'matrix_override': '&_cu',  # This allows us to pass alternate alert "triggers" instead of just geometry.
-        'triggers': '&_triggers1',
+        'triggers': '&_utrends',
         'tb': 't',
+        'signal': 'TR.DN',
         'icon': 'img/icons/minus_circle.png',  # Schematic view icon.
         'icon_fill': 'green',  # Icon color.
         'tag_fill': 'black',  # Schematic text color.
@@ -166,8 +168,9 @@ style = {
         'arrow': 'first',  # This is the end of the line that thhe arrow will attach.
         'arrowshape': (5, 5, 2),  # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
         'matrix_override': '&_cl',  # This allows us to pass alternate alert "triggers" instead of just geometry.
-        'triggers': '&_triggers2',
+        'triggers': '&_dtrends',
         'tb': 'b',
+        'signal': 'TR.UP',
         'icon': 'img/icons/x1.png',  # Schematic view icon.
         'icon_fill': 'red',  # Icon color.
         'tag_fill': 'black',  # Schematic text color.
@@ -193,21 +196,21 @@ style = {
     },
     'icing_top': {
         'geometry': '&_price_matrix',
-        'triggers': '&_triggers1',
-        'thickness': 1,
+        'triggers': '&_trend',
+        'thickness': 2,
         'smooth': False,
-        'dash': (1, 1),
-        'color1': 'magenta',
-        'color2': 'cyan',
+        # 'dash': (1, 1),
+        'color1': 'blue',
+        'color2': 'blue',
         'tb': 't'
     },
     'icing_bottom': {
         'geometry': '&_price_matrix',
-        'triggers': '&_triggers2',
+        'triggers': '&_anti_trend',
         'thickness': 1,
         'smooth': False,
-        'dash': (1, 1),
-        'color1': 'magenta',
+        # 'dash': (1, 1),
+        'color1': 'cyan',
         'color2': 'cyan',
         'tb': 'b'
     },
