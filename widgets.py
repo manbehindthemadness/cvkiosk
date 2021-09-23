@@ -24,8 +24,9 @@ class StatBar(tk.Frame):
     w_lab = None
     b_var = tk.IntVar()
     b_lab = None
-    labels = None
+    labelvars = None
     show_labels = None
+    lbls = list()
 
     def __init__(self, parent: tk.Frame, base):
         tk.Frame.__init__(self, parent)
@@ -41,13 +42,26 @@ class StatBar(tk.Frame):
         ]
         self.cr = gp.color_range
 
+    @staticmethod
+    def create_or_modify(i: int, arry: list, *args, **kwargs):
+        """
+        This will update an existing label, if the label does not exist, it will create a new one.
+        """
+        try:
+            lbl = arry[i]
+        except IndexError:
+            lbl = tk.Label(*args, **kwargs)
+            arry.append(lbl)
+            lbl.pack(side=tk.LEFT)
+        return lbl
+
     def build_content(self, **style):
         """
         This will construct the contents of the widget based on the passed style.
         """
         s = self.style = style
 
-        self.labels = self.base.labels  # noqa
+        self.labelvars = self.base.labelvars  # noqa
 
         x, y = s['coords']
         self.configure(
@@ -60,7 +74,7 @@ class StatBar(tk.Frame):
             width=s['width'],
             height=s['height']
         )
-        d_width = int(np.divide(s['width'], len(self.base.labels)))
+        d_width = int(np.divide(s['width'], len(self.base.labelvars)))
         self.b_meter.params(  # Battery meter.
             width=d_width,
             height=s['height'],
@@ -69,7 +83,7 @@ class StatBar(tk.Frame):
             border=s['border'],
             meter_colors=s['meter_colors_left'],
             meter_border=s['border'],
-            meter_var=self.base.labels['BAT'],
+            meter_var=self.base.labelvars['BAT'],
             meter_label='BAT',
             meter_label_width=s['meter_label_width_left'],
             font_override=s['font'],
@@ -81,7 +95,7 @@ class StatBar(tk.Frame):
             width=d_width,
             height=s['height'],
         )
-        w_x = int(np.multiply(d_width, np.add(len(self.base.labels), -1)))
+        w_x = int(np.multiply(d_width, np.add(len(self.base.labelvars), -1)))
         self.w_meter.params(  # Wifi Meter.
             mirror=True,
             width=d_width,
@@ -91,7 +105,7 @@ class StatBar(tk.Frame):
             border=s['border'],
             meter_colors=s['meter_colors_right'],
             meter_border=s['border'],
-            meter_var=self.base.labels['WFI'],
+            meter_var=self.base.labelvars['WFI'],
             meter_label='WFI',
             meter_label_width=s['meter_label_width_right'],
             font_override=s['font'],
@@ -103,12 +117,12 @@ class StatBar(tk.Frame):
             width=d_width,
             height=s['height'],
         )
-        for idx, label in enumerate(self.base.labels):
+        for idx, label in enumerate(self.base.labelvars):
             if label not in ['WFI', 'BAT']:
                 exec('self.' + label + ' = tk.StringVar()')
                 exec('self.' + label + '.set("' + label + ': 0")')
 
-                lbl = tk.Label(self)
+                lbl = self.create_or_modify(idx, self.lbls, self, {})
                 lbl.configure(
                     bg=s['background'],
                     fg=s['text_color'],

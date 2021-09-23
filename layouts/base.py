@@ -26,7 +26,7 @@ class Layout(gp.Diagram):
     data = dict()
 
     widgets = list()
-    labels = dict()
+    labelvars = dict()
 
     def __init__(self, parent: tk.Frame, cache: gp.ImgCache, settings: config):
         """
@@ -93,17 +93,18 @@ class Layout(gp.Diagram):
         """
         This will take our style and use it to set up all of our widgets.
         """
-        self.labels.update({  # These are the static wifi and battery meters.
-            'BAT': tk.IntVar(),
-            'WFI': tk.IntVar()
-        })
+        if "WFI" not in self.labelvars.keys():
+            self.labelvars.update({  # These are the static wifi and battery meters.
+                'BAT': tk.IntVar(),
+                'WFI': tk.IntVar()  # Remember these are being passed from OnScreen.update_variables
+            })
 
         x, y = style['main']['price_canvas_offset_coord']
         self.place(x=x, y=y)
-        self.update()
+        # self.update()
         width, height = self.winfo_width(), self.winfo_height()
         self.style = style
-        self.assets = list()
+        # self.assets = list()
         inventory = self.__dict__.keys()
         for asset in style:
             if asset in inventory and asset in style['asset_order'] and asset in self.widgets:
@@ -117,7 +118,7 @@ class Layout(gp.Diagram):
 
     def configure_actors(self):
         """
-        Same as above but for the animted acrots.
+        Same as above but for the animted actors.
         """
         self.actors = list()
         inventory = self.__dict__.keys()
@@ -153,5 +154,9 @@ class Layout(gp.Diagram):
         """
         self.style = None
         for asset in self.assets:
-            asset.burn_all()  # This is going to need some compat.
+            asset.burn_all()
+        try:
+            self.statbar.refresh()
+        except AttributeError:
+            pass
         return self

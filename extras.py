@@ -199,18 +199,13 @@ class Filters:
                 holder = pts[start: idx]
                 teller = pts[idx: end]
                 ut = dt = 0
-                # print(holder, pts[idx], idx, teller)
-                if 0 not in holder and pts[idx] == 0 and 1 not in teller:
+                if 0 not in holder and pts[idx] == 0 and 1 not in teller:  # This here is just a fancy filter.
                     seer = utrends[check: idx]
-                    # print('utrend', seer)
                     if 1 not in seer and len(teller) == 4:
-                        # ut = 1
                         utrends[np.subtract(idx, 4)] = 1
                 elif 1 not in holder and pts[idx] == 1 and 0 not in teller:
                     seer = dtrends[check: idx]
-                    # print('dtrend', seer)
                     if 1 not in seer and len(teller) == 4:
-                        # dt = 1
                         dtrends[np.subtract(idx, 4)] = 1
                 utrends.append(ut)
                 dtrends.append(dt)

@@ -6,8 +6,13 @@ Copyright (c) 2021 Kevin Eales.
 This program is experimental and proprietary, redistribution is prohibited.
 Please see the license file for more details.
 ------------------------------------------------------------------------------------------------------------------------
+TODO: We need to go over every inch of this and confirm we are actually cleaning up our images
+        https://github.com/pythonprofilers/memory_profiler
+
 """
+import gc
 import random
+import linecache
 import numpy as np
 import tkinter as tk
 import graphiend as gp
@@ -23,12 +28,15 @@ from utils import (
 )
 from uxutils import setup
 from extras import Filters
+from diagnostics import MemTrace
 
 
 class OnScreen:
     """
     This will configure, refresh and draw our user interface.
     """
+    runner = 0
+
     base = None
     base_style = None
     ticker = None
@@ -72,6 +80,9 @@ class OnScreen:
         self.filters = None
 
         setup(self.settings)  # Prep environment for display.
+
+        if self.settings['debug_memory']:
+            self.trace = MemTrace()  # Fire up a tracer and watch for leaks.
 
     def refresh_api(self):
         """
@@ -129,7 +140,6 @@ class OnScreen:
         self.price_matrix = self.solve_matrices(self.price_chart)
         self.feed_matrix = self.solve_matrices(self.feed_chart, 'feed')
         if self.settings['style'] == 'tutorial':  # This is for the example setup only.
-            print('drawing example randoms')
             self.matrices.update({
                 '_triggers1': test_o_random(self.matrices['_cu'], 5),
                 '_triggers2': test_o_random(self.matrices['_cl'], 5),
@@ -151,20 +161,23 @@ class OnScreen:
 
     def update_variables(self):
         """
-        This is where we will iterate through the layout.labels dict and pass the statbar variables.
+        This is where we will iterate through the layout.labelvars dict and pass the statbar variables.
         We can loop this method in an alternate thread for faster updates.
 
         THIS IS SETUP FOR TESTING AND NEEDS REAL VARIABLES.
         """
-        self.statvars['WFI'] = random.randint(50, 100)  # TODO: For testing only
-        self.statvars['BAT'] = random.randint(50, 100)
-        for var in self.statvars:
-            if var in self.layout.labels.keys() and var not in ['WFI', 'BAT']:
-                rnd = var + ': ' + str(random.randint(50, 100))  # noqa
-                exec('self.layout.statbar.' + var + '.set(rnd)')
-            elif var in self.layout.labels.keys() and var in ['WFI', 'BAT']:
-                self.layout.labels[var].set(self.statvars[var])
-        self.layout.statbar.refresh()
+        try:
+            self.statvars['WFI'] = random.randint(50, 100)  # TODO: For testing only
+            self.statvars['BAT'] = random.randint(50, 100)
+            for var in self.statvars:
+                if var in self.layout.labelvars.keys() and var not in ['WFI', 'BAT']:
+                    rnd = var + ': ' + str(random.randint(50, 100))  # noqa
+                    exec('self.layout.statbar.' + var + '.set(rnd)')
+                elif var in self.layout.labelvars.keys() and var in ['WFI', 'BAT']:
+                    self.layout.labelvars[var].set(self.statvars[var])
+            self.layout.statbar.refresh()
+        except AttributeError:
+            pass
         return self
 
     def cycle_variables(self):
@@ -172,7 +185,8 @@ class OnScreen:
         This is the statbar refresh loop.
         """
         self.update_variables()
-        self.parent.after(self.settings['stats_refresh'], self.cycle_variables)
+        # self.parent.after(self.settings['stats_refresh'], self.cycle_variables)
+        self.parent.after(15000, self.cycle_variables)
         return self
 
     def parse(self):
@@ -257,15 +271,16 @@ class OnScreen:
     def purge(self, prep: bool = False):
         """
         Removes all our variables in order to redraw.
+        https://stackoverflow.com/questions/57462037/what-are-count0-count1-and-count2-values-returned-by-the-python-gc-get-count
         """
         if prep:  # TODO: This will need to be evaluated to maximize our redraw speeds.
-            self.price_chart = None
-            self.feed_matrix = None
-            self.price_matrix = None
-            self.feed_chart = None
-            self.alerts = None
-            self.chart_data = None
-            self.matrix_solver = None
+            # self.price_chart = None
+            # self.feed_matrix = None
+            # self.price_matrix = None
+            # self.feed_chart = None
+            # self.alerts = None
+            # self.chart_data = None
+            # self.matrix_solver = None
             self.style = dict(self.base_style)
             self.layout.purge()
         else:
@@ -281,7 +296,9 @@ class OnScreen:
         self.update_style_matrices()
         self.configure()
         self.purge()
+        self.handle_memory()
         self.draw()  # Test to see if we are properly clearing the images.
+        self.update_variables()
         return self
 
     def cycle(self):
@@ -292,6 +309,7 @@ class OnScreen:
             self.delay = int(np.multiply(np.multiply(self.settings['update_time'], 60), 1000))
         self.refresh()
         self.parent.after(self.delay, self.cycle)
+
         return self
 
     def run(self):
@@ -305,3 +323,19 @@ class OnScreen:
         self.cycle_variables()
         self.mainloop()
         return self
+
+    def handle_memory(self):
+        """
+        This is some memory handling logic we are using to prevent memory leaks.
+        """
+        gc.collect()
+        linecache.clearcache()  # This is experimental.
+        if self.settings['debug_memory']:
+            # Trace memory leak.
+            if not np.mod(self.runner, 50):
+                print('trace:' + str(self.runner), '------------------------------------------------------------------')
+                self.trace.comp_n_show(6)
+                pass
+            self.runner += 1
+            if not np.mod(self.runner, 10):
+                print(self.runner)

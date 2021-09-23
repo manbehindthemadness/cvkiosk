@@ -345,7 +345,7 @@ class StatBar(tk.Frame):
             width=mtr_width
         )
         self.value_finder()  # Update the label text.
-        self.update()
+        # self.update()
         return self
 
 
@@ -435,7 +435,7 @@ class EventLog(tk.Frame):
             width=self.width,
             height=height,
         )
-        self.maxlen = np.subtract(np.round(np.divide(self.width, 4.3), 0), 1)
+        self.maxlen = np.subtract(np.round(np.divide(self.width, 4.3), 0), 1)  # noqa
         self.make_lines()
         self.labels = list()
         for idx, line in enumerate(self.stringvars):

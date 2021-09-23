@@ -41,7 +41,7 @@ class Format(Layout):
             'statbar',
             'ticker'
         ]
-        self.labels = {  # This specifies the extra labels to be included in the statbar.
+        self.labelvars = {  # This specifies the extra labels to be included in the statbar.
             'FGI': tk.StringVar(),
             'UTC': tk.StringVar(),
             'REF': tk.StringVar(),

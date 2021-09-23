@@ -53,7 +53,7 @@ style = {
     },
     'asset_order': [  # This is our draw_order widgets will be drawn starting with the farthest back into the foreground.
         'smoothi_bottom',
-        # 'smoothi_top',
+        'smoothi_top',
         'volume',
         'top_arrows',
         'bottom_arrows',
