@@ -16,6 +16,11 @@ import importlib
 import datetime
 import logging
 import random
+import requests
+import urllib.request
+from urllib.error import URLError
+import bs4
+import socket
 from subprocess import Popen, PIPE
 import numpy as np
 
@@ -403,3 +408,27 @@ def flip_stream(stream: np.array) -> np.array:
     result[0::2] = xs
     result[1::2] = ys
     return result
+
+
+def get_from_html(url: str, criteria: tuple):
+    """
+    This gets the target criteria from the html stored at the specified URL.
+    """
+    try:
+        page = urllib.request.urlopen(url).read()
+        soup = bs4.BeautifulSoup(page, "html.parser")
+        div = soup.find(*criteria)
+        result = div.contents
+    except (AttributeError, socket.gaierror, URLError, requests.exceptions.ConnectionError):
+        pass
+        result = ''
+    return result
+
+
+def get_index():
+    """
+    This grabs out fear and greed index
+    :return: Index value.
+    :rtype: int
+    """
+    return int(get_from_html('https://alternative.me/crypto/fear-and-greed-index/', ("div", {"class": "fng-circle"}))[0])

@@ -56,7 +56,7 @@ style = {
         'smoothi_top',
         'volume',
         'top_arrows',
-        'bottom_arrows',
+        # 'bottom_arrows',
         'candlesticks',
         'icing_top1',
         'icing_top2',
@@ -149,7 +149,7 @@ style = {
         'geometry': '&_price_matrix',
         'height': 10,
         'offset': 10,  # This is the distance the arrow will appear from the coordinate.
-        'fill': 'deepskyblue',
+        'fill': 'blueviolet',
         'thickness': 1,  # Line thickness.
         'arrow': 'first',  # This is the end of the line that thhe arrow will attach.
         'arrowshape': (4, 4, 1),  # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html

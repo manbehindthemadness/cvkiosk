@@ -187,7 +187,6 @@ class Filters:
         """
         This is much like trender, except it's for graphing instead of an alert trigger.
         """
-        # points = flip_stream(np.array(points))
         if prefix:
             prefix = '_' + prefix
         result = np.linspace(0, 0, num=len(points)).astype(np.int)
@@ -208,7 +207,14 @@ class Filters:
         result[1::2] = np.multiply(yts, -1)
         name = prefix + '_drift'
         self.style['main'][name] = np.array(result)
-
+        trend = list()
+        for point in np.array(result[1::2]):
+            pt = 0
+            if point != 0:
+                pt = 1
+            trend.append(pt)
+        name = prefix + '_trend'
+        self.style['main'][name] = np.array(trend)
         return result
 
     def oscillator(self, points: np.array) -> np.array:

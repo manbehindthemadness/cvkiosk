@@ -25,6 +25,7 @@ from utils import (
     matrix_parser,
     matrix_sorter,
     test_o_random,
+    get_index,
 )
 from uxutils import setup
 from extras import Filters
@@ -151,8 +152,8 @@ class OnScreen:
             })
 
         self.filters.configure(self.feed_matrix)
-        self.filters.trender(self.feed_matrix.adjusted_price_points, 'super')
         self.filters.drifter(self.feed_matrix.adjusted_price_points, 'super')
+        # self.filters.trender(self.feed_matrix.adjusted_price_points, 'super')
         normal = self.filters.normalize(self.feed_matrix.adjusted_price_points, 100, 9)
         self.filters.zero_point(self.feed_matrix.adjusted_price_points, 1)
         trend = self.filters.trender(normal)
@@ -174,7 +175,7 @@ class OnScreen:
             self.statvars['BAT'] = random.randint(50, 100)
             for var in self.statvars:
                 if var in self.layout.labelvars.keys() and var not in ['WFI', 'BAT']:
-                    rnd = var + ': ' + str(random.randint(50, 100))  # noqa
+                    rnd = var + ': ' + str(self.statvars[var])  # noqa
                     exec('self.layout.statbar.' + var + '.set(rnd)')
                 elif var in self.layout.labelvars.keys() and var in ['WFI', 'BAT']:
                     self.layout.labelvars[var].set(self.statvars[var])
@@ -182,6 +183,15 @@ class OnScreen:
         except AttributeError:
             pass
         return self
+
+    def cycle_index(self):
+        """
+        This is a temporary refresh loop for the fear and greed index.
+        """
+        if 'FGI' in self.layout.labelvars.keys():
+            index = get_index()
+            self.statvars['FGI'] = index
+        self.parent.after(1800000, self.cycle_index)
 
     def cycle_variables(self):
         """
@@ -320,6 +330,7 @@ class OnScreen:
         """
         self.parse()
         self.cycle()
+        self.cycle_index()
         self.layout.configure_actors()
         self.layout.animate_actors()
         self.cycle_variables()

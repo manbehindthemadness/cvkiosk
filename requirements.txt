@@ -1,3 +1,4 @@
+bs4==0.0.1
 colorama>=0.4.4
 colour>=0.1.5
 configparser>=5.0.2
@@ -15,5 +16,6 @@ pathlib>=1.0.1
 Pillow>=8.3.1
 pyautogui
 pyscreenshot
+requests==2.26.0
 Rpi.GPIO
 smbus2
