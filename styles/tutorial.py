@@ -119,15 +119,17 @@ style = {
     },
     'smoothi_top': {
         'geometry': '&_price_matrix',
+        'matrix_override': '&_super_drift',
         'height': 30,
         'fill': 'red',
-        'graph_type': 'volume',
+        'graph_type': 'prices',
         'tb': 't',
-        'smooth': 1,
-        'lineinterpol': 2,
+        'smooth': 2,
+        'lineinterpol': 4,
         'offset': 320,
         'padding': (46, 46, 0, 0),  # left, right, top, bottom.
-        'alpha': 0.6,
+        # 'outline': 'black',
+        'alpha': 0.7,
         'aa': (10, 0)
     },
     'volume': {
@@ -201,8 +203,8 @@ style = {
         'thickness': 2,
         'smooth': False,
         # 'dash': (1, 1),
-        'color1': 'blue',
-        'color2': 'blue',
+        'color1': 'blueviolet',
+        'color2': 'blueviolet',
         'tb': 't'
     },
     'icing_top2': {
@@ -211,14 +213,14 @@ style = {
             'thickness': 2,
             'smooth': False,
             'dash': (1, 1),
-            'color1': 'magenta',
-            'color2': 'magenta',
+            'color1': 'black',
+            'color2': 'black',
             'tb': 't'
         },
     'icing_bottom1': {
         'geometry': '&_price_matrix',
         'triggers': '&_anti_trend',
-        'thickness': 2,
+        'thickness': 1,
         'smooth': False,
         # 'dash': (1, 1),
         'color1': 'cyan',

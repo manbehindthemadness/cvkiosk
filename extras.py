@@ -73,11 +73,9 @@ class Filters:
         average = self.inkeys(name)
         if isinstance(average, NoneType):
             average = flip_stream(points)
-            # average = gp.smooth_y(np.array(average), spread)
             ays = gp.moving_average(np.array(average[1::2]), spread)
             padding = np.subtract(spread, 1)
             average[1::2] = np.pad(ays, (padding, 0))
-            # average = flip_stream(average)
             self.mstyle[name] = average
         return np.array(average)
 
@@ -184,6 +182,34 @@ class Filters:
         ys = np.add(np.multiply(ys, -1), 1)
         self.style['main'][name] = np.array(ys)
         return ys
+
+    def drifter(self, points: np.array, prefix: str = '') -> np.array:
+        """
+        This is much like trender, except it's for graphing instead of an alert trigger.
+        """
+        # points = flip_stream(np.array(points))
+        if prefix:
+            prefix = '_' + prefix
+        result = np.linspace(0, 0, num=len(points)).astype(np.int)
+        result[0::2] = np.array(points[0::2])
+        ys = np.array(points[1::2])
+        yts = [0]
+        for idx, point in enumerate(ys):
+            if not idx:
+                pass
+            else:
+                last = ys[np.subtract(idx, 1)]
+                this = point
+                drift = np.subtract(this, last)
+                yp = 0
+                if drift > -1:
+                    yp = this
+                yts.append(yp)
+        result[1::2] = np.multiply(yts, -1)
+        name = prefix + '_drift'
+        self.style['main'][name] = np.array(result)
+
+        return result
 
     def oscillator(self, points: np.array) -> np.array:
         """
