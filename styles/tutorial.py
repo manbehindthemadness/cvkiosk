@@ -50,6 +50,7 @@ style = {
         'price_matrix_offsets': (47, 46, 35, 155),  # left, right, top, bottom.
         'price_increment': 6,  # The width of one candlestick in pixels.
         'background': 'white',
+        'utc_format': '%H:%M:%p',
     },
     'asset_order': [  # This is our draw_order widgets will be drawn starting with the farthest back into the foreground.
         'smoothi_bottom',

@@ -14,3 +14,4 @@ from ux import OnScreen
 config = config('settings')
 oc = OnScreen()
 oc.run()
+print('done')

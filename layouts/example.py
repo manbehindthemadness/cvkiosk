@@ -45,5 +45,5 @@ class Format(Layout):
         self.labelvars = {  # This specifies the extra labels to be included in the statbar.
             'FGI': tk.StringVar(),
             'UTC': tk.StringVar(),
-            'REF': tk.StringVar(),
+            'DRF': tk.StringVar(),
         }

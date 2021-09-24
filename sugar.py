@@ -167,14 +167,15 @@ NOTE: THis file is a mess, but it''s the best I could do without any form of rea
 
 """
 # noinspection PyPackageRequirements
-from smbus2 import SMBus
-# import threading
-from legacy.client import settings
-from math import percent_in
-from logs import JournalD
+try:
+    from smbus2 import SMBus  # noqa
+except ImportError:
+    pass
+from utils import config, percent_in
 import numpy as np
 
-log = JournalD(settings).log
+
+config = config('settings')
 
 
 class Sugar:
@@ -244,7 +245,7 @@ class Sugar:
                     1000
                 ), self._bus.read_byte_data(address, 0x55)
         except ValueError as err:
-            log(err, '*err*')
+            print(err, '*err*')
             result = 0.0
         return result
 
@@ -259,12 +260,12 @@ class Sugar:
         :rtype: float
         """
         base = np.round(
-            np.subtract(batt_lvl, settings.SHUTDOWN_PERCENT),
+            np.subtract(batt_lvl, config['shutdown_percent']),
             1
         )
         percentage = percent_in(
             base,
-            np.subtract(100, settings.SHUTDOWN_PERCENT),
+            np.subtract(100, config['shutdown_percent']),
             use_float=True
         )
         result = float(np.round(percentage, 1))
@@ -331,7 +332,7 @@ class Sugar:
 
         REGISTER: NAME: VALUE: ACTION
         0x26: CHG_DIG_CTL4: 1: VSET PIN: 0: (Can't tell... Default seems to be 191)
-        ox52: VSET_sel: 01: GPIO4 (No idea but I think its reset selection, )
+        0x52: VSET_sel: 01: GPIO4 (No idea but I think its reset selection, )
         0x53: GPIO4_INEN: 0: disable: 1: enable (GPIO4 input toggle)
         0x54: GPIO4_OUTEN: 0: disable: 1: enable (GPIO output toggle)
         0x55: GPIO4_DAT: (GPIO4 data output pin)

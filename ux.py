@@ -10,6 +10,7 @@ TODO: We need to go over every inch of this and confirm we are actually cleaning
         https://github.com/pythonprofilers/memory_profiler
 
 """
+import datetime
 import gc
 import random
 import linecache
@@ -31,6 +32,8 @@ from uxutils import setup
 from extras import Filters
 if config('settings')['debug_memory']:
     from diagnostics import MemTrace
+
+from sugar import Sugar
 
 
 class OnScreen:
@@ -56,6 +59,8 @@ class OnScreen:
     matrix_solver = None
     delay = None
 
+    sugar = None
+
     statvars = {
         'WFI': int(),
         'BAT': int(),
@@ -80,6 +85,12 @@ class OnScreen:
         self.api = GetChart()
         self.debug_mode = debug_mode
         self.filters = None
+
+        try:
+            self.sugar = Sugar()
+            self.sugar.battery_gpio_set()
+        except NameError:
+            pass
 
         setup(self.settings)  # Prep environment for display.
 
@@ -162,16 +173,33 @@ class OnScreen:
         self.style = matrix_parser(self.style, self.matrices)
         return self
 
+    def screen_cap(self):
+        """
+        This will take the screenshot we will host with our cute little dash server.
+        NOTE: This will only capture the graphiend chart region ( not stats and tickers )
+        """
+
+    def read_hardware(self):
+        """
+        This will get variables from the system hardware
+        """
+        bat_lvl = -1
+        if self.sugar:
+            self.sugar.capacity()
+            bat_lvl = self.sugar.BATTERY_LEVEL
+        self.statvars['BAT'] = bat_lvl
+
     def update_variables(self):
         """
         This is where we will iterate through the layout.labelvars dict and pass the statbar variables.
         We can loop this method in an alternate thread for faster updates.
 
-        THIS IS SETUP FOR TESTING AND NEEDS REAL VARIABLES.
         """
+        self.read_hardware()
         try:
-            self.statvars['WFI'] = random.randint(50, 100)  # TODO: For testing only
-            self.statvars['BAT'] = random.randint(50, 100)
+            self.statvars['WFI'] = 75
+            self.statvars['UTC'] = datetime.datetime.utcnow().strftime(self.style['main']['utc_format'])  # noqa
+            self.statvars['DRF'] = self.feed_chart[-1][-1]
             for var in self.statvars:
                 if var in self.layout.labelvars.keys() and var not in ['WFI', 'BAT']:
                     rnd = var + ': ' + str(self.statvars[var])  # noqa
