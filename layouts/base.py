@@ -100,10 +100,10 @@ class Layout(gp.Diagram):
                 'BAT': tk.IntVar(),
                 'WFI': tk.IntVar()  # Remember these are being passed from OnScreen.update_variables
             })
-
         x, y = style['main']['price_canvas_offset_coord']
         self.place(x=x, y=y)
-        width, height = self.winfo_width(), self.winfo_height()
+        # We need to pass our actual size because otherwise it won't be evident until after the first draw.
+        width, height = int(style['main']['price_canvas_width']), int(style['main']['price_canvas_height'])
         self.style = style
         self.assets = list()
         inventory = self.__dict__.keys()
@@ -154,7 +154,6 @@ class Layout(gp.Diagram):
         """
         This will burn all the visual elements across all the widgets
         """
-        # self.style = None
         for asset in self.assets:
             asset.burn_all()
         return self

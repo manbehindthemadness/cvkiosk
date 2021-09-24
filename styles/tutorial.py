@@ -47,7 +47,7 @@ style = {
         'price_canvas_width': '$_screen_width:100%',  # The size of the graphiend canvas.
         'price_canvas_height': '$_screen_height:50-',
         # This scales the candlestick matrix in order to make room for the other widgets.
-        'price_matrix_offsets': (50, 50, 35, 155),  # left, right, top, bottom.
+        'price_matrix_offsets': (47, 46, 35, 155),  # left, right, top, bottom.
         'price_increment': 6,  # The width of one candlestick in pixels.
         'background': 'white',
     },
@@ -101,7 +101,7 @@ style = {
     },
     'smoothi_bottom': {
         'geometry': '&_feed_price_matrix',
-        'matrix_override': '&_normal_30_9',
+        'matrix_override': '&_normal_100_9',
         'height': 75,
         'fill': 'aqua',
         'grad': ('deepskyblue', 'black', 'v'),  # Gradient.
@@ -308,7 +308,7 @@ style = {
         }
     },
     'tics1': {  # These are the little ruler ticks that run down the edges.
-        'coords': (450, 35, 450, 190),  # top x, y, bottom x, y
+        'coords': (452, 35, 452, 190),  # top x, y, bottom x, y
         'tics': [2, 4, 9],  # shorts, longs, increment.
         'style': {
             'fill': 'grey',
@@ -381,7 +381,7 @@ style = {
         }
     },
     'tics2': {  # These are the little ruler ticks that run down the edges.
-        'coords': (49, 0, 49, 350),  # top x, y, bottom x, y
+        'coords': (47, 0, 47, 350),  # top x, y, bottom x, y
         'tics': [2, 4, 9],  # shorts, longs, increment.
         'style': {
             'fill': 'grey',
@@ -408,6 +408,7 @@ style = {
             'outlinestyle': (0, 0, 1, 1),
             'linecolor': 'grey',
             'linethickness': 1,
+            'fill': 'black',
         },
         'background': {
             'fill': 'white',

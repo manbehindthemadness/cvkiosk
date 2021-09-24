@@ -15,6 +15,7 @@ TODO: Even though this is all kinds of fun we are going to eventually have to tr
 
 import numpy as np
 import graphiend as gp
+from utils import flip_stream
 
 
 NoneType = type(None)  # https://stackoverflow.com/questions/40553285/determining-a-variables-type-is-nonetype-in-python/40553322
@@ -48,7 +49,7 @@ class Filters:
         This just sets up a bunch of variables.
         """
         self.matrix = matrix
-        self.vrange = np.multiply(matrix.viewable_increment_count, 2)
+        self.vrange = np.add(np.multiply(matrix.viewable_increment_count, 2), 2)
         return self
 
     def trim(self, ary: np.array) -> np.array:
@@ -71,8 +72,12 @@ class Filters:
         name = '_ema_' + str(spread)
         average = self.inkeys(name)
         if isinstance(average, NoneType):
-            average = points
-            average = gp.smooth_y(np.array(average), spread)
+            average = flip_stream(points)
+            # average = gp.smooth_y(np.array(average), spread)
+            ays = gp.moving_average(np.array(average[1::2]), spread)
+            padding = np.subtract(spread, 1)
+            average[1::2] = np.pad(ays, (padding, 0))
+            # average = flip_stream(average)
             self.mstyle[name] = average
         return np.array(average)
 

@@ -387,3 +387,19 @@ def ticks_to_chart_time(ticks: int) -> str:
     """
     stamp = datetime.datetime.now() + datetime.timedelta(microseconds=np.divide(ticks, 10))
     return stamp.strftime("%Y-%m-%d-%H-%M")
+
+
+def flip_stream(stream: np.array) -> np.array:
+    """
+    This will take a stream of coords (x, y, x, y, x, y) and flip it vertically.
+    """
+    result = np.linspace(0, 0, num=len(stream))
+    xs = stream[0::2]
+    ys = stream[1::2]
+    mi, ma = np.amin(ys), np.amax(ys)
+    np.subtract(ys, mi)
+    np.multiply(ys, -1)
+    np.add(ys, ma)
+    result[0::2] = xs
+    result[1::2] = ys
+    return result
