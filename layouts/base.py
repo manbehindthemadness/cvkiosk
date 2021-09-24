@@ -22,6 +22,8 @@ class Layout(gp.Diagram):
     """
     This is the base layout class for the various user interface configurations.
     """
+    first = True
+
     style = dict()
     data = dict()
 
@@ -101,10 +103,9 @@ class Layout(gp.Diagram):
 
         x, y = style['main']['price_canvas_offset_coord']
         self.place(x=x, y=y)
-        # self.update()
         width, height = self.winfo_width(), self.winfo_height()
         self.style = style
-        # self.assets = list()
+        self.assets = list()
         inventory = self.__dict__.keys()
         for asset in style:
             if asset in inventory and asset in style['asset_order'] and asset in self.widgets:
@@ -114,6 +115,7 @@ class Layout(gp.Diagram):
                 self.asset.canvas_height = height
                 self.asset.configure(**style[asset])
                 self.assets.append(eval(cmd))
+        self.first = False
         return self
 
     def configure_actors(self):
@@ -152,11 +154,7 @@ class Layout(gp.Diagram):
         """
         This will burn all the visual elements across all the widgets
         """
-        self.style = None
+        # self.style = None
         for asset in self.assets:
             asset.burn_all()
-        try:
-            self.statbar.refresh()
-        except AttributeError:
-            pass
         return self

@@ -28,7 +28,8 @@ from utils import (
 )
 from uxutils import setup
 from extras import Filters
-from diagnostics import MemTrace
+if config('settings')['debug_memory']:
+    from diagnostics import MemTrace
 
 
 class OnScreen:
@@ -185,8 +186,7 @@ class OnScreen:
         This is the statbar refresh loop.
         """
         self.update_variables()
-        # self.parent.after(self.settings['stats_refresh'], self.cycle_variables)
-        self.parent.after(15000, self.cycle_variables)
+        self.parent.after(self.settings['stats_refresh'], self.cycle_variables)
         return self
 
     def parse(self):
