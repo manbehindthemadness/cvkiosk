@@ -102,7 +102,7 @@ style = {
     },
     'smoothi_bottom': {
         'geometry': '&_feed_price_matrix',
-        'matrix_override': '&_normal_100_9',
+        'matrix_override': '&_normal_100_1',
         'height': 75,
         'fill': 'aqua',
         'grad': ('deepskyblue', 'black', 'v'),  # Gradient.

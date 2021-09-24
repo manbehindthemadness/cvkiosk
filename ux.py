@@ -142,7 +142,7 @@ class OnScreen:
         self.price_matrix = self.solve_matrices(self.price_chart)
         self.feed_matrix = self.solve_matrices(self.feed_chart, 'feed')
         if self.settings['style'] == 'tutorial':  # This is for the example setup only.
-            self.matrices.update({
+            self.matrices.update({  # Here we are making a buncha test triggers to demostrate in the tutorial.
                 '_triggers1': test_o_random(self.matrices['_cu'], 5),
                 '_triggers2': test_o_random(self.matrices['_cl'], 5),
                 '_triggers3': test_o_random(self.matrices['_ac'], 5),
@@ -153,8 +153,7 @@ class OnScreen:
 
         self.filters.configure(self.feed_matrix)
         self.filters.drifter(self.feed_matrix.adjusted_price_points, 'super')
-        # self.filters.trender(self.feed_matrix.adjusted_price_points, 'super')
-        normal = self.filters.normalize(self.feed_matrix.adjusted_price_points, 100, 9)
+        normal = self.filters.normalize(self.feed_matrix.adjusted_price_points, 100, 1)
         self.filters.zero_point(self.feed_matrix.adjusted_price_points, 1)
         trend = self.filters.trender(normal)
         self.filters.oscillator(trend)
