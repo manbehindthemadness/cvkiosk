@@ -159,10 +159,12 @@ class Filters:
         self.style['main'][name] = result
         return result
 
-    def trender(self, points: np.array) -> np.array:
+    def trender(self, points: np.array, prefix: str = '') -> np.array:
         """
         This identifies the trend cycle direction of the supplied points.
         """
+        if prefix:
+            prefix = '_' + prefix
         ys = [0]
         points = np.array(points)
         pts = points[1::2]
@@ -176,9 +178,9 @@ class Filters:
                 if last < point:
                     pt = 1
                 ys.append(pt)
-        name = '_trend'
+        name = prefix + '_trend'
         self.style['main'][name] = np.array(ys)
-        name = '_anti_trend'
+        name = prefix + '_anti_trend'
         ys = np.add(np.multiply(ys, -1), 1)
         self.style['main'][name] = np.array(ys)
         return ys

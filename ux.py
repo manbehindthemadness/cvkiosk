@@ -151,6 +151,7 @@ class OnScreen:
             })
 
         self.filters.configure(self.feed_matrix)
+        supertrend = self.filters.trender(self.feed_matrix.adjusted_price_points, 'super')
         normal = self.filters.normalize(self.feed_matrix.adjusted_price_points, 100, 9)
         self.filters.zero_point(self.feed_matrix.adjusted_price_points, 1)
         trend = self.filters.trender(normal)

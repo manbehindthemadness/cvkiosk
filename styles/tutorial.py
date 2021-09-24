@@ -58,8 +58,9 @@ style = {
         'top_arrows',
         'bottom_arrows',
         'candlesticks',
-        'icing_top',
-        'icing_bottom',
+        'icing_top1',
+        'icing_top2',
+        'icing_bottom1',
         # 'onions1',
         # 'points1',
         'volume_ruler_top',
@@ -194,7 +195,7 @@ style = {
         'signal': 'M',
         'use_schematic': True
     },
-    'icing_top': {
+    'icing_top1': {
         'geometry': '&_price_matrix',
         'triggers': '&_trend',
         'thickness': 2,
@@ -204,10 +205,20 @@ style = {
         'color2': 'blue',
         'tb': 't'
     },
-    'icing_bottom': {
+    'icing_top2': {
+            'geometry': '&_price_matrix',
+            'triggers': '&_super_trend',
+            'thickness': 2,
+            'smooth': False,
+            'dash': (1, 1),
+            'color1': 'magenta',
+            'color2': 'magenta',
+            'tb': 't'
+        },
+    'icing_bottom1': {
         'geometry': '&_price_matrix',
         'triggers': '&_anti_trend',
-        'thickness': 1,
+        'thickness': 2,
         'smooth': False,
         # 'dash': (1, 1),
         'color1': 'cyan',
