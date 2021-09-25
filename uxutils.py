@@ -75,12 +75,11 @@ class ScrCap:
     This is a screen capture class that (we hope) will stabalize the wacky failures behind the python screenshot
     libraries.
     """
-    def __init__(self, settings, target_file):
+    def __init__(self, target_file):
         """
         NOTE: This class cannot init until the above 'setup' function has been run.
         """
         self.target_image = target_file
-        self.settings = settings
         self.grab = None
         self.imp()
 
@@ -94,19 +93,17 @@ class ScrCap:
         import pyscreenshot as pys
         self.grab = pys.grab
 
-    def capture(self):
+    def capture(self, region: tuple):
         """
         Captures and saves a screenshot...hopefully.
+
+        region coords (x1, y1, x2, y2)
         :return:
         """
         try:
             os.remove(self.target_image)
         except FileNotFoundError:
             pass
-        if self.settings.DIAGNOSTIC_UNIX:
-            region = (0, 0, 320, 240)
-        else:
-            region = (8, 2, 328, 271)
         while not self.target_image.is_file():
             try:
                 img = self.grab(bbox=region)

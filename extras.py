@@ -29,9 +29,9 @@ class Filters:
     vrange = None
     polarity = None
 
-    def __init__(self, style: dict):
-        self.style = style
-        self.mstyle = self.style['main']
+    def __init__(self):
+        self.style = None
+        self.mstyle = None
 
     def inkeys(self, name: str) -> [bool, np.array]:
         """
@@ -44,10 +44,12 @@ class Filters:
             result = self.mstyle[name]
         return result
 
-    def configure(self, matrix: gp.ChartToPix):
+    def configure(self, style: dict, matrix: gp.ChartToPix):
         """
         This just sets up a bunch of variables.
         """
+        self.style = style
+        self.mstyle = self.style['main']
         self.matrix = matrix
         self.vrange = np.add(np.multiply(matrix.viewable_increment_count, 2), 2)
         return self

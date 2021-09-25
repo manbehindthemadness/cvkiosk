@@ -48,22 +48,22 @@ def clean_images(alll: bool = False):
 clean_images(alll=True)
 
 
-def launch(settings):
+def run_dash(settings):
     """
     Launches debug webserver.
     :return: Nothing.
     """
     logger = logging.getLogger('ext_dash')
     logger.addHandler(logging.StreamHandler(stream=sys.stdout))
-    if settings.DEV_MODE:
+    if settings['debug_web']:
         log = print
     else:
         log = logger.info
 
-    refresh_time = settings.UPDATE_TIME * 60 * 1000
+    refresh_time = settings['webserver_refresh'] * 60 * 1000
     clean_images()
     app = dash.Dash(__name__)
-    app.external_stylesheets = 'assets/style.css'
+    app.external_stylesheets = 'css/style.css'
     app.scripts.config.serve_locally = False
 
     app.layout = html.Div([
@@ -110,7 +110,7 @@ def launch(settings):
             time.sleep(0.5)
         log('file copy success')
 
-        return html.Img(id='graph', src='/static/' + name, style={'width': '100%'}),
+        return html.Img(id='graph', src='/www/' + name, style={'width': '100%'}),
 
     # Add a static image route that serves images from desktop
     # Be *very* careful here - you don't want to serve arbitrary files
@@ -131,6 +131,6 @@ def launch(settings):
         return flask.send_from_directory(image_directory, image_name)
 
     location = flask.helpers.get_root_path(__name__)
-    log('dash serving from:', location)
+    # log('dash serving from:', location)
 
     app.run_server(host='0.0.0.0')

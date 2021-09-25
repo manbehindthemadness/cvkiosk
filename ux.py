@@ -10,6 +10,8 @@ TODO: We need to go over every inch of this and confirm we are actually cleaning
         https://github.com/pythonprofilers/memory_profiler
 
 """
+import time
+import threading
 import datetime
 import gc
 import random
@@ -17,6 +19,7 @@ import linecache
 import numpy as np
 import tkinter as tk
 import graphiend as gp
+from pathlib import Path
 from api import GetChart
 from utils import (
     config,
@@ -28,12 +31,16 @@ from utils import (
     test_o_random,
     get_index,
 )
-from uxutils import setup
+from uxutils import setup, ScrCap
 from extras import Filters
 if config('settings')['debug_memory']:
     from diagnostics import MemTrace
 
 from sugar import Sugar
+
+
+cap_file = Path('www/chart.png')
+screen_cap = ScrCap(cap_file)
 
 
 class OnScreen:
@@ -84,7 +91,7 @@ class OnScreen:
         self.settings = config('settings')  # Grab our settings.
         self.api = GetChart()
         self.debug_mode = debug_mode
-        self.filters = None
+        self.filters = Filters()
 
         try:
             self.sugar = Sugar()
@@ -162,7 +169,7 @@ class OnScreen:
                 '_triggers6': test_o_random(self.matrices['_cu'], 5),
             })
 
-        self.filters.configure(self.feed_matrix)
+        self.filters.configure(self.style, self.feed_matrix)
         self.filters.drifter(self.feed_matrix.adjusted_price_points, 'super')
         normal = self.filters.normalize(self.feed_matrix.adjusted_price_points, 100, 1)
         self.filters.zero_point(self.feed_matrix.adjusted_price_points, 1)
@@ -173,11 +180,21 @@ class OnScreen:
         self.style = matrix_parser(self.style, self.matrices)
         return self
 
-    def screen_cap(self):
+    def screen_cap(self, delay: int = 1):
         """
         This will take the screenshot we will host with our cute little dash server.
         NOTE: This will only capture the graphiend chart region ( not stats and tickers )
         """
+        time.sleep(delay)
+        ox, oy = self.settings['capture_offsets']
+        x1 = np.add(self.layout.winfo_x(), ox)
+        y1 = np.add(self.layout.winfo_y(), oy)
+        x2 = np.add(x1, self.layout.winfo_width())
+        y2 = np.add(y1, self.layout.winfo_height())
+        coords = (x1, y1, x2, y2,)
+        screen_cap.capture(coords)
+        screen_cap.enhance()
+        return self
 
     def read_hardware(self):
         """
@@ -188,6 +205,7 @@ class OnScreen:
             self.sugar.capacity()
             bat_lvl = self.sugar.BATTERY_LEVEL
         self.statvars['BAT'] = bat_lvl
+        return self
 
     def update_variables(self):
         """
@@ -199,7 +217,7 @@ class OnScreen:
         try:
             self.statvars['WFI'] = 75
             self.statvars['UTC'] = datetime.datetime.utcnow().strftime(self.style['main']['utc_format'])  # noqa
-            self.statvars['DRF'] = self.feed_chart[-1][-1]
+            self.statvars['DRF'] = np.round(self.feed_chart[-1][-1], 3)
             for var in self.statvars:
                 if var in self.layout.labelvars.keys() and var not in ['WFI', 'BAT']:
                     rnd = var + ': ' + str(self.statvars[var])  # noqa
@@ -219,6 +237,7 @@ class OnScreen:
             index = get_index()
             self.statvars['FGI'] = index
         self.parent.after(1800000, self.cycle_index)
+        return self
 
     def cycle_variables(self):
         """
@@ -247,7 +266,6 @@ class OnScreen:
 
         mstyle = self.style['main']
         self.parent.geometry = mstyle['geometry']  # Configure the UX size.
-        self.filters = Filters(self.style)
 
         self.base = tk.Frame(
             self.parent,
@@ -347,6 +365,8 @@ class OnScreen:
         if not self.delay:
             self.delay = int(np.multiply(np.multiply(self.settings['update_time'], 60), 1000))
         self.refresh()
+        threading.Thread(target=self.screen_cap, args=(5,)).start()
+        # self.screen_cap()
         self.parent.after(self.delay, self.cycle)
 
         return self
