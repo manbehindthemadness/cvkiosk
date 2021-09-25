@@ -23,10 +23,10 @@ import logging
 import sys
 
 old_name = str()
-image_directory = './assets'
-base = 'warehouse/assets/'
+image_directory = './www'
+base = 'www/'
 list_of_images = [os.path.basename(x) for x in glob.glob('{}*.png'.format(base))]
-static_image_route = '/static/'
+static_image_route = '/www/'
 
 
 def clean_images(alll: bool = False):
