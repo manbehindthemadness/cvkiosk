@@ -10,8 +10,6 @@ TODO: We need to go over every inch of this and confirm we are actually cleaning
         https://github.com/pythonprofilers/memory_profiler
 
 """
-import time
-import threading
 import datetime
 import gc
 import random
@@ -43,11 +41,13 @@ cap_file = Path('www/chart.png')
 screen_cap = ScrCap(cap_file)
 
 
-class OnScreen:
+class OnScreen(tk.Tk):
     """
     This will configure, refresh and draw our user interface.
     """
     runner = 0
+
+    init = True
 
     base = None
     base_style = None
@@ -86,7 +86,7 @@ class OnScreen:
     }
 
     def __init__(self, debug_mode: bool = False):
-        self.parent = tk.Tk()
+        tk.Tk.__init__(self)
         self.cache = gp.ImgCache().refresh()  # Init the cache.
         self.settings = config('settings')  # Grab our settings.
         self.api = GetChart()
@@ -180,12 +180,11 @@ class OnScreen:
         self.style = matrix_parser(self.style, self.matrices)
         return self
 
-    def screen_cap(self, delay: int = 1):
+    def screen_cap(self):
         """
         This will take the screenshot we will host with our cute little dash server.
         NOTE: This will only capture the graphiend chart region ( not stats and tickers )
         """
-        time.sleep(delay)
         ox, oy = self.settings['capture_offsets']
         x1 = np.add(self.layout.winfo_x(), ox)
         y1 = np.add(self.layout.winfo_y(), oy)
@@ -236,7 +235,7 @@ class OnScreen:
         if 'FGI' in self.layout.labelvars.keys():
             index = get_index()
             self.statvars['FGI'] = index
-        self.parent.after(1800000, self.cycle_index)
+        self.after(1800000, self.cycle_index)
         return self
 
     def cycle_variables(self):
@@ -244,7 +243,7 @@ class OnScreen:
         This is the statbar refresh loop.
         """
         self.update_variables()
-        self.parent.after(self.settings['stats_refresh'], self.cycle_variables)
+        self.after(self.settings['stats_refresh'], self.cycle_variables)
         return self
 
     def parse(self):
@@ -265,10 +264,10 @@ class OnScreen:
         )
 
         mstyle = self.style['main']
-        self.parent.geometry = mstyle['geometry']  # Configure the UX size.
+        self.geometry = mstyle['geometry']  # Configure the UX size.
 
         self.base = tk.Frame(
-            self.parent,
+            self,
             width=self.constants['_screen_width'],
             height=self.constants['_screen_height'],
             bg=mstyle['background'],
@@ -303,7 +302,7 @@ class OnScreen:
             )
         return self
 
-    def configure(self):
+    def configure_layout(self):
         """
         This will configure the widgets with our new style information.
         """
@@ -316,13 +315,6 @@ class OnScreen:
         This will draw our widgets against the parent user interface.
         """
         self.layout.draw_widgets()
-        return self
-
-    def mainloop(self):
-        """
-        runs out UX mainloop.
-        """
-        self.parent.mainloop()
         return self
 
     def purge(self, prep: bool = False):
@@ -348,14 +340,20 @@ class OnScreen:
         """
         This will refresh our chart data.
         """
+        if not self.init:
+            print('waiting')
+            self.wait_variable(self.layout.ticker.foreign_lock)
+        print('complete')
         self.purge(prep=True)
         self.refresh_api()  # Launching this here will fire off the api twice really fast.... need to fix this.
         self.update_style_matrices()
-        self.configure()
+        self.configure_layout()
         self.purge()
         self.handle_memory()
         self.draw()  # Test to see if we are properly clearing the images.
         self.update_variables()
+        self.after(5000, self.screen_cap)
+
         return self
 
     def cycle(self):
@@ -365,9 +363,7 @@ class OnScreen:
         if not self.delay:
             self.delay = int(np.multiply(np.multiply(self.settings['update_time'], 60), 1000))
         self.refresh()
-        threading.Thread(target=self.screen_cap, args=(5,)).start()
-        # self.screen_cap()
-        self.parent.after(self.delay, self.cycle)
+        self.after(self.delay, self.cycle)
 
         return self
 
@@ -381,6 +377,7 @@ class OnScreen:
         self.layout.configure_actors()
         self.layout.animate_actors()
         self.cycle_variables()
+        self.init = False
         self.mainloop()
         return self
 
