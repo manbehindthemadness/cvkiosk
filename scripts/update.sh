@@ -20,11 +20,11 @@ mkdir -p $bkp
 cd /opt/cvkiosk || return
 cp cfg.ini "$bkp/$bkp_name" 2> /dev/null
 
-print 'updating cvkiosk'
+echo 'updating cvkiosk'
 git reset --hard
 git pull
 
-print 'updating graphiend'
+echo 'updating graphiend'
 if ! test -f "/usr/src/graphiend" 2> /dev/null
 then
   cd /usr/src || return
@@ -38,7 +38,7 @@ cd /usr/src/graphiend || return
 $pi install -r requirements.txt
 $py setup.py install
 
-print 'updating cvclient'
+echo 'updating cvclient'
 if ! test -f "/usr/src/cvclient" 2> /dev/null
 then
   cd /usr/src || return
