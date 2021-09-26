@@ -34,7 +34,6 @@ class StatBar(tk.Frame):
         self.base = base
         self.b_meter = gp.StatBar(self)
         self.w_meter = gp.StatBar(self)
-        self.l_frame = tk.Frame(self)
 
         self.statbars = [
             self.b_meter,
@@ -50,7 +49,6 @@ class StatBar(tk.Frame):
         try:
             lbl = arry[i]
         except IndexError:
-            print('args', args, 'kwargs', kwargs)
             lbl = tk.Label(*args, **kwargs)
             arry.append(lbl)
             lbl.pack(side=tk.LEFT)
@@ -120,18 +118,6 @@ class StatBar(tk.Frame):
             width=d_width,
             height=s['height'],
         )
-        w = np.subtract(s['width'], np.multiply(d_width, 2))
-        # self.l_frame.configure(
-        #     width=w,
-        #     height=s['height'],
-        #     bg='blue'
-        # )
-        # self.l_frame.place(
-        #     x=d_width,
-        #     y=y,
-        #     width=w,
-        #     height=s['height'],
-        # )
         for idx, label in enumerate(self.base.labelvars):
             if label not in ['WFI', 'BAT']:
                 exec('self.' + label + ' = tk.StringVar()')
@@ -149,7 +135,6 @@ class StatBar(tk.Frame):
                     textvar=tvar
                 )
                 x = int(np.multiply(d_width, np.add(idx, 1)))
-                print('placing label', x, y, tvar.get())
                 lbl.place(
                     x=x,
                     y=y,
@@ -172,4 +157,3 @@ class StatBar(tk.Frame):
         This is a dummy so we work with the layout main logic.
         """
         return self
-

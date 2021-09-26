@@ -20,6 +20,7 @@ mkdir -p $bkp
 cd /opt/cvkiosk || return
 cp cfg.ini "$bkp/$bkp_name" 2> /dev/null
 
+git reset --hard
 git pull
 
 if ! test -f "/usr/src/graphiend" 2> /dev/null
@@ -43,7 +44,6 @@ else
   git pull
 fi
 cd /usr/src/cvclient|| return
-$pi install -r requirements.txt
 $py setup.py install
 
 systemctl daemon-reload
