@@ -10,6 +10,7 @@ TODO: We need to go over every inch of this and confirm we are actually cleaning
         https://github.com/pythonprofilers/memory_profiler
 
 """
+import threading
 import datetime
 import gc
 import random
@@ -180,10 +181,19 @@ class OnScreen(tk.Tk):
         self.style = matrix_parser(self.style, self.matrices)
         return self
 
-    def screen_cap(self):
+    def screen_cap(self, coords: tuple, enhance: bool = False):
         """
         This will take the screenshot we will host with our cute little dash server.
         NOTE: This will only capture the graphiend chart region ( not stats and tickers )
+        """
+        screen_cap.capture(coords)
+        if enhance:
+            screen_cap.enhance()
+        return self
+
+    def _screen_cap(self):
+        """
+        This is a threaded wrapper for screen_cap
         """
         ox, oy = self.settings['capture_offsets']
         x1 = np.add(self.layout.winfo_x(), ox)
@@ -191,8 +201,9 @@ class OnScreen(tk.Tk):
         x2 = np.add(x1, self.layout.winfo_width())
         y2 = np.add(y1, self.layout.winfo_height())
         coords = (x1, y1, x2, y2,)
-        screen_cap.capture(coords)
-        screen_cap.enhance()
+        th = threading.Thread(target=self.screen_cap, args=(coords, False))
+        th.start()
+        th.join()
         return self
 
     def read_hardware(self):
@@ -332,6 +343,7 @@ class OnScreen(tk.Tk):
             # self.matrix_solver = None
             self.style = dict(self.base_style)
             self.layout.purge()
+            self.filters.clear()
         else:
             self.layout.delete('all')
         return self
@@ -352,7 +364,7 @@ class OnScreen(tk.Tk):
         self.handle_memory()
         self.draw()  # Test to see if we are properly clearing the images.
         self.update_variables()
-        self.after(5000, self.screen_cap)
+        self.after(self.settings['capture_delay'], self._screen_cap)
 
         return self
 

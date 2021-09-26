@@ -54,6 +54,14 @@ class Filters:
         self.vrange = np.add(np.multiply(matrix.viewable_increment_count, 2), 2)
         return self
 
+    def clear(self):
+        """
+        This purges our variables.
+        """
+        self.style = None
+        self.mstyle = None
+        self.matrix = None
+
     def trim(self, ary: np.array) -> np.array:
         """
         This trims our output to the viewable range and scales it to the proper size.
