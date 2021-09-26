@@ -95,12 +95,12 @@ class Filters:
             from the spread ema.
         """
         name = '_normal_' + str(base_spread) + '_' + str(spread)
-        normal = self.inkeys(name)
-        if isinstance(normal, NoneType):
-            ema = self.ema(points, base_spread)
-            normal = self.ema(points, spread)
-            normal[1::2] = np.subtract(normal[1::2], ema[1::2])
-            self.mstyle[name] = normal
+        # normal = self.inkeys(name)
+        # if isinstance(normal, NoneType):  # This is the problem right here.....
+        ema = self.ema(points, base_spread)
+        normal = self.ema(points, spread)
+        normal[1::2] = np.subtract(normal[1::2], ema[1::2])
+        self.mstyle[name] = normal
         return np.array(normal)
 
     def find_polarity(self, points: np.array):

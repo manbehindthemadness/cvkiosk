@@ -171,14 +171,13 @@ class OnScreen(tk.Tk):
             })
 
         self.filters.configure(self.style, self.feed_matrix)
-        self.filters.drifter(self.feed_matrix.adjusted_price_points, 'super')
-        normal = self.filters.normalize(self.feed_matrix.adjusted_price_points, 100, 1)
-        self.filters.zero_point(self.feed_matrix.adjusted_price_points, 1)
-        trend = self.filters.trender(normal)
-        self.filters.oscillator(trend)
-        self.style = self.filters.style
+        self.filters.drifter(self.feed_matrix.adjusted_price_points, 'super')  # Build top smoothi.
+        normal = self.filters.normalize(self.feed_matrix.adjusted_price_points, 100, 1)  # Build bottom smoothi.
+        trend = self.filters.trender(normal)  # Build icing trends.
+        self.filters.oscillator(trend)  # Build arrow triggers.
+        self.style = self.filters.style  # Update style
 
-        self.style = matrix_parser(self.style, self.matrices)
+        self.style = matrix_parser(self.style, self.matrices)  # Explode coordinates into style.
         return self
 
     def screen_cap(self, coords: tuple, enhance: bool = False):

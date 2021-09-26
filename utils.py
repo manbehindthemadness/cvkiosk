@@ -201,13 +201,12 @@ def percent_in(part, whole, use_float=False):
     return result
 
 
-def config(section: str) -> configparser:
+def read_config_file(section: str, file: str) -> dict:
     """
-    Thius will grab our settings.
-    :return:
+    This will pull the settings from individual files.
     """
     cfg = configparser.ConfigParser()
-    cfg.read(WORKING_DIR + '/cfg.ini')
+    cfg.read(file)
     cfg = cfg[section]
     settings = dict()
     for setting in list(cfg.keys()):
@@ -216,6 +215,17 @@ def config(section: str) -> configparser:
         except SyntaxError:
             value = cfg[setting]
         settings.update({setting: value})
+    return settings
+
+
+def config(section: str) -> configparser:
+    """
+    This will grab our settings.
+    :return:
+    """
+    settings = read_config_file(section, WORKING_DIR + '/def.ini')
+    local = read_config_file(section, WORKING_DIR + '/cfg.ini')
+    settings.update(local)
     return settings
 
 
