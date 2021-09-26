@@ -34,7 +34,7 @@ fi
 cd /usr/src/graphiend || return
 git reset --hard
 git pull
-$pi install -r requirements.txt
+# $pi install -r requirements.txt
 $py setup.py install
 
 echo 'updating cvclient'
@@ -47,7 +47,7 @@ fi
 cd /usr/src/cvclient || return
 git reset --hard
 git pull
-$pi install -r requirements.txt
+# $pi install -r requirements.txt
 $py setup.py install
 
 systemctl daemon-reload
