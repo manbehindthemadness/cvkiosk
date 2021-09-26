@@ -29,6 +29,7 @@ then
   git clone /media/git/graphiend
 else
   cd /usr/src/graphiend || return
+  git reset --hard
   git pull
 fi
 cd /usr/src/graphiend || return
@@ -41,6 +42,7 @@ then
   git clone /media/git/cvclient
 else
   cd /usr/src/cvclient || return
+  git reset --hard
   git pull
 fi
 cd /usr/src/cvclient|| return
