@@ -17,7 +17,7 @@ mount -t cifs //10.4.222.20/common /media/backups -o username=fakeuser,noexec,pa
 bkp="$backup_location"/cvkiosk
 mkdir -p $bkp
 
-cd /opt/kiosk || return
+cd /opt/cvkiosk || return
 cp cfg.ini "$bkp/$bkp_name" 2> /dev/null
 
 git pull
