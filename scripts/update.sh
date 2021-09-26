@@ -25,7 +25,7 @@ git reset --hard
 git pull
 
 echo 'updating graphiend'
-if ! test -f "/usr/src/graphiend" 2> /dev/null
+if ! test -d "/usr/src/graphiend" 2> /dev/null
 then
   cd /usr/src || return
   git clone /media/git/graphiend
@@ -39,7 +39,7 @@ $pi install -r requirements.txt
 $py setup.py install
 
 echo 'updating cvclient'
-if ! test -f "/usr/src/cvclient" 2> /dev/null
+if ! test -d "/usr/src/cvclient" 2> /dev/null
 then
   cd /usr/src || return
   git clone /media/git/cvclient
