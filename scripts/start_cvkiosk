@@ -1,0 +1,6 @@
+#! /bin/bash
+export PATH=$PATH:/opt/venv/bin:/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/us$
+alias  chdir="cd /opt/cvkiosk"
+cd /opt/cvkiosk || return
+startx &
+/opt/venv/bin/python -c 'import main' && xrandr -d :0

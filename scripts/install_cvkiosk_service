@@ -1,0 +1,8 @@
+#! /bin/bash
+ln -s /opt/cvkiosk/scripts/cvkiosk.service /etc/systemd/system/
+ln -s /opt/cvkiosk/scripts/start_cvkiosk /bin/
+chmod +x /bin/start_cvkiosk
+# Cleanup extra files here
+systemctl daemon-reload
+systemctl enable cvkiosk.service
+service cvkiosk start

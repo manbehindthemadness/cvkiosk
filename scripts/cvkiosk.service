@@ -1,0 +1,15 @@
+[Unit]
+Description=ClairvoyantKiosk
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/
+ExecStart=/bin/sh /bin/start_cvkiosk
+# ExecStartPost=
+TimeoutSec=20
+
+ExecStop= /bin/sleep 20
+ExecStop= /bin/kill -2 $MAINPID
+
+[Install]
+WantedBy=multi-user.target
