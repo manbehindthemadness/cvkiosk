@@ -8,23 +8,36 @@ Please see the license file for more details.
 ------------------------------------------------------------------------------------------------------------------------
 """
 import tkinter as tk
-from base import Layout
+import graphiend as gp
+from layouts.base import Layout
 from utils import config
-from graphiend import (
-    utils
-)
 
 
-class Body(Layout):
+class Format(Layout):
     """
-    This is a layout child class that will provide our visual elements for the UX
+    This is an example layout format.
     """
-    def __init__(self, parent: tk.Frame, cache: utils.ImgCache, settings: config):
+    def __init__(self, parent: tk.Frame, cache: gp.ImgCache, settings: config):
         Layout.__init__(self, parent, cache, settings)
+        self.widgets = [  # This is the list of included widgets for this layout,
+            'smoothi_bottom',
+            'smoothi_top',
+            'volume',
+            'top_arrows',
+            'bottom_arrows',
+            'candlesticks',
+            'icing_top1',
+            'icing_top2',
+            'icing_bottom1',
+            'tics1',
+            'date_ruler',
+            'tics2',
+            'statbar',
+            'ticker'
+        ]
+        self.labelvars = {  # This specifies the extra labels to be included in the statbar.
+            'UTC': tk.StringVar(),
+            'FGI': tk.StringVar(),
+            'QUO': tk.StringVar(),
+        }
 
-    def prep(self, style: dict, data: dict):
-        """
-        This will pass our style configurations down to all out happy little widgets.
-        """
-        self.style = style
-        self.data = data  # Do we need this?
