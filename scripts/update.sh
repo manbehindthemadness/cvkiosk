@@ -25,30 +25,30 @@ git reset --hard
 git pull
 
 echo 'updating graphiend'
-if ! test -d "/usr/src/graphiend" 2> /dev/null
+if [ ! -d "/usr/src/graphiend" ] 2> /dev/null
 then
   cd /usr/src || return
   git clone /media/git/graphiend
-else
-  cd /usr/src/graphiend || return
-  git reset --hard
-  git pull
 fi
+
+cd /usr/src/graphiend || return
+git reset --hard
+git pull
+
 cd /usr/src/graphiend || return
 $pi install -r requirements.txt
 $py setup.py install
 
 echo 'updating cvclient'
-if ! test -d "/usr/src/cvclient" 2> /dev/null
+if [ ! -d "/usr/src/cvclient" ] 2> /dev/null
 then
   cd /usr/src || return
   git clone /media/git/cvclient
-else
-  cd /usr/src/cvclient || return
-  git reset --hard
-  git pull
 fi
-cd /usr/src/cvclient|| return
+
+cd /usr/src/cvclient || return
+git reset --hard
+git pull
 $py setup.py install
 
 systemctl daemon-reload
