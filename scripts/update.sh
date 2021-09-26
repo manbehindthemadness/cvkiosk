@@ -4,6 +4,7 @@ backup_path=/media/backups/
 backup_folder=node_backups
 backup_location="$backup_path""$backup_folder"
 py=/opt/venv/bin/python
+pi=/opt/venv/bin/pip
 
 mkdir /media/git 2> /dev/null
 mount -t cifs //10.4.222.20/git /media/git -o username=fakeuser,noexec,password=FakePassword1!
@@ -30,6 +31,7 @@ else
   git pull
 fi
 cd /usr/src/graphiend || return
+$pi install -r requirements.txt
 $py setup.py install
 
 if ! test -f "/usr/src/cvclient" 2> /dev/null
@@ -41,6 +43,7 @@ else
   git pull
 fi
 cd /usr/src/cvclient|| return
+$pi install -r requirements.txt
 $py setup.py install
 
 systemctl daemon-reload
