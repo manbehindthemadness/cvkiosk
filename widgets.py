@@ -29,7 +29,7 @@ class StatBar(tk.Frame):
     lbls = list()
 
     def __init__(self, parent: tk.Frame, base):
-        tk.Frame.__init__(self, parent)
+        tk.Frame.__init__(self)
         self.parent = parent
         self.base = base
         self.b_meter = gp.StatBar(self)
@@ -50,6 +50,7 @@ class StatBar(tk.Frame):
         try:
             lbl = arry[i]
         except IndexError:
+            print('args', args, 'kwargs', kwargs)
             lbl = tk.Label(*args, **kwargs)
             arry.append(lbl)
             lbl.pack(side=tk.LEFT)
@@ -66,7 +67,9 @@ class StatBar(tk.Frame):
         x, y = s['coords']
         self.configure(
             bg=s['background'],
-            border=s['border']
+            border=s['border'],
+            width=s['width'],
+            height=s['height']
         )
         self.place(
             x=x,
@@ -117,12 +120,25 @@ class StatBar(tk.Frame):
             width=d_width,
             height=s['height'],
         )
+        w = np.subtract(s['width'], np.multiply(d_width, 2))
+        # self.l_frame.configure(
+        #     width=w,
+        #     height=s['height'],
+        #     bg='blue'
+        # )
+        # self.l_frame.place(
+        #     x=d_width,
+        #     y=y,
+        #     width=w,
+        #     height=s['height'],
+        # )
         for idx, label in enumerate(self.base.labelvars):
             if label not in ['WFI', 'BAT']:
                 exec('self.' + label + ' = tk.StringVar()')
                 exec('self.' + label + '.set("' + label + ': 0")')
 
-                lbl = self.create_or_modify(idx, self.lbls, self, {})
+                lbl = self.create_or_modify(idx, self.lbls, self, height=s['height'], width=d_width)
+                tvar = eval('self.' + label)
                 lbl.configure(
                     bg=s['background'],
                     fg=s['text_color'],
@@ -130,9 +146,10 @@ class StatBar(tk.Frame):
                     border=s['border'],
                     width=d_width,
                     height=s['height'],
-                    textvar=eval('self.' + label)
+                    textvar=tvar
                 )
                 x = int(np.multiply(d_width, np.add(idx, 1)))
+                print('placing label', x, y, tvar.get())
                 lbl.place(
                     x=x,
                     y=y,
@@ -140,6 +157,7 @@ class StatBar(tk.Frame):
                     height=s['height'],
                 )
                 exec('self.' + label + '_label = lbl')
+        self.update()
         return self
 
     def refresh(self):
