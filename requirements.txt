@@ -11,7 +11,7 @@ dash-table>=4.12.0
 Flask>=2.0.1
 graphiend>=0.3
 mttkinter>=0.6.1
-numpy==1.21.0
+numpy==1.16.2
 pathlib>=1.0.1
 Pillow>=8.3.1
 pyautogui
