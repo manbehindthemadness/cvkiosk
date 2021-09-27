@@ -52,7 +52,7 @@ style = {
         'meter_colors_right': "@gp.color_range(0, 100, 'red', 'green')",
         'meter_label_width_left': 40,
         'meter_label_width_right': 40,
-        'font': 'Arial 6 normal bold',
+        'font': 'Arial 5 normal bold',
         'average': 3,   # This averages the readout across a few samples (useful for noisy sensors).
         'background': 'white',
     },
