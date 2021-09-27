@@ -85,13 +85,13 @@ style = {
     'smoothi_top': {
         'geometry': '&_price_matrix',
         'matrix_override': '&_super_drift',
-        'height': 30,
+        'height': 20,
         'fill': 'red',
         'graph_type': 'prices',
         'tb': 't',
         'smooth': 2,
         'lineinterpol': 4,
-        'offset': 184,
+        'offset': 194,
         'padding': (0, 0, 0, 0),  # left, right, top, bottom.
         # 'outline': 'black',
         'alpha': 0.5,
