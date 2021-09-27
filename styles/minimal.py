@@ -95,7 +95,8 @@ style = {
         'padding': (0, 0, 0, 0),  # left, right, top, bottom.
         # 'outline': 'black',
         'alpha': 0.5,
-        'aa': (10, 0)
+        'aa': (10, 0),
+        'hide_info_text': True,
     },
     'volume': {
         'geometry': '&_price_matrix',

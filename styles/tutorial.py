@@ -131,7 +131,8 @@ style = {
         'padding': (46, 46, 0, 0),  # left, right, top, bottom.
         # 'outline': 'black',
         'alpha': 0.7,
-        'aa': (10, 0)
+        'aa': (10, 0),
+        'hide_info_text': False,
     },
     'volume': {
         'geometry': '&_price_matrix',
