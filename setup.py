@@ -83,7 +83,7 @@ def simple_install(installer, obj, copy=False):
             shutil.rmtree(there)
         except WindowsError:
             pass
-        system_command(['pip', 'install', '-r', 'requirements.txt'])
+        # system_command(['pip', 'install', '-r', 'requirements.txt'])
         shutil.copytree(
             here,
             there,
