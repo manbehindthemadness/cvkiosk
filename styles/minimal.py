@@ -96,7 +96,6 @@ style = {
         # 'outline': 'black',
         'alpha': 0.5,
         'aa': (10, 0),
-        'hide_info_text': True,
     },
     'volume': {
         'geometry': '&_price_matrix',
@@ -213,6 +212,7 @@ style = {
             'anchor': 'e',
             'time_increment': 3,
             'use_local_time': True,
+            'hide_info_text': True,
         },
         'background': {
             'fill': 'white',
