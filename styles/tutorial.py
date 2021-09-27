@@ -449,7 +449,7 @@ style = {
             'icondown': None,
             'symbolup': '▲',
             'symboldown': '▼',
-            'symbolwidth': None,
+            'symbolwidth': 8,
             'pix_per_step': 2,
             'step_delay': 50,
             'spacing': 1,

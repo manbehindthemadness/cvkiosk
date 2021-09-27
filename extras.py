@@ -31,7 +31,6 @@ class Filters:
 
     def __init__(self):
         self.style = None
-        self.mstyle = None
 
     def inkeys(self, name: str) -> [bool, np.array]:
         """
@@ -40,8 +39,8 @@ class Filters:
             Tf no it will return None.
         """
         result = None
-        if name in self.mstyle.keys():
-            result = self.mstyle[name]
+        if name in self.style['main'].keys():
+            result = self.style['main'][name]
         return result
 
     def configure(self, style: dict, matrix: gp.ChartToPix):
@@ -50,7 +49,6 @@ class Filters:
         """
         self.clear()
         self.style = style
-        self.mstyle = style['main']
         self.matrix = matrix
         self.vrange = np.add(np.multiply(matrix.viewable_increment_count, 2), 2)
         return self
@@ -60,7 +58,6 @@ class Filters:
         This purges our variables.
         """
         self.style = None
-        self.mstyle = None
         self.matrix = None
         self.vrange = None
 
@@ -88,7 +85,7 @@ class Filters:
             ays = gp.moving_average(np.array(average[1::2]), spread)
             padding = np.subtract(spread, 1)
             average[1::2] = np.pad(ays, (padding, 0))
-            self.mstyle[name] = np.array(average)
+            self.style['main'][name] = np.array(average)
         return np.array(average)  # TODO: this might have something to do with our problem.
 
     def normalize(self, points: np.array, base_spread: int, spread: int) -> np.array:
@@ -100,7 +97,7 @@ class Filters:
         ema = self.ema(points, base_spread)
         normal = self.ema(points, spread)
         normal[1::2] = np.subtract(normal[1::2], ema[1::2])
-        self.mstyle[name] = np.array(normal)
+        self.style['main'][name] = np.array(normal)
         return normal
 
     def find_polarity(self, points: np.array):

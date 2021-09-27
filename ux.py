@@ -18,7 +18,6 @@ import linecache
 import numpy as np
 import tkinter as tk
 import graphiend as gp
-from PIL import ImageTk
 from pathlib import Path
 from api import GetChart
 from utils import (
@@ -31,7 +30,7 @@ from utils import (
     test_o_random,
     get_index,
 )
-from uxutils import ScrCap, loadimage
+from uxutils import ScrCap
 from extras import Filters
 if config('settings')['debug_memory']:
     from diagnostics import MemTrace
@@ -95,7 +94,7 @@ class OnScreen(tk.Tk):
         self.settings = config('settings')  # Grab our settings.
         self.api = GetChart()
         self.debug_mode = debug_mode
-        self.filters = Filters()
+        self.filters = None
 
         try:
             self.sugar = Sugar()
@@ -172,7 +171,9 @@ class OnScreen(tk.Tk):
                 '_triggers5': test_o_random(self.matrices['_cl'], 5),
                 '_triggers6': test_o_random(self.matrices['_cu'], 5),
             })
-
+        self.filters = Filters()
+        print('feed source -----------------------------')
+        print(self.feed_matrix.price_matrix[-1][:8], self.feed_matrix.price_matrix[-1][-8:])
         self.filters.configure(self.style, self.feed_matrix)
         self.filters.drifter(self.feed_matrix.price_matrix[-1], 'super')  # Build top smoothi.
         normal = self.filters.normalize(self.feed_matrix.price_matrix[-1], 100, 1)  # Build bottom smoothi.
@@ -189,12 +190,9 @@ class OnScreen(tk.Tk):
         NOTE: This will only capture the graphiend chart region ( not stats and tickers )
         """
         gp.burn(self.faker_image)
-        img = screen_cap.capture(coords)
+        screen_cap.capture(coords)
         if enhance:
-            img = screen_cap.enhance()
-        # image = ImageTk.PhotoImage(img)
-
-        # self.faker.configure(bg=img)
+            screen_cap.enhance()
         return self
 
     def _screen_cap(self):
@@ -288,6 +286,7 @@ class OnScreen(tk.Tk):
         self.geometry = mstyle['geometry']  # Configure the UX size.
 
         # This here is going to hold a screenshot that we are going to use to hide the redraw process.
+        # TODO: This sounded like a good idea but the application hangs whenever I try to open the file -_-
         self.faker = tk.Frame(
             self,
             width=mstyle['price_canvas_width'],
@@ -360,6 +359,7 @@ class OnScreen(tk.Tk):
         https://stackoverflow.com/questions/57462037/what-are-count0-count1-and-count2-values-returned-by-the-python-gc-get-count
         """
         if prep:  # TODO: This will need to be evaluated to maximize our redraw speeds.
+            self.matrices = None
             self.price_chart = None
             self.feed_matrix = None
             self.price_matrix = None
