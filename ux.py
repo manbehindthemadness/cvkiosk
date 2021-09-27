@@ -30,7 +30,7 @@ from utils import (
     test_o_random,
     get_index,
 )
-from uxutils import setup, ScrCap
+from uxutils import ScrCap
 from extras import Filters
 if config('settings')['debug_memory']:
     from diagnostics import MemTrace
@@ -99,8 +99,6 @@ class OnScreen(tk.Tk):
             self.sugar.battery_gpio_set()
         except NameError:
             pass
-
-        setup(self.settings)  # Prep environment for display.
 
         if self.settings['debug_memory']:
             self.trace = MemTrace()  # Fire up a tracer and watch for leaks.

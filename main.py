@@ -8,11 +8,13 @@ Please see the license file for more details.
 ------------------------------------------------------------------------------------------------------------------------
 """
 import threading
+from uxutils import setup
 from utils import config
 from ux import OnScreen
 from web import run_dash
 
 config = config('settings')
+setup(config)  # Prep environment for display.
 web_thread = threading.Thread(target=run_dash, args=(config,))
 web_thread.start()
 OnScreen().run()
