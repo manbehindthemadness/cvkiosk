@@ -3,4 +3,4 @@ export PATH=$PATH:/opt/venv/bin:/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/
 alias  chdir="cd /opt/cvkiosk"
 cd /opt/cvkiosk || return
 startx &
-/opt/venv/bin/python -c 'import main' && xrandr -d :0
+/usr/bin/nice -n -5 /opt/venv/bin/python -c 'import main' && xrandr -d :0

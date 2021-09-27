@@ -15,11 +15,11 @@ style = {
         'style_name': 'tutorial',  # Name style for organization.
         # Configure global settings in relation to screen size and what have you.
         'geometry': "$_screen_size:",  # This is our screen size.
-        'price_canvas_offset_coord': (0, 0),  # This is the coordinate of the upper left corner of the price canvas.
+        'price_canvas_offset_coord': (0, 10),  # This is the coordinate of the upper left corner of the price canvas.
         'price_canvas_width': '$_screen_width:100%',  # The size of the graphiend canvas.
-        'price_canvas_height': '$_screen_height:16-',
+        'price_canvas_height': '$_screen_height:26-',
         # This scales the candlestick matrix in order to make room for the other widgets.
-        'price_matrix_offsets': (2, 2, 30, 75),  # left, right, top, bottom.
+        'price_matrix_offsets': (2, 2, 20, 85),  # left, right, top, bottom.
         'price_increment': 4,  # The width of one candlestick in pixels.
         'background': 'white',
         'utc_format': '%H:%M:%p',
@@ -76,7 +76,7 @@ style = {
         'outline': 'black',
         'smooth': 1,  # Smooths average out the measurements.
         'lineinterpol': 2,  # Linear interpolation adds points and then rounds off the edges.
-        'offset': 160,
+        'offset': 150,
         'padding': (0, 0, 0, 0),  # left, right, top, bottom.
         'alpha': 0.2,  # Transparency.
         'alphamask': True,  # Transparency following a gradient.
@@ -101,8 +101,8 @@ style = {
         'geometry': '&_price_matrix',
         'height': 40,
         'top': 100,
-        'bottom': 150,
-        'offset': 80,
+        'bottom': 140,
+        'offset': 70,
         'alpha': 0.6,
         'aa': (10, 0),
         'color1': 'green',
@@ -175,7 +175,7 @@ style = {
         'tb': 'b'
     },
     'tics1': {  # These are the little ruler ticks that run down the edges.
-        'coords': (319, 10, 319, 150),  # top x, y, bottom x, y
+        'coords': (319, 0, 319, 140),  # top x, y, bottom x, y
         'tics': [1, 2, 9],  # shorts, longs, increment.
         'style': {
             'fill': 'black',
@@ -185,7 +185,7 @@ style = {
     },
     'date_ruler': {
         'geometry': '&_price_matrix',
-        'coords': (320, 150),
+        'coords': (320, 140),
         'time_coord': 2,
         'height': 50,
         'width': 50,
@@ -220,7 +220,7 @@ style = {
         }
     },
     'tics2': {  # These are the little ruler ticks that run down the edges.
-        'coords': (0, 10, 0, 150),  # top x, y, bottom x, y
+        'coords': (0, 10, 0, 140),  # top x, y, bottom x, y
         'tics': [1, 2, 9],  # shorts, longs, increment.
         'style': {
             'fill': 'black',
