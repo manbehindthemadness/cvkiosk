@@ -103,6 +103,8 @@ class OnScreen(tk.Tk):
         if self.settings['debug_memory']:
             self.trace = MemTrace()  # Fire up a tracer and watch for leaks.
 
+        self.config(cursor="none")
+
     def refresh_api(self):
         """
         This will refresh the imformation from the api.
@@ -208,10 +210,13 @@ class OnScreen(tk.Tk):
         This will get variables from the system hardware
         """
         bat_lvl = -1
-        if self.sugar:
-            self.sugar.capacity()
-            bat_lvl = self.sugar.BATTERY_LEVEL
-        self.statvars['BAT'] = bat_lvl
+        try:
+            if self.sugar:
+                self.sugar.capacity()
+                bat_lvl = self.sugar.BATTERY_LEVEL
+            self.statvars['BAT'] = bat_lvl
+        except OSError:
+            pass
         return self
 
     def update_variables(self):
