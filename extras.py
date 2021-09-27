@@ -48,8 +48,9 @@ class Filters:
         """
         This just sets up a bunch of variables.
         """
+        self.clear()
         self.style = style
-        self.mstyle = self.style['main']
+        self.mstyle = style['main']
         self.matrix = matrix
         self.vrange = np.add(np.multiply(matrix.viewable_increment_count, 2), 2)
         return self
@@ -61,6 +62,7 @@ class Filters:
         self.style = None
         self.mstyle = None
         self.matrix = None
+        self.vrange = None
 
     def trim(self, ary: np.array) -> np.array:
         """
@@ -73,7 +75,7 @@ class Filters:
         vmin = np.amin(trm[1::2])
         height = np.subtract(vmax, vmin)
         ary[1::2] = gp.scale(ary[1::2], height, self.matrix.viewable_increment_count)
-        return np.array(ary)
+        return ary
 
     def ema(self, points: np.array, spread: int = 20, ) -> np.array:
         """
@@ -86,8 +88,8 @@ class Filters:
             ays = gp.moving_average(np.array(average[1::2]), spread)
             padding = np.subtract(spread, 1)
             average[1::2] = np.pad(ays, (padding, 0))
-            self.mstyle[name] = average
-        return np.array(average)
+            self.mstyle[name] = np.array(average)
+        return np.array(average)  # TODO: this might have something to do with our problem.
 
     def normalize(self, points: np.array, base_spread: int, spread: int) -> np.array:
         """
@@ -95,13 +97,11 @@ class Filters:
             from the spread ema.
         """
         name = '_normal_' + str(base_spread) + '_' + str(spread)
-        # normal = self.inkeys(name)
-        # if isinstance(normal, NoneType):  # This is the problem right here.....
         ema = self.ema(points, base_spread)
         normal = self.ema(points, spread)
         normal[1::2] = np.subtract(normal[1::2], ema[1::2])
-        self.mstyle[name] = normal
-        return np.array(normal)
+        self.mstyle[name] = np.array(normal)
+        return normal
 
     def find_polarity(self, points: np.array):
         """
@@ -120,52 +120,6 @@ class Filters:
                     polarity = 0
                 self.polarity.append(polarity)
         return self
-
-    def zero_point(
-            self, points: np.array,
-            trigger_point: [int, float],
-    ) -> np.array:
-        """
-        This makes a volatility graph that starts at plus or minus the trigger point and
-            spikes the closer we get to zero.
-            This doesn't work at all... and I think I am going to table it until the next release.
-        """
-
-        xs = np.array(points[0::2])
-        ys = [0]
-        yt = np.array(points[1::2])
-        last_nonzero = np.add(trigger_point, 1)  # Use this to prevent zerodivision.
-        for idx, point in enumerate(yt):
-            if not idx:  # Skip the first iteration.
-                pass
-            else:
-                pt = 0
-                ls = np.subtract(idx, 1)
-                last = np.abs(yt[ls])
-                this = np.abs(point)
-                lr = [last, this]
-                mx, mn = np.amax(lr), np.amin(lr)
-                drift = np.subtract(mx, mn)
-                if drift <= trigger_point:
-                    if not drift:
-                        drift = 0.1
-                    if drift > 0:
-                        pt = np.divide(trigger_point, drift)
-                        if pt > trigger_point:
-                            pt = trigger_point
-                        last_nonzero = pt
-                if not pt:
-                    pt = last_nonzero
-                ys.append(pt)
-        result = np.concatenate(np.transpose([
-            xs,
-            ys
-        ]))
-
-        self.find_polarity(np.array(result[1::2]))
-        name = '_zero_point_' + str(trigger_point)
-        self.style['main'][name] = result
-        return result
 
     def trender(self, points: np.array, prefix: str = '') -> np.array:
         """

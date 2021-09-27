@@ -18,6 +18,7 @@ import linecache
 import numpy as np
 import tkinter as tk
 import graphiend as gp
+from PIL import ImageTk
 from pathlib import Path
 from api import GetChart
 from utils import (
@@ -30,7 +31,7 @@ from utils import (
     test_o_random,
     get_index,
 )
-from uxutils import ScrCap
+from uxutils import ScrCap, loadimage
 from extras import Filters
 if config('settings')['debug_memory']:
     from diagnostics import MemTrace
@@ -52,6 +53,8 @@ class OnScreen(tk.Tk):
 
     base = None
     base_style = None
+    faker = None
+    faker_image = None
     ticker = None
     header = None
     layout = None
@@ -171,10 +174,10 @@ class OnScreen(tk.Tk):
             })
 
         self.filters.configure(self.style, self.feed_matrix)
-        self.filters.drifter(self.feed_matrix.adjusted_price_points, 'super')  # Build top smoothi.
-        normal = self.filters.normalize(self.feed_matrix.adjusted_price_points, 100, 1)  # Build bottom smoothi.
-        trend = self.filters.trender(normal)  # Build icing trends.
-        self.filters.oscillator(trend)  # Build arrow triggers.
+        self.filters.drifter(self.feed_matrix.price_matrix[-1], 'super')  # Build top smoothi.
+        normal = self.filters.normalize(self.feed_matrix.price_matrix[-1], 100, 1)  # Build bottom smoothi.
+        trend = self.filters.trender(np.array(normal))  # Build icing trends.
+        self.filters.oscillator(np.array(trend))  # Build arrow triggers.
         self.style = self.filters.style  # Update style
 
         self.style = matrix_parser(self.style, self.matrices)  # Explode coordinates into style.
@@ -185,9 +188,13 @@ class OnScreen(tk.Tk):
         This will take the screenshot we will host with our cute little dash server.
         NOTE: This will only capture the graphiend chart region ( not stats and tickers )
         """
-        screen_cap.capture(coords)
+        gp.burn(self.faker_image)
+        img = screen_cap.capture(coords)
         if enhance:
-            screen_cap.enhance()
+            img = screen_cap.enhance()
+        # image = ImageTk.PhotoImage(img)
+
+        # self.faker.configure(bg=img)
         return self
 
     def _screen_cap(self):
@@ -280,6 +287,22 @@ class OnScreen(tk.Tk):
         mstyle = self.style['main']
         self.geometry = mstyle['geometry']  # Configure the UX size.
 
+        # This here is going to hold a screenshot that we are going to use to hide the redraw process.
+        self.faker = tk.Frame(
+            self,
+            width=mstyle['price_canvas_width'],
+            height=mstyle['price_canvas_height'],
+            bd=0,
+            highlightthickness=0
+        )
+        x, y = self.style['main']['price_canvas_offset_coord']
+        self.faker.place(
+            x=x,
+            y=y,
+            width=mstyle['price_canvas_width'],
+            height=mstyle['price_canvas_height'],
+        )
+
         self.base = tk.Frame(
             self,
             width=self.constants['_screen_width'],
@@ -337,13 +360,13 @@ class OnScreen(tk.Tk):
         https://stackoverflow.com/questions/57462037/what-are-count0-count1-and-count2-values-returned-by-the-python-gc-get-count
         """
         if prep:  # TODO: This will need to be evaluated to maximize our redraw speeds.
-            # self.price_chart = None
-            # self.feed_matrix = None
-            # self.price_matrix = None
-            # self.feed_chart = None
-            # self.alerts = None
-            # self.chart_data = None
-            # self.matrix_solver = None
+            self.price_chart = None
+            self.feed_matrix = None
+            self.price_matrix = None
+            self.feed_chart = None
+            self.alerts = None
+            self.chart_data = None
+            self.matrix_solver = None
             self.style = dict(self.base_style)
             self.layout.purge()
             self.filters.clear()
@@ -356,9 +379,7 @@ class OnScreen(tk.Tk):
         This will refresh our chart data.
         """
         if not self.init:
-            print('waiting')
             self.wait_variable(self.layout.ticker.foreign_lock)
-        print('complete')
         self.purge(prep=True)
         self.refresh_api()  # Launching this here will fire off the api twice really fast.... need to fix this.
         self.update_style_matrices()

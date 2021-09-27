@@ -18,6 +18,7 @@ import numpy as np
 from colour import Color
 from PIL import (
     Image,
+    ImageTk,
     ImageEnhance,
     ImageFilter
 )
@@ -29,6 +30,19 @@ from utils import (
 from _tkinter import TclError
 
 pys = None
+
+
+def loadimage(file):
+    """
+    Loads an image into memory and then closes the file.
+    """
+    # with open(file, 'rb', 0) as file:
+    #     image = Image.open(file)
+    #     image.load()
+    #     file.close()
+    #     del file
+    image = Image.open(file)
+    return ImageTk.PhotoImage(image)
 
 
 def setup(settings, display_override: str = None):
@@ -100,6 +114,7 @@ class ScrCap:
         region coords (x1, y1, x2, y2)
         :return:
         """
+        img = None
         try:
             os.remove(self.target_image)
         except FileNotFoundError:
@@ -114,6 +129,7 @@ class ScrCap:
                 print('capture failed', '*warn*')
                 self.imp()
                 time.sleep(0.5)
+        return img
 
     def enhance(self):
         """
@@ -124,6 +140,7 @@ class ScrCap:
         img = converter.enhance(2.0)
         img = img.filter(ImageFilter.SHARPEN)
         img.save(self.target_image)
+        return img
 
 
 def from_rgb(rgb: tuple) -> str:
