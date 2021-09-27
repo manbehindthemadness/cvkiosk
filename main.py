@@ -15,6 +15,5 @@ from web import run_dash
 config = config('settings')
 web_thread = threading.Thread(target=run_dash, args=(config,))
 web_thread.start()
-oc = OnScreen()
-oc.run()
+OnScreen().run()
 print('done')
