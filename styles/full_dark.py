@@ -41,6 +41,7 @@ style = {
         'price_ruler',
         'date_ruler',
         'tics2',
+        'schematic'
     ],
     'actor_order': [  # Animate order for moving actors.
         'statbar',
@@ -129,15 +130,15 @@ style = {
         'tb': 't',
         'signal': 'TR.DN',
         'icon': 'img/icons/minus_circle.png',  # Schematic view icon.
-        'icon_fill': 'green',  # Icon color.
-        'tag_fill': 'black',  # Schematic text color.
+        'icon_fill': 'white',  # Icon color.
+        'tag_fill': 'white',  # Schematic text color.
         'use_schematic': True  # Toggle schematics.
     },
     'bottom_arrows': {
         'geometry': '&_price_matrix',
         'height': 10,
         'offset': 10,  # This is the distance the arrow will appear from the coordinate.
-        'fill': 'magenta',
+        'fill': 'cyan',
         'thickness': 1,  # Line thickness.
         'arrow': 'first',  # This is the end of the line that the arrow will attach.
         'arrowshape': (5, 5, 2),  # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
@@ -146,8 +147,8 @@ style = {
         'tb': 'b',
         'signal': 'TR.UP',
         'icon': 'img/icons/x1.png',  # Schematic view icon.
-        'icon_fill': 'red',  # Icon color.
-        'tag_fill': 'black',  # Schematic text color.
+        'icon_fill': 'white',  # Icon color.
+        'tag_fill': 'white',  # Schematic text color.
         'use_schematic': True  # Toggle schematics.
     },
     'icing_top1': {
@@ -333,12 +334,38 @@ style = {
         }
     },
     'tics2': {  # These are the little ruler ticks that run down the edges.
-        'coords': (75, 0, 75, 430),  # top x, y, bottom x, y
+        'coords': (79, 0, 79, 427),  # top x, y, bottom x, y
         'tics': [3, 5, 9],  # shorts, longs, increment.
         'style': {
             'fill': '#adadad',
             'anchor': 'e',
             'width': 1,
+        }
+    },
+    'schematic': {  # This is where all the fancy pointer lines go to show information.
+        'geometry': '&_price_matrix',
+        'coords': (0, 0),
+        'width': 79,
+        'height': 427,
+        'path_spacing': 20,  # This is how close the lines are allowed to get to one another.
+        'path_relief': 5,  # Distance from the target pointer to the start of the line.
+        'pointer_relief': -5,  # Distance between line end and the ruler.
+        'font': 'Arial 10 normal normal',
+        'linetype': 'line',  # More options to come in the future.
+        'style': {
+            'smooth': True,
+            'dash': (1, 2),
+            'arrow': 'last',
+            'arrowshape': (5, 5, 2),
+            'tag_fill': 'white',
+            'outlinestyle': (0, 0, 1, 1),
+            'linecolor': '#adadad',
+            'linethickness': 1,
+            'fill': '#2d3030',
+        },
+        'background': {
+            'fill': '#262929',
+            'alpha': 0.5
         }
     },
     'ticker': {
