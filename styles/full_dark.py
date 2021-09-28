@@ -34,9 +34,13 @@ style = {
         'icing_top1',
         'icing_top2',
         'icing_bottom1',
-        # 'tics1',
-        # 'date_ruler',
-        # 'tics2',
+        'volume_ruler_top',
+        'volume_ruler_bottom1',
+        'volume_ruler_bottom2',
+        'tics1',
+        'price_ruler',
+        'date_ruler',
+        'tics2',
     ],
     'actor_order': [  # Animate order for moving actors.
         'statbar',
@@ -177,56 +181,163 @@ style = {
         'tb': 'b'
     },
     'tics1': {  # These are the little ruler ticks that run down the edges.
-        'coords': (319, 0, 319, 140),  # top x, y, bottom x, y
-        'tics': [1, 2, 9],  # shorts, longs, increment.
+        'coords': (1845, 35, 1845, 305),  # top x, y, bottom x, y
+        'tics': [3, 5, 9],  # shorts, longs, increment.
         'style': {
             'fill': '#adadad',
-            'anchor': 'e',
+            'anchor': 'w',
             'width': 1,
+        }
+    },
+    'volume_ruler_top': {
+        'geometry': '&_price_matrix',
+        'coords': (1841, 0),
+        'height': 35,
+        'width': 79,
+        'price_range': '&_volume',
+        'quotes': '&_drf',
+        'style': {
+            'font': 'Arial 10 normal normal',
+            'linecolor': '#adadad',
+            'linethickness': 1,
+            'toptextcolor': '#adadad',
+            'bottomtextcolor': '#adadad',
+            'topbottomtextoffsets': (1, 5),
+            'showtopbottomquotes': False,
+            'showquotepointer': False,
+            'quotetextcolor': 'white',
+            'quoteheight': 6,
+            'quoteoffset': 3,
+            'outlinestyle': (0, 0, 1, 1),  # left, right, top, bottom.
+        },
+        'background': {
+            'fill': '#262929',
+            'alpha': 0.5
+        }
+    },
+    'volume_ruler_bottom1': {
+        'geometry': '&_price_matrix',
+        'coords': (1841, 355),
+        'height': 32,
+        'width': 79,
+        'price_range': '&_volume',
+        'quotes': '&_drf',
+        'style': {
+            'font': 'Arial 10 normal normal',
+            'linecolor': '#adadad',
+            'linethickness': 1,
+            'toptextcolor': 'white',
+            'bottomtextcolor': 'white',
+            'topbottomtextoffsets': (1, 5),
+            'showtopbottomquotes': False,
+            'showquotepointer': False,
+            'quotetextcolor': 'white',
+            'quoteheight': 6,
+            'quoteoffset': 3,
+            'outlinestyle': (0, 0, 0, 0),  # left, right, top, bottom.
+        },
+        'background': {
+            'fill': '#262929',
+            'alpha': 0.5
+        }
+    },
+    'volume_ruler_bottom2': {
+        'geometry': '&_price_matrix',
+        'coords': (1841, 387),
+        'height': 40,
+        'width': 79,
+        'price_range': '&_volume',
+        'quotes': '&_volume_quote',
+        'style': {
+            'font': 'Arial 10 normal normal',
+            'linecolor': '#adadad',
+            'linethickness': 1,
+            'toptextcolor': 'white',
+            'bottomtextcolor': 'white',
+            'topbottomtextoffsets': (1, 5),
+            'showtopbottomquotes': False,
+            'showquotepointer': False,
+            'quotetextcolor': 'white',
+            'quoteheight': 6,
+            'quoteoffset': 3,
+            'outlinestyle': (0, 0, 1, 1),  # left, right, top, bottom.
+        },
+        'background': {
+            'fill': '#262929',
+            'alpha': 0.5
+        }
+    },
+    'price_ruler': {
+        'geometry': '&_price_matrix',
+        'coords': (1841, 35),
+        'height': 270,
+        'width': 79,
+        'price_range': '&_prices',
+        'quotes': '&_price_quote',
+        'style': {
+            'font': 'Arial 10 normal bold',
+            'linecolor': '#adadad',
+            'linethickness': 1,
+            'colorup': 'white',
+            'colordown': 'red',
+            'toptextcolor': 'white',
+            'bottomtextcolor': 'white',
+            'topbottomtextoffsets': (1, 5),
+            'showtopbottomquotes': False,
+            'showquotepointer': True,
+            'quotetextcolor': None,
+            'quoteheight': 7,
+            'quoteoffset': -7,
+            'outlinestyle': (0, 0, 0, 1),  # left, right, top, bottom.
+            'anchor': 'ne',
+        },
+        'background': {
+            'fill': '#262929',
+            'alpha': 0.5
         }
     },
     'date_ruler': {
         'geometry': '&_price_matrix',
-        'coords': (320, 140),
-        'time_coord': 2,
+        'coords': (1841, 305),
+        'time_coord': 75,
         'height': 50,
-        'width': 50,
+        'width': 79,
         'style': {
-            'font': 'Arial 10 italic bold',
-            'timequotefont': 'Arial 6 italic bold',
+            'font': 'Arial 10 normal bold',
+            'timequotefont': 'Arial 9 normal normal',
             'timequoteanchor': 'ne',
             'timeanchor': 'center',
             'timecolor': 'black',
             'timeruler_color': 'black',
             'timeformat': '%d.%I:%M%p',
             'dateformat': '%d.%I:%M%p',
-            'timeoffset': 5,
+            'timeoffset': -18,
             'linecolor': '#adadad',
             'timelinecolor': '#adadad',
             'markerstyle': 'default',
-            'markersize': 10,
+            'markersize': -10,
             'linethickness': 1,
-            'outlinestyle': (1, 1, 1, 1),  # left, right, top, bottom (of the quote box).
+            'outlinestyle': (0, 0, 1, 1),  # left, right, top, bottom (of the quote box).
             'timeoutlinestyle': (0, 0, 1, 0),  # left, right, top, bottom (of the date ruler).
             'timeoutline_extras': {'dash': (1, 1)},
             'quoteoffset': 6,
-            'quotetextcolor': 'black',
+            'quotetextcolor': 'white',
             'anchor': 'e',
-            'time_increment': 3,
+            'time_increment': 7,
             'use_local_time': True,
             'hide_info_text': False,
         },
         'background': {
-            'fill': '#1a1c1c',
-            'alpha': 0.1
+            'fill': '#262929',
+            'alpha': 0.5
         }
     },
     'tics2': {  # These are the little ruler ticks that run down the edges.
-        'coords': (0, 10, 0, 140),  # top x, y, bottom x, y
-        'tics': [1, 2, 9],  # shorts, longs, increment.
+        'coords': (75, 0, 75, 455),  # top x, y, bottom x, y
+        'tics': [3, 5, 9],  # shorts, longs, increment.
         'style': {
             'fill': '#adadad',
-            'anchor': 'w',
+            'anchor': 'e',
             'width': 1,
         }
     },

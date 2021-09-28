@@ -178,6 +178,8 @@ class OnScreen(tk.Tk):
         trend = self.filters.trender(np.array(normal))  # Build icing trends.
         self.filters.oscillator(np.array(trend))  # Build arrow triggers.
         self.style = self.filters.style  # Update style
+        # Add some variables we can use for later.
+        self.style['main']['_drf'] = [str(np.round(float(self.feed_chart[-1][-1]), 3))]
 
         self.style = matrix_parser(self.style, self.matrices)  # Explode coordinates into style.
         return self
@@ -222,11 +224,12 @@ class OnScreen(tk.Tk):
             pass
         return self
 
-    def update_variables(self):
+    def update_statbar_variables(self):
         """
         This is where we will iterate through the layout.labelvars dict and pass the statbar variables.
         We can loop this method in an alternate thread for faster updates.
 
+        NOTE: THese are for the statbar only.
         """
         self.read_hardware()
         try:
@@ -263,7 +266,7 @@ class OnScreen(tk.Tk):
         """
         This is the statbar refresh loop.
         """
-        self.update_variables()
+        self.update_statbar_variables()
         self.after(self.settings['stats_refresh'], self.cycle_variables)
         return self
 
@@ -389,7 +392,7 @@ class OnScreen(tk.Tk):
         self.purge()
         self.handle_memory()
         self.draw()  # Test to see if we are properly clearing the images.
-        self.update_variables()
+        self.update_statbar_variables()
         self.after(self.settings['capture_delay'], self._screen_cap)
 
         return self
