@@ -92,7 +92,7 @@ style = {
         'outline': 'black',
         'smooth': 2,
         'lineinterpol': 4,
-        'offset': 194,
+        'offset': 192,
         'padding': (0, 0, 0, 0),  # left, right, top, bottom.
         # 'outline': 'black',
         'alpha': 0.7,
