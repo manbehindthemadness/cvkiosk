@@ -29,6 +29,7 @@ style = {
         'smoothi_top',
         'volume',
         'top_arrows',
+        'bottom_arrows',
         'candlesticks',
         'icing_top1',
         'icing_top2',
@@ -128,23 +129,23 @@ style = {
         'tag_fill': 'black',  # Schematic text color.
         'use_schematic': True  # Toggle schematics.
     },
-    # 'bottom_arrows': {
-    #     'geometry': '&_price_matrix',
-    #     'height': 10,
-    #     'offset': 10,  # This is the distance the arrow will appear from the coordinate.
-    #     'fill': 'magenta',
-    #     'thickness': 1,  # Line thickness.
-    #     'arrow': 'first',  # This is the end of the line that thhe arrow will attach.
-    #     'arrowshape': (5, 5, 2),  # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
-    #     'matrix_override': '&_cl',  # This allows us to pass alternate alert "triggers" instead of just geometry.
-    #     'triggers': '&_dtrends',
-    #     'tb': 'b',
-    #     'signal': 'TR.UP',
-    #     'icon': 'img/icons/x1.png',  # Schematic view icon.
-    #     'icon_fill': 'red',  # Icon color.
-    #     'tag_fill': 'black',  # Schematic text color.
-    #     'use_schematic': True  # Toggle schematics.
-    # },
+    'bottom_arrows': {
+        'geometry': '&_price_matrix',
+        'height': 10,
+        'offset': 10,  # This is the distance the arrow will appear from the coordinate.
+        'fill': 'magenta',
+        'thickness': 1,  # Line thickness.
+        'arrow': 'first',  # This is the end of the line that thhe arrow will attach.
+        'arrowshape': (5, 5, 2),  # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
+        'matrix_override': '&_cl',  # This allows us to pass alternate alert "triggers" instead of just geometry.
+        'triggers': '&_dtrends',
+        'tb': 'b',
+        'signal': 'TR.UP',
+        'icon': 'img/icons/x1.png',  # Schematic view icon.
+        'icon_fill': 'red',  # Icon color.
+        'tag_fill': 'black',  # Schematic text color.
+        'use_schematic': True  # Toggle schematics.
+    },
     'icing_top1': {
         'geometry': '&_price_matrix',
         'triggers': '&_trend',
