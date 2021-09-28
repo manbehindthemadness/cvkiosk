@@ -84,8 +84,6 @@ class Filters:
         You guessed it, and moving average.
         """
         name = '_ema_' + str(spread)
-        # average = self.inkeys(name)
-        # if isinstance(average, NoneType):
         average = flip_stream(points)
         ays = gp.moving_average(np.array(average[1::2]), spread)
         padding = np.subtract(spread, 1)

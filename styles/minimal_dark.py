@@ -21,7 +21,7 @@ style = {
         # This scales the candlestick matrix in order to make room for the other widgets.
         'price_matrix_offsets': (2, 2, 20, 85),  # left, right, top, bottom.
         'price_increment': 4,  # The width of one candlestick in pixels.
-        'background': 'white',
+        'background': '#292929',
         'utc_format': '%H:%M:%p',
     },
     'asset_order': [  # This is our draw_order widgets will be drawn starting with the farthest back into the foreground.
@@ -47,21 +47,21 @@ style = {
         'width': '$_screen_width:100%',
         'coords': (0, 0),  # Upper left hand corner.
         'border': 0,
-        'text_color': 'black',
+        'text_color': 'white',
         'meter_colors_left': "@gp.color_range(0, 100, 'red', 'green')",  # This is an eval statement, it can pass anything in utils.py
         'meter_colors_right': "@gp.color_range(0, 100, 'red', 'green')",
         'meter_label_width_left': 40,
         'meter_label_width_right': 40,
         'font': 'Arial 5 normal bold',
         'average': 3,   # This averages the readout across a few samples (useful for noisy sensors).
-        'background': 'white',
+        'background': '#292929',
     },
     'candlesticks': {
         # The bar_width will alter the X coordinates of all the price related widgets.
         'geometry': '&_price_matrix',
         'height': '$_screen_height:50%',
-        'color1': 'green',
-        'color2': 'red',
+        'color1': '#2eff62',
+        'color2': '#ff2e2e',
         'alpha': 0.75,
         'hollow': []  # ['red']  # This can hole one none or both of the colors.
     },
@@ -73,7 +73,7 @@ style = {
         'grad': ('deepskyblue', 'blue', 'v'),  # Gradient.
         'graph_type': 'prices',
         'tb': 'b',  # Top or bottom style.
-        'outline': 'black',
+        # 'outline': 'white',
         'smooth': 1,  # Smooths average out the measurements.
         'lineinterpol': 2,  # Linear interpolation adds points and then rounds off the edges.
         'offset': 150,
@@ -86,7 +86,7 @@ style = {
         'geometry': '&_price_matrix',
         'matrix_override': '&_super_drift',
         'height': 20,
-        'fill': 'red',
+        'fill': '#ff2e2e',
         'graph_type': 'prices',
         'tb': 't',
         'smooth': 2,
@@ -105,8 +105,8 @@ style = {
         'offset': 70,
         'alpha': 0.6,
         'aa': (10, 0),
-        'color1': 'green',
-        'color2': 'red',
+        'color1': '#2eff62',
+        'color2': '#ff2e2e',
         'graph_type': 'volume',
         'tb': 'b'
     },
@@ -147,11 +147,11 @@ style = {
     'icing_top1': {
         'geometry': '&_price_matrix',
         'triggers': '&_trend',
-        'thickness': 2,
+        'thickness': 1,
         'smooth': False,
         # 'dash': (1, 1),
-        'color1': 'blueviolet',
-        'color2': 'blueviolet',
+        'color1': '#03009c',
+        'color2': '#03009c',
         'tb': 't'
     },
     'icing_top2': {
@@ -159,7 +159,7 @@ style = {
             'triggers': '&_super_trend',
             'thickness': 2,
             'smooth': False,
-            'dash': (1, 1),
+            # 'dash': (1, 1),
             'color1': 'black',
             'color2': 'black',
             'tb': 't'
@@ -178,7 +178,7 @@ style = {
         'coords': (319, 0, 319, 140),  # top x, y, bottom x, y
         'tics': [1, 2, 9],  # shorts, longs, increment.
         'style': {
-            'fill': 'black',
+            'fill': '#adadad',
             'anchor': 'e',
             'width': 1,
         }
@@ -199,8 +199,8 @@ style = {
             'timeformat': '%d.%I:%M%p',
             'dateformat': '%d.%I:%M%p',
             'timeoffset': 5,
-            'linecolor': 'grey',
-            'timelinecolor': 'grey',
+            'linecolor': '#adadad',
+            'timelinecolor': '#adadad',
             'markerstyle': 'default',
             'markersize': 10,
             'linethickness': 1,
@@ -215,7 +215,7 @@ style = {
             'hide_info_text': True,
         },
         'background': {
-            'fill': 'white',
+            'fill': '#292929',
             'alpha': 0.1
         }
     },
@@ -223,26 +223,26 @@ style = {
         'coords': (0, 10, 0, 140),  # top x, y, bottom x, y
         'tics': [1, 2, 9],  # shorts, longs, increment.
         'style': {
-            'fill': 'black',
+            'fill': '#adadad',
             'anchor': 'w',
             'width': 1,
         }
     },
     'ticker': {
         'style': {
-            'background': 'white',
-            'colorup': 'green',
-            'colordown': 'red',
+            'background': '#292929',
+            'colorup': '#2eff62',
+            'colordown': '#ff2e2e',
             'tickerfont': 'Arial 6 normal bold',
-            'tickerfontcolorup': 'black',
-            'tickerfontcolordown': 'black',
-            'tickerbgup': 'white',
-            'tickerbgdown': 'white',
+            'tickerfontcolorup': 'white',
+            'tickerfontcolordown': 'white',
+            'tickerbgup': '#292929',
+            'tickerbgdown': '#292929',
             'quotefont': 'Arial 6 normal bold',
             'quotefontcolorup': 'green',
-            'quotebgdown': 'white',
-            'quotebgup': 'white',
-            'quotefontcolordown': 'red',
+            'quotebgdown': '#292929',
+            'quotebgup': '#292929',
+            'quotefontcolordown': '#ff2e2e',
             'iconup': None,
             'icondown': None,
             'symbolup': '▲',
