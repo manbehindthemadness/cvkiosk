@@ -40,8 +40,8 @@ style = {
         'tics1',
         'price_ruler',
         'date_ruler',
+        'schematic',
         'tics2',
-        'schematic'
     ],
     'actor_order': [  # Animate order for moving actors.
         'statbar',
