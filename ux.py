@@ -230,6 +230,10 @@ class OnScreen(tk.Tk):
         """
         self.read_hardware()
         try:
+            asset = self.settings['chart_focus']
+            if not asset:
+                asset = 'BTC'
+            self.statvars['TIK'] = asset
             self.statvars['WFI'] = 75
             self.statvars['UTC'] = datetime.datetime.utcnow().strftime(self.style['main']['utc_format'])  # noqa
             self.statvars['DRF'] = np.round(float(self.feed_chart[-1][-1]), 3)
