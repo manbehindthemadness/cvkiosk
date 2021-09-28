@@ -239,7 +239,7 @@ style = {
             'tickerbgup': '#292929',
             'tickerbgdown': '#292929',
             'quotefont': 'Arial 6 normal bold',
-            'quotefontcolorup': 'green',
+            'quotefontcolorup': '#2eff62',
             'quotebgdown': '#292929',
             'quotebgup': '#292929',
             'quotefontcolordown': '#ff2e2e',
