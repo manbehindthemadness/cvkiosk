@@ -37,8 +37,8 @@ style = {
         'volume_ruler_top',
         'volume_ruler_bottom1',
         'volume_ruler_bottom2',
-        'tics1',
         'price_ruler',
+        'tics1',
         'date_ruler',
         'schematic',
         'tics2',
@@ -182,7 +182,7 @@ style = {
         'tb': 'b'
     },
     'tics1': {  # These are the little ruler ticks that run down the edges.
-        'coords': (1845, 35, 1845, 305),  # top x, y, bottom x, y
+        'coords': (1841, 35, 1841, 305),  # top x, y, bottom x, y
         'tics': [3, 5, 9],  # shorts, longs, increment.
         'style': {
             'fill': '#adadad',
@@ -289,7 +289,7 @@ style = {
             'quotetextcolor': None,
             'quoteheight': 7,
             'quoteoffset': -7,
-            'outlinestyle': (0, 0, 0, 1),  # left, right, top, bottom.
+            'outlinestyle': (0, 0, 1, 1),  # left, right, top, bottom.
             'anchor': 'ne',
         },
         'background': {
@@ -334,7 +334,7 @@ style = {
         }
     },
     'tics2': {  # These are the little ruler ticks that run down the edges.
-        'coords': (79, 0, 79, 427),  # top x, y, bottom x, y
+        'coords': (78, 0, 79, 427),  # top x, y, bottom x, y
         'tics': [3, 5, 9],  # shorts, longs, increment.
         'style': {
             'fill': '#adadad',
