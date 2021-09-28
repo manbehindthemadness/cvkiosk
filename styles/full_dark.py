@@ -361,7 +361,7 @@ style = {
             'outlinestyle': (0, 0, 1, 1),
             'linecolor': '#adadad',
             'linethickness': 1,
-            'fill': '#2d3030',
+            'fill': '#3a3d3d',
         },
         'background': {
             'fill': '#262929',
