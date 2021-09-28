@@ -11,6 +11,8 @@ This file is where we store various price and chart post processing utilities,
 
 TODO: Even though this is all kinds of fun we are going to eventually have to transfer these calculations
     to source the original feed data in order to remain accurate when it comes to smaller screens.
+
+    SOMETHING IN HERE IS FUCKED
 """
 
 import numpy as np
@@ -76,7 +78,7 @@ class Filters:
 
     def ema(self, points: np.array, spread: int = 20, ) -> np.array:
         """
-        You guessed it, and exponencial moving average.
+        You guessed it, and moving average.
         """
         name = '_ema_' + str(spread)
         average = self.inkeys(name)

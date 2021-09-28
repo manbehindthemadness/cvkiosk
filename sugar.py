@@ -302,8 +302,8 @@ class Sugar:
                 )
                 batt_lvl = np.add(level_base, r[2])
                 self.BATTERY_LEVEL = self.reserve(batt_lvl)
-        if self.CHARGING:
-            self.BATTERY_LEVEL = 'CRG'
+        # if self.CHARGING:
+        #     self.BATTERY_LEVEL = 000
         return self.BATTERY_LEVEL
 
     def battery_gpio_set(self):

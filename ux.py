@@ -232,7 +232,7 @@ class OnScreen(tk.Tk):
         """
         self.read_hardware()
         try:
-            self.statvars['WFI'] = 75
+            self.statvars['WFI'] = '75'
             self.statvars['UTC'] = datetime.datetime.utcnow().strftime(self.style['main']['utc_format'])  # noqa
             self.statvars['DRF'] = np.round(self.feed_chart[-1][-1], 3)
             self.statvars['QUO'] = np.round(float(self.price_chart[-1][-2]), 1)  # TODO: Need to figure out how we handle small values.
