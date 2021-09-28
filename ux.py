@@ -163,7 +163,7 @@ class OnScreen(tk.Tk):
         self.price_matrix = self.solve_matrices(self.price_chart)
         self.feed_matrix = self.solve_matrices(self.feed_chart, 'feed')
         if self.settings['style'] == 'tutorial':  # This is for the example setup only.
-            self.matrices.update({  # Here we are making a buncha test triggers to demostrate in the tutorial.
+            self.matrices.update({  # Here we are making a buncha test triggers to show in the tutorial.
                 '_triggers1': test_o_random(self.matrices['_cu'], 5),
                 '_triggers2': test_o_random(self.matrices['_cl'], 5),
                 '_triggers3': test_o_random(self.matrices['_ac'], 5),
@@ -172,8 +172,6 @@ class OnScreen(tk.Tk):
                 '_triggers6': test_o_random(self.matrices['_cu'], 5),
             })
         self.filters = Filters()
-        print('feed source -----------------------------')
-        print(self.feed_matrix.price_matrix[-1][:8], self.feed_matrix.price_matrix[-1][-8:])
         self.filters.configure(self.style, self.feed_matrix)
         self.filters.drifter(self.feed_matrix.price_matrix[-1], 'super')  # Build top smoothi.
         normal = self.filters.normalize(self.feed_matrix.price_matrix[-1], 100, 1)  # Build bottom smoothi.
@@ -407,7 +405,7 @@ class OnScreen(tk.Tk):
         """
         Experimental runtime setup.
         """
-        self.parse()
+        self.parse()  # Remember we only parse once, so persistent variables need to be updated per-run.
         self.cycle()
         self.cycle_index()
         self.layout.configure_actors()

@@ -39,6 +39,9 @@ class Filters:
         This just checks to see if a value has already been calculated.
             If yes it will return the value from the style.
             Tf no it will return None.
+
+            TODO: THIS IS THE SOURCE OF OUR UPDATE PROBLEM.
+                    This also indicates that the style main section isn't getting updated.
         """
         result = None
         if name in self.style['main'].keys():
@@ -81,14 +84,14 @@ class Filters:
         You guessed it, and moving average.
         """
         name = '_ema_' + str(spread)
-        average = self.inkeys(name)
-        if isinstance(average, NoneType):
-            average = flip_stream(points)
-            ays = gp.moving_average(np.array(average[1::2]), spread)
-            padding = np.subtract(spread, 1)
-            average[1::2] = np.pad(ays, (padding, 0))
-            self.style['main'][name] = np.array(average)
-        return np.array(average)  # TODO: this might have something to do with our problem.
+        # average = self.inkeys(name)
+        # if isinstance(average, NoneType):
+        average = flip_stream(points)
+        ays = gp.moving_average(np.array(average[1::2]), spread)
+        padding = np.subtract(spread, 1)
+        average[1::2] = np.pad(ays, (padding, 0))
+        self.style['main'][name] = np.array(average)
+        return np.array(average)
 
     def normalize(self, points: np.array, base_spread: int, spread: int) -> np.array:
         """
