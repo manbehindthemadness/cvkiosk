@@ -88,12 +88,12 @@ class OnScreen(tk.Tk):
         '1day': '1D'
     }
 
-    def __init__(self, debug_mode: bool = False):
+    def __init__(self):
         tk.Tk.__init__(self)
         self.cache = gp.ImgCache().refresh()  # Init the cache.
         self.settings = config('settings')  # Grab our settings.
         self.api = GetChart()
-        self.debug_mode = debug_mode
+        self.debug_mode = self.settings['debug_data']
         self.filters = None
 
         try:
@@ -121,7 +121,7 @@ class OnScreen(tk.Tk):
             self.price_chart = list(data)
             random.shuffle(data)
             self.feed_chart = list(data)
-            self.alerts = gp.samples.alerts
+            self.alerts = gp.samples.alerts['alert_data']
         return self
 
     def solve_matrices(self, matrix: [list, np.array], prefix: str = None) -> np.array:
@@ -232,9 +232,9 @@ class OnScreen(tk.Tk):
         """
         self.read_hardware()
         try:
-            self.statvars['WFI'] = '75'
+            self.statvars['WFI'] = 75
             self.statvars['UTC'] = datetime.datetime.utcnow().strftime(self.style['main']['utc_format'])  # noqa
-            self.statvars['DRF'] = np.round(self.feed_chart[-1][-1], 3)
+            self.statvars['DRF'] = np.round(float(self.feed_chart[-1][-1]), 3)
             self.statvars['QUO'] = np.round(float(self.price_chart[-1][-2]), 1)  # TODO: Need to figure out how we handle small values.
             for var in self.statvars:
                 if var in self.layout.labelvars.keys() and var not in ['WFI', 'BAT']:
