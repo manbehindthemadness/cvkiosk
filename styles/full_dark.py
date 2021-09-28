@@ -333,7 +333,7 @@ style = {
         }
     },
     'tics2': {  # These are the little ruler ticks that run down the edges.
-        'coords': (75, 0, 75, 455),  # top x, y, bottom x, y
+        'coords': (75, 0, 75, 430),  # top x, y, bottom x, y
         'tics': [3, 5, 9],  # shorts, longs, increment.
         'style': {
             'fill': '#adadad',
