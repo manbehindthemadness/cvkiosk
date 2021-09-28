@@ -162,8 +162,8 @@ style = {
             'thickness': 2,
             'smooth': False,
             'dash': (1, 1),
-            'color1': '#ff9cf8',
-            'color2': '#ff9cf8',
+            'color1': 'white',
+            'color2': 'white',
             'tb': 't'
         },
     'icing_bottom1': {
@@ -214,7 +214,7 @@ style = {
             'anchor': 'e',
             'time_increment': 3,
             'use_local_time': True,
-            'hide_info_text': True,
+            'hide_info_text': False,
         },
         'background': {
             'fill': '#1a1c1c',
