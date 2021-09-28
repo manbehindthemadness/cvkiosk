@@ -73,7 +73,7 @@ style = {
         'grad': ('deepskyblue', 'blue', 'v'),  # Gradient.
         'graph_type': 'prices',
         'tb': 'b',  # Top or bottom style.
-        # 'outline': 'white',
+        'outline': 'black',
         'smooth': 1,  # Smooths average out the measurements.
         'lineinterpol': 2,  # Linear interpolation adds points and then rounds off the edges.
         'offset': 150,
@@ -89,12 +89,13 @@ style = {
         'fill': '#ff2e2e',
         'graph_type': 'prices',
         'tb': 't',
+        'outline': 'black',
         'smooth': 2,
         'lineinterpol': 4,
         'offset': 194,
         'padding': (0, 0, 0, 0),  # left, right, top, bottom.
         # 'outline': 'black',
-        'alpha': 0.5,
+        'alpha': 0.7,
         'aa': (10, 0),
     },
     'volume': {
@@ -114,7 +115,7 @@ style = {
         'geometry': '&_price_matrix',
         'height': 10,
         'offset': 10,  # This is the distance the arrow will appear from the coordinate.
-        'fill': 'blueviolet',
+        'fill': 'magenta',
         'thickness': 1,  # Line thickness.
         'arrow': 'first',  # This is the end of the line that thhe arrow will attach.
         'arrowshape': (4, 4, 1),  # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
@@ -150,8 +151,8 @@ style = {
         'thickness': 1,
         'smooth': False,
         # 'dash': (1, 1),
-        'color1': '#03009c',
-        'color2': '#03009c',
+        'color1': 'magenta',
+        'color2': 'magenta',
         'tb': 't'
     },
     'icing_top2': {
@@ -159,9 +160,9 @@ style = {
             'triggers': '&_super_trend',
             'thickness': 2,
             'smooth': False,
-            # 'dash': (1, 1),
-            'color1': 'black',
-            'color2': 'black',
+            'dash': (1, 1),
+            'color1': '#ff9cf8',
+            'color2': '#ff9cf8',
             'tb': 't'
         },
     'icing_bottom1': {
@@ -170,8 +171,8 @@ style = {
         'thickness': 1,
         'smooth': False,
         # 'dash': (1, 1),
-        'color1': 'cyan',
-        'color2': 'cyan',
+        'color1': '#1eced9',
+        'color2': '#1eced9',
         'tb': 'b'
     },
     'tics1': {  # These are the little ruler ticks that run down the edges.
