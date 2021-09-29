@@ -52,8 +52,6 @@ class OnScreen(tk.Tk):
 
     base = None
     base_style = None
-    faker = None
-    faker_image = None
     ticker = None
     header = None
     layout = None
@@ -95,6 +93,7 @@ class OnScreen(tk.Tk):
         self.api = GetChart()
         self.debug_mode = self.settings['debug_data']
         self.filters = None
+        self.faker = None
 
         try:
             self.sugar = Sugar()
@@ -189,11 +188,18 @@ class OnScreen(tk.Tk):
         This will take the screenshot we will host with our cute little dash server.
         NOTE: This will only capture the graphiend chart region ( not stats and tickers )
         """
-        gp.burn(self.faker_image)
+
         screen_cap.capture(coords)
         if enhance:
             screen_cap.enhance()
         return self
+
+    def hide_faker(self):
+        """
+        This hides the screen faker deal.
+        """
+        self.faker.hide()
+        self.after(1000, self._screen_cap)
 
     def _screen_cap(self):
         """
@@ -248,7 +254,9 @@ class OnScreen(tk.Tk):
                 elif var in self.layout.labelvars.keys() and var in ['WFI', 'BAT']:
                     self.layout.labelvars[var].set(self.statvars[var])
             self.layout.statbar.refresh()
-        except AttributeError:
+        except (AttributeError, TypeError) as err:
+            print('failed to populate variables')
+            print(err)
             pass
         return self
 
@@ -292,21 +300,6 @@ class OnScreen(tk.Tk):
 
         # This here is going to hold a screenshot that we are going to use to hide the redraw process.
         # TODO: This sounded like a good idea but the application hangs whenever I try to open the file -_-
-        self.faker = tk.Frame(
-            self,
-            width=mstyle['price_canvas_width'],
-            height=mstyle['price_canvas_height'],
-            bd=0,
-            highlightthickness=0
-        )
-        x, y = self.style['main']['price_canvas_offset_coord']
-        self.faker.place(
-            x=x,
-            y=y,
-            width=mstyle['price_canvas_width'],
-            height=mstyle['price_canvas_height'],
-        )
-
         self.base = tk.Frame(
             self,
             width=self.constants['_screen_width'],
@@ -341,6 +334,8 @@ class OnScreen(tk.Tk):
                 x=t['x'],
                 y=t['y']
             )
+        from widgets import Faker
+        self.faker = Faker(self, self.layout)
         return self
 
     def configure_layout(self):
@@ -385,6 +380,7 @@ class OnScreen(tk.Tk):
         """
         if not self.init:
             self.wait_variable(self.layout.ticker.foreign_lock)
+        self.faker.show()
         self.purge(prep=True)
         self.refresh_api()  # Launching this here will fire off the api twice really fast.... need to fix this.
         self.update_style_matrices()
@@ -393,7 +389,7 @@ class OnScreen(tk.Tk):
         self.handle_memory()
         self.draw()  # Test to see if we are properly clearing the images.
         self.update_statbar_variables()
-        self.after(self.settings['capture_delay'], self._screen_cap)
+        self.after(self.settings['capture_delay'], self.hide_faker)
 
         return self
 

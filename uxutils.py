@@ -118,12 +118,13 @@ class ScrCap:
         try:
             os.remove(self.target_image)
         except FileNotFoundError:
+            print('screenshot not found')
             pass
         while not self.target_image.is_file():
             try:
                 img = self.grab(bbox=region)
                 img.save(self.target_image)
-            except self.grab.err.FailedBackendError:  # pyscreenshot.err.FailedBackendError
+            except self.grab.err.FailedBackendError:
                 pass
             if not self.target_image.is_file():
                 print('capture failed', '*warn*')

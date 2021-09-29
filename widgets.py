@@ -7,10 +7,17 @@ This program is experimental and proprietary, redistribution is prohibited.
 Please see the license file for more details.
 ------------------------------------------------------------------------------------------------------------------------
 """
-
+import os
+import shutil
 import tkinter as tk
 import graphiend as gp
 import numpy as np
+from utils import config
+from pathlib import Path
+from PIL import Image, ImageTk
+
+
+settings = config('settings')
 
 
 class StatBar(tk.Frame):
@@ -156,4 +163,88 @@ class StatBar(tk.Frame):
         """
         This is a dummy so we work with the layout main logic.
         """
+        return self
+
+
+class Faker:
+    """
+    This is a sneaky technique to use a screenshot to hide the redraw whilst loading process.
+    """
+    def __init__(self, parent, layout):
+        self.parent = parent
+        self.layout = layout
+        self.coords = None
+        self.frame = None
+        self.canvas = None
+
+        self.cap_source = Path('www/chart.png')
+        self.cap_target = self.cap_source
+        self.cap = None
+
+    def show(self):
+        """
+        This will copy the screen cap file, set it as our background and raise the frame to cover the
+            price canvas.
+        """
+        if settings['use_faker']:
+            x1 = self.layout.winfo_x()
+            y1 = self.layout.winfo_y()
+            x2 = np.add(x1, self.layout.winfo_width())
+            y2 = np.add(y1, self.layout.winfo_height())
+            self.coords = (x1, y1, x2, y2,)
+            print(self.coords)
+            if self.cap_source.is_file():
+                with open(self.cap_target, 'rb', 0) as file:
+                    cap = Image.open(file)
+                    cap.load()
+                    file.close()
+                    del file
+                self.cap = ImageTk.PhotoImage(cap)
+
+                self.frame = tk.Frame()
+                self.frame.configure(
+                    width=x2,
+                    height=y2,
+                    bd=0,
+                    highlightthickness=0
+                )
+                self.frame.place(
+                    x=x1,
+                    y=y1,
+                    width=x2,
+                    height=y2
+                )
+                self.canvas = tk.Canvas(self.frame)
+                self.canvas.configure(
+                    width=x2,
+                    height=y2,
+                    bd=0,
+                    highlightthickness=0
+                )
+                self.canvas.place(
+                    x=0,
+                    y=0,
+                    width=x2,
+                    height=y2
+                )
+
+                self.canvas.create_image((0, 0), image=self.cap, anchor='nw')
+                self.frame.tkraise()
+                # print('raising self')
+            else:
+                print('capture not found')
+        return self
+
+    def hide(self):
+        """
+        This will remove our capture and raise the parent.
+        """
+        if settings['use_faker']:
+            try:
+                self.frame.destroy()
+                gp.burn(self.cap)
+                self.canvas.destroy()
+            except AttributeError:
+                pass
+            # print('killing self')
         return self
