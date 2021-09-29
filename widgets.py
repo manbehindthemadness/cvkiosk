@@ -7,8 +7,7 @@ This program is experimental and proprietary, redistribution is prohibited.
 Please see the license file for more details.
 ------------------------------------------------------------------------------------------------------------------------
 """
-import os
-import shutil
+
 import tkinter as tk
 import graphiend as gp
 import numpy as np
@@ -206,7 +205,8 @@ class Faker:
                     width=x2,
                     height=y2,
                     bd=0,
-                    highlightthickness=0
+                    highlightthickness=0,
+                    bg=self.layout.style['main']['background']
                 )
                 self.frame.place(
                     x=x1,
