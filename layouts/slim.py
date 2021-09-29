@@ -36,7 +36,7 @@ class Format(Layout):
             'ticker'
         ]
         self.labelvars = {  # This specifies the extra labels to be included in the statbar.
-            'UTC': tk.StringVar(),
+            'TIK': tk.StringVar(),
             'FGI': tk.StringVar(),
             'QUO': tk.StringVar(),
         }
