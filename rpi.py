@@ -25,7 +25,7 @@ def wifi_sig() -> int:
         percentages = info.split()[1].split('=')[1]
         a, b = percentages.split('/')
         strength = percent_in(int(a), int(b))
-    except FileNotFoundError as err:
+    except (FileNotFoundError, IndexError) as err:
         if settings['debug_startup']:
             print(err)
         strength = 0
