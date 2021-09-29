@@ -105,7 +105,7 @@ def log(*args, **kwargs):
     exec(cmd)
 
 
-def system_command(params):
+def system_command(params) -> str:
     """
     Use this to execute a system level command.
 
