@@ -219,7 +219,8 @@ class Faker:
                     width=x2,
                     height=y2,
                     bd=0,
-                    highlightthickness=0
+                    highlightthickness=0,
+                    bg=self.layout.style['main']['background']
                 )
                 self.canvas.place(
                     x=0,
