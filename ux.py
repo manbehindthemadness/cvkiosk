@@ -32,6 +32,7 @@ from utils import (
 )
 from uxutils import ScrCap
 from extras import Filters
+from rpi import wifi_sig
 if config('settings')['debug_memory']:
     from diagnostics import MemTrace
 
@@ -243,7 +244,7 @@ class OnScreen(tk.Tk):
             if not asset:
                 asset = 'BTC'
             self.statvars['TIK'] = asset
-            self.statvars['WFI'] = 75
+            self.statvars['WFI'] = wifi_sig()
             self.statvars['UTC'] = datetime.datetime.utcnow().strftime(self.style['main']['utc_format'])  # noqa
             self.statvars['DRF'] = np.round(float(self.feed_chart[-1][-1]), 3)
             self.statvars['QUO'] = np.round(float(self.price_chart[-1][-2]), 1)  # TODO: Need to figure out how we handle small values.

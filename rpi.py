@@ -9,7 +9,10 @@ Please see the license file for more details.
 This is where we will put code related to the raspberry pi hardware.
 """
 
-from utils import system_command, percent_in
+from utils import system_command, percent_in, config
+
+
+settings = config('settings')
 
 
 def wifi_sig() -> int:
@@ -23,6 +26,7 @@ def wifi_sig() -> int:
         a, b = percentages.split('/')
         strength = percent_in(int(a), int(b))
     except FileNotFoundError as err:
-        print(err)
+        if settings['debug_startup']:
+            print(err)
         strength = 0
     return strength
