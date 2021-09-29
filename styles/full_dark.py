@@ -279,7 +279,7 @@ style = {
             'font': 'Arial 10 normal bold',
             'linecolor': '#adadad',
             'linethickness': 1,
-            'colorup': 'white',
+            'colorup': 'green',
             'colordown': 'red',
             'toptextcolor': 'white',
             'bottomtextcolor': 'white',
