@@ -21,7 +21,7 @@ def wifi_sig() -> int:
         info = system_command(cmd, shell=True)
         percentages = info.split()[1].split('=')[1]
         a, b = percentages.split('/')
-        strength = percent_in(a, b)
+        strength = percent_in(int(a), int(b))
     except FileNotFoundError as err:
         print(err)
         strength = 0
