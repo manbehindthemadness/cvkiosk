@@ -118,7 +118,6 @@ class ScrCap:
         try:
             os.remove(self.target_image)
         except FileNotFoundError:
-            print('screenshot not found')
             pass
         while not self.target_image.is_file():
             try:

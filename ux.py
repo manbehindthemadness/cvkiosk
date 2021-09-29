@@ -380,6 +380,7 @@ class OnScreen(tk.Tk):
         """
         if not self.init:
             self.wait_variable(self.layout.ticker.foreign_lock)
+            self.layout.ticker.initial = True  # This prevents the extra delay cycle.
         self.faker.show()
         self.purge(prep=True)
         self.refresh_api()  # Launching this here will fire off the api twice really fast.... need to fix this.

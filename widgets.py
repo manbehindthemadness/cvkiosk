@@ -191,7 +191,6 @@ class Faker:
             x2 = np.add(x1, self.layout.winfo_width())
             y2 = np.add(y1, self.layout.winfo_height())
             self.coords = (x1, y1, x2, y2,)
-            print(self.coords)
             if self.cap_source.is_file():
                 with open(self.cap_target, 'rb', 0) as file:
                     cap = Image.open(file)
@@ -231,9 +230,6 @@ class Faker:
 
                 self.canvas.create_image((0, 0), image=self.cap, anchor='nw')
                 self.frame.tkraise()
-                # print('raising self')
-            else:
-                print('capture not found')
         return self
 
     def hide(self):
@@ -247,5 +243,4 @@ class Faker:
                 self.canvas.destroy()
             except AttributeError:
                 pass
-            # print('killing self')
         return self
