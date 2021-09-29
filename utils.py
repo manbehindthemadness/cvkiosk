@@ -105,17 +105,13 @@ def log(*args, **kwargs):
     exec(cmd)
 
 
-def system_command(params) -> str:
+def system_command(params, shell: bool = False) -> str:
     """
     Use this to execute a system level command.
 
     NOTE: Use with caution.
-    :param params: List of commands and args to execute.
-    :type params: list
-    :return: stout.
-    :rtype: PIPE
     """
-    process = Popen(params, stdout=PIPE)
+    process = Popen(params, stdout=PIPE, shell=shell)
     output, _error = process.communicate()
     output = output.decode("utf8")
     return output
