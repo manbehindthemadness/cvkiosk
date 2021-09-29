@@ -240,14 +240,15 @@ class OnScreen(tk.Tk):
         """
         self.read_hardware()
         try:
-            asset = self.settings['chart_focus']
+            asset = self.settings['chart_focus'].upper()
             if not asset:
                 asset = 'BTC'
+            asset += ' / ' + self.settings['chart_pair'].upper()
             self.statvars['TIK'] = asset
             self.statvars['WFI'] = wifi_sig()
             self.statvars['UTC'] = datetime.datetime.utcnow().strftime(self.style['main']['utc_format'])  # noqa
             self.statvars['DRF'] = np.round(float(self.feed_chart[-1][-1]), 3)
-            self.statvars['QUO'] = np.round(float(self.price_chart[-1][-2]), 1)  # TODO: Need to figure out how we handle small values.
+            self.statvars['QUO'] = np.round(float(self.price_chart[-1][-2]), 3)  # TODO: Need to figure out how we handle small values.
             for var in self.statvars:
                 if var in self.layout.labelvars.keys() and var not in ['WFI', 'BAT']:
                     rnd = var + ': ' + str(self.statvars[var])  # noqa
