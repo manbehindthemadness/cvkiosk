@@ -74,7 +74,7 @@ style = {
     'smoothi_bottom': {
         'geometry': '&_feed_price_matrix',
         'matrix_override': '&_normal_100_1',
-        'height': 100,
+        'height': 93,
         'fill': 'aqua',
         'grad': ('deepskyblue', 'blue', 'v'),  # Gradient.
         'graph_type': 'prices',
@@ -82,7 +82,7 @@ style = {
         'outline': 'black',
         'smooth': 1,  # Smooths average out the measurements.
         'lineinterpol': 2,  # Linear interpolation adds points and then rounds off the edges.
-        'offset': 325,
+        'offset': 317,
         'padding': (75, 75, 0, 25),  # left, right, top, bottom.
         'alpha': 0.2,  # Transparency.
         'alphamask': True,  # Transparency following a gradient.
@@ -109,7 +109,7 @@ style = {
         'height': 40,
         'top': 50,
         'bottom': 378,
-        'offset': 330,
+        'offset': 335,
         'alpha': 0.6,
         'aa': (10, 0),
         'color1': '#2eff62',
