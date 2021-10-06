@@ -31,6 +31,8 @@ class Format(Layout):
             'icing_bottom1',
             'onions1',
             'points1',
+            'line1',
+            'line2',
             'volume_ruler_top',
             'volume_ruler_bottom1',
             'volume_ruler_bottom2',

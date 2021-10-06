@@ -103,6 +103,19 @@ class Filters:
         self.style['main'][name] = np.array(normal)
         return normal
 
+    def cross_normalize(self, normal: np.array, points: np.array, spread: int = 26, offset: int = 0) -> np.array:
+        """
+        This will take a normalized price plot and conform it to a secondary set of coordinates.
+
+        TODO: I don't think using offset is going to work as the screens layouts vary...
+        """
+        _ema = self.ema(points, spread)
+        cross = np.array(normal)
+        cross[1::2] = np.add(np.add(_ema[1::2], offset), cross[1::2])
+        name = '_cross_normal_' + str(spread)
+        self.style['main'][name] = np.array(cross)
+        return cross
+
     def find_polarity(self, points: np.array):
         """
         Merely discovers if we are moving isn a positive or negitive direction.

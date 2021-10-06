@@ -157,6 +157,8 @@ class OnScreen(tk.Tk):
     def update_style_matrices(self):
         """
         This updates the price and volume matrices in our style so it can bbe passed to the widgets.
+
+        TODO: It's become clear that all these calculations are going to have to be moved to the server in the next release.
         """
         self.style['main']['_alerts'] = self.alerts  # Pull sample alert data for the ticker tape.
         self.matrices = dict()
@@ -176,6 +178,8 @@ class OnScreen(tk.Tk):
         self.filters.drifter(self.feed_matrix.price_matrix[-1], 'super')  # Build top smoothi.
         normal = self.filters.normalize(self.feed_matrix.price_matrix[-1], 100, 1)  # Build bottom smoothi.
         trend = self.filters.trender(np.array(normal))  # Build icing trends.
+        self.filters.cross_normalize(normal, self.matrices['_ac'], spread=9, offset=60)
+        self.filters.cross_normalize(normal, self.matrices['_ac'], spread=26, offset=60)
         self.filters.oscillator(np.array(trend))  # Build arrow triggers.
         self.style = self.filters.style  # Update style
         # Add some variables we can use for later.

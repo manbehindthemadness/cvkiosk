@@ -30,6 +30,8 @@ style = {
         'volume',
         'top_arrows',
         'bottom_arrows',
+        'line1',
+        'line2',
         'candlesticks',
         'icing_top1',
         'icing_top2',
@@ -70,6 +72,28 @@ style = {
         'color2': '#ff2e2e',
         'alpha': 0.75,
         'hollow': []  # ['red']  # This can hole one none or both of the colors.
+    },
+    'line1': {
+        'matrix_override': '&_cross_normal_9',
+        'geometry': '&_price_matrix',
+        'smooth': 0,
+        'width': 1,
+        'fill': 'purple',
+        'linetype': 'scatter',
+        'lineinterpol': 2,
+        'rad': 2,
+        'alpha': 0.5
+    },
+    'line2': {
+        'matrix_override': '&_cross_normal_26',
+        'geometry': '&_price_matrix',
+        'smooth': 0,
+        'width': 1,
+        'fill': 'magenta',
+        'linetype': 'scatter',
+        'lineinterpol': 2,
+        'rad': 2,
+        'alpha': 0.5
     },
     'smoothi_bottom': {
         'geometry': '&_feed_price_matrix',
