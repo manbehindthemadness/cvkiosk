@@ -28,6 +28,7 @@ import graphiend as gp # noqa
 
 WORKING_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__)))
 logging.getLogger().setLevel(logging.INFO)
+FGI = 0
 
 
 def test_o_random(view_arry: list, alerts: int) -> list:
@@ -437,4 +438,10 @@ def get_index():
     :return: Index value.
     :rtype: int
     """
-    return int(get_from_html('https://alternative.me/crypto/fear-and-greed-index/', ("div", {"class": "fng-circle"}))[0])
+    global FGI
+    try:
+        fgi = int(get_from_html('https://alternative.me/crypto/fear-and-greed-index/', ("div", {"class": "fng-circle"}))[0])
+        FGI = fgi
+    except (IndexError, TypeError, AttributeError):
+        fgi = FGI
+    return fgi
