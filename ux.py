@@ -179,7 +179,7 @@ class OnScreen(tk.Tk):
         normal = self.filters.normalize(self.feed_matrix.price_matrix[-1], 100, 1)  # Build bottom smoothi.
         trend = self.filters.trender(np.array(normal))  # Build icing trends.
         self.filters.cross_normalize(normal, self.matrices['_ac'], spread=9, offset=60)
-        self.filters.cross_normalize(normal, self.matrices['_ac'], spread=26, offset=60)
+        self.filters.cross_normalize(normal, self.matrices['_ac'], spread=26, offset=60)  # noqa
         self.filters.oscillator(np.array(trend))  # Build arrow triggers.
         self.style = self.filters.style  # Update style
         # Add some variables we can use for later.
