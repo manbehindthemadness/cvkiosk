@@ -218,11 +218,17 @@ class Filters:
                 if 0 not in holder and pts[idx] == 0 and 1 not in teller:  # This here is just a fancy filter.
                     seer = utrends[check: idx]
                     if 1 not in seer and len(teller) == 4:
-                        utrends[np.subtract(idx, 4)] = 1
+                        try:
+                            utrends[np.subtract(idx, 4)] = 1
+                        except IndexError:
+                            pass
                 elif 1 not in holder and pts[idx] == 1 and 0 not in teller:
                     seer = dtrends[check: idx]
                     if 1 not in seer and len(teller) == 4:
-                        dtrends[np.subtract(idx, 4)] = 1
+                        try:
+                            dtrends[np.subtract(idx, 4)] = 1
+                        except IndexError:
+                            pass
                 utrends.append(ut)
                 dtrends.append(dt)
         name = '_utrends'
