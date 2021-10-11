@@ -131,7 +131,7 @@ def run_dash(settings):
             raise Exception(str(image_name) + ' is excluded from the allowed static files'.format(image_path))
         return flask.send_from_directory(image_directory, image_name)
 
-    location = flask.helpers.get_root_path(__name__)
+    # location = flask.helpers.get_root_path(__name__)
     # log('dash serving from:', location)
 
     app.run_server(host='0.0.0.0')
