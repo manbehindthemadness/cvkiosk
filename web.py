@@ -94,7 +94,7 @@ def run_dash(settings):
         tell = Path(base + 'chart.png')
         exist = False
         while not exist:  # TODO: This needs to be performed via image content matching.
-            log('attempting file copy')
+            # log('attempting file copy')
             if tell.is_file():
                 try:
                     shutil.copy(base + 'chart.png', base + name)
@@ -104,9 +104,10 @@ def run_dash(settings):
                     list_of_images = [name]
                     exist = True
                 except FileNotFoundError:
-                    log('File Copy failure')
-            else:  # What we do if the capture isn't present.
-                log('image capture not found')
+                    pass
+                    # log('File Copy failure')
+            # else:  # What we do if the capture isn't present.
+            #     log('image capture not found')
             time.sleep(0.5)
         log('file copy success')
 
