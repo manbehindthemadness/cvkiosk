@@ -94,7 +94,6 @@ def run_dash(settings):
         tell = Path(base + 'chart.png')
         exist = False
         while not exist:  # TODO: This needs to be performed via image content matching.
-            # log('attempting file copy')
             if tell.is_file():
                 try:
                     shutil.copy(base + 'chart.png', base + name)
@@ -105,9 +104,6 @@ def run_dash(settings):
                     exist = True
                 except FileNotFoundError:
                     pass
-                    # log('File Copy failure')
-            # else:  # What we do if the capture isn't present.
-            #     log('image capture not found')
             time.sleep(0.5)
         log('file copy success')
 
@@ -130,8 +126,5 @@ def run_dash(settings):
         if '.png' not in image_name:
             raise Exception(str(image_name) + ' is excluded from the allowed static files'.format(image_path))
         return flask.send_from_directory(image_directory, image_name)
-
-    # location = flask.helpers.get_root_path(__name__)
-    # log('dash serving from:', location)
 
     app.run_server(host='0.0.0.0')
