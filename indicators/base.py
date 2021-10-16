@@ -21,6 +21,8 @@ class Indicator:
     name = None
     source = None
 
+    matrix_override = list()
+
     options = None
     normal_base = None
     normal_spread = None
@@ -39,7 +41,8 @@ class Indicator:
         'normal_spread',
         'ema_spread',
         'source',
-        'polarity'
+        'polarity',
+        'matrix_override'
     ]
 
     def_options = {
@@ -80,6 +83,8 @@ class Indicator:
             cmd += 'self.' + kw + ', '
         cmd += ' = get_args(self.kw, self.kwargs)'
         exec(cmd)
+        if not self.matrix_override:
+            self.matrix_override = list()
         return self
 
     def collect(self, pmatrix, fmatrix):

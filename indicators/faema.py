@@ -41,18 +41,21 @@ class FAEMA(Indicator):
         """
         pmatrix, fmatrix = args
         gp = self.gp
-        norm.solve(*args)
-        self.normal = norm.solution
-        cross = gp.convert_to_pixels(pmatrix, pmatrix.center_averages)  # Convert to pixels so the scaling is accurate.
-        solution = gp.cross_normalize(
-            pmatrix,
-            self.normal,
-            cross,
-            self.ema_spread,
-            prefix='cross_'
-        )
         name = '_faema_' + str(self.normal_base) + '_' + str(self.normal_spread) + '_' + str(self.ema_spread)
-        self.style['main'][name] = solution
+        if name not in self.style['main'].keys():
+            norm.solve(*args)
+            self.normal = norm.solution
+            cross = gp.convert_to_pixels(pmatrix, pmatrix.center_averages)  # Convert to pixels so the scaling is accurate.
+            solution = gp.cross_normalize(
+                pmatrix,
+                self.normal,
+                cross,
+                self.ema_spread,
+                prefix='cross_'
+            )
+            self.style['main'][name] = solution
+        else:
+            solution = self.style['main'][name]
         self.collect(pmatrix, fmatrix)
         self.solution = solution
         # NOTE: We aren't going to trim this to the view range as we will be using it to attach other trends elsewhere.

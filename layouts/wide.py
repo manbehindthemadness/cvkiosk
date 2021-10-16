@@ -21,6 +21,8 @@ class Format(Layout):
         Layout.__init__(self, parent, cache, settings)
         self.widgets = [  # This is the list of included widgets for this layout,
             'smoothi_bottom',
+            'smoothi_bottom_backdrop',
+            'smoothi_top_backdrop',
             'smoothi_top',
             'volume',
             'top_arrows',

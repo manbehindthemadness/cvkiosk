@@ -36,18 +36,23 @@ class DDrift(Indicator):
         """
         This will do the actual math and build our solution.
         """
+        suffix = str()
+        if self.matrix_override:
+            self.matrix_override = self.style['main'][self.matrix_override]
+            suffix = '_override'
         pmatrix, fmatrix = args
         ma.solve(*args)  # This will build our moving average.
         gp = self.gp
         source = pmatrix
         if self.source == 'feed':
             source = fmatrix
-        dd_name = '_' + self.source + '_dd_' + str(self.ema_spread) + '_' + self.polarity
+        dd_name = '_' + self.source + '_dd_' + str(self.ema_spread) + '_' + self.polarity + suffix
         if dd_name not in self.style['main'].keys():  # Ensure we don't re-calculate something we already have.
             self.dd = gp.directional_drift(
                 source,
                 self.polarity,
-                self.ema_spread
+                self.ema_spread,
+                self.matrix_override
             )
             self.style['main'][dd_name] = self.dd
             self.solution = self.dd

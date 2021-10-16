@@ -11,6 +11,8 @@ In this we will pass two dictionaries data and style.
 In the data dictionary we will have our tk.Xvar elements that will be passed to their respective labels via key to
     name matching.
 In the style dictionary we will pass visual configurations key-named to their respective widgets.
+
+TODO: It's become evident that we are evaluating widgets that aren't in the layout properly during draw...
 """
 import tkinter as tk
 import graphiend as gp
