@@ -12,7 +12,7 @@ Please see the license file for more details.
 
 style = {
     'main': {  # The elements in the 'main' section must be defined for the style to parse.
-        'style_name': 'tutorial',  # Name style for organization.
+        'style_name': 'full_dark',  # Name style for organization.
         # Configure global settings in relation to screen size and what have you.
         'geometry': "$_screen_size:",  # This is our screen size.
         'price_canvas_offset_coord': (0, 25),  # This is the coordinate of the upper left corner of the price canvas.
@@ -24,8 +24,29 @@ style = {
         'background': '#1a1c1c',
         'utc_format': '%H:%M:%p',
     },
+    'indicators': {
+        'moving_average': [
+            {'ema_spread': 9, 'source': 'price'}
+        ],
+        'normal': [
+            {'normal_base': 100, 'normal_spread': 1, 'source': 'feed'},
+        ],
+        'faema': [
+            {'normal_base': 100, 'normal_spread': 1, 'ema_spread': 9},
+            {'normal_base': 100, 'normal_spread': 1, 'ema_spread': 26},
+        ],
+        'directional_drift': [
+            {'ema_spread': 1, 'source': 'feed', 'polarity': 'negative'},
+            {'ema_spread': 1, 'source': 'feed', 'polarity': 'positive', 'matrix_override': '_normal_100_1'}
+        ],
+        'normalized_directional_drift': [
+            {'source': 'feed'}
+        ],
+    },
     'asset_order': [  # This is our draw_order widgets will be drawn starting with the farthest back into the foreground.
+        'smoothi_bottom_backdrop',
         'smoothi_bottom',
+        'smoothi_top_backdrop',
         'smoothi_top',
         'volume',
         'top_arrows',
@@ -33,16 +54,16 @@ style = {
         'line1',
         'line2',
         'candlesticks',
-        'icing_top1',
-        'icing_top2',
-        'icing_bottom1',
+        # 'icing_top1',
+        # 'icing_top2',
+        # 'icing_bottom1',
         'volume_ruler_top',
         'volume_ruler_bottom1',
         'volume_ruler_bottom2',
         'price_ruler',
         'tics1',
         'date_ruler',
-        'schematic',
+        # 'schematic',
         'tics2',
     ],
     'actor_order': [  # Animate order for moving actors.
@@ -74,7 +95,8 @@ style = {
         'hollow': []  # ['red']  # This can hole one none or both of the colors.
     },
     'line1': {
-        'matrix_override': '&_cross_normal_9',
+        'matrix_override': '&_faema_100_1_9',
+        # 'matrix_override': '&_price_ema_9',
         'geometry': '&_price_matrix',
         'smooth': 0,
         'width': 1,
@@ -85,7 +107,7 @@ style = {
         'alpha': 0.5
     },
     'line2': {
-        'matrix_override': '&_cross_normal_26',
+        'matrix_override': '&_faema_100_1_26',
         'geometry': '&_price_matrix',
         'smooth': 0,
         'width': 1,
@@ -103,29 +125,60 @@ style = {
         'grad': ('deepskyblue', 'blue', 'v'),  # Gradient.
         'graph_type': 'prices',
         'tb': 'b',  # Top or bottom style.
+        # 'outline': 'black',
+        'smooth': 1,  # Smooths average out the measurements.
+        'lineinterpol': 2,  # Linear interpolation adds points and then rounds off the edges.
+        'offset': 317,
+        'padding': (75, 75, 0, 25),  # left, right, top, bottom.
+        'alpha': 0.9,  # Transparency.
+        'alphamask': True,  # Transparency following a gradient.
+        'aa': (10, 0)  # Antialiasing (sample_size, passes).
+    },
+    'smoothi_bottom_backdrop': {
+        'geometry': '&_feed_price_matrix',
+        'matrix_override': '&_faema_100_1_9',
+        'height': 93,
+        'fill': 'aqua',
+        'grad': ('violet', 'purple', 'v'),  # Gradient.
+        'graph_type': 'prices',
+        'tb': 'b',  # Top or bottom style.
         'outline': 'black',
         'smooth': 1,  # Smooths average out the measurements.
         'lineinterpol': 2,  # Linear interpolation adds points and then rounds off the edges.
         'offset': 317,
         'padding': (75, 75, 0, 25),  # left, right, top, bottom.
-        'alpha': 0.2,  # Transparency.
+        'alpha': 0.1,  # Transparency.
         'alphamask': True,  # Transparency following a gradient.
         'aa': (10, 0)  # Antialiasing (sample_size, passes).
     },
     'smoothi_top': {
         'geometry': '&_price_matrix',
-        'matrix_override': '&_super_drift',
+        'matrix_override': '&_feed_dd_1_negative',
         'height': 35,
         'fill': '#ff2e2e',
         'graph_type': 'prices',
         'tb': 't',
-        'outline': 'black',
         'smooth': 2,
         'lineinterpol': 4,
         'offset': 415,
         'padding': (75, 75, 0, 0),  # left, right, top, bottom.
         # 'outline': 'black',
         'alpha': 0.7,
+        'aa': (10, 0),
+    },
+    'smoothi_top_backdrop': {
+        'geometry': '&_price_matrix',
+        'matrix_override': '&_eno_feed',
+        'height': 35,
+        'fill': '#ff2e2e',
+        'graph_type': 'prices',
+        'tb': 't',
+        'smooth': 2,
+        'lineinterpol': 4,
+        'offset': 415,
+        'padding': (75, 75, 0, 0),  # left, right, top, bottom.
+        # 'outline': 'black',
+        'alpha': 0.2,
         'aa': (10, 0),
     },
     'volume': {
@@ -141,70 +194,70 @@ style = {
         'graph_type': 'volume',
         'tb': 'b'
     },
-    'top_arrows': {
-        'geometry': '&_price_matrix',
-        'height': 10,
-        'offset': 10,  # This is the distance the arrow will appear from the coordinate.
-        'fill': 'magenta',
-        'thickness': 1,  # Line thickness.
-        'arrow': 'first',  # This is the end of the line that thhe arrow will attach.
-        'arrowshape': (4, 4, 1),  # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
-        'matrix_override': '&_cu',  # This allows us to pass alternate alert "triggers" instead of just geometry.
-        'triggers': '&_utrends',
-        'tb': 't',
-        'signal': 'TR.DN',
-        'icon': 'img/icons/minus_circle.png',  # Schematic view icon.
-        'icon_fill': 'white',  # Icon color.
-        'tag_fill': 'white',  # Schematic text color.
-        'use_schematic': True  # Toggle schematics.
-    },
-    'bottom_arrows': {
-        'geometry': '&_price_matrix',
-        'height': 10,
-        'offset': 10,  # This is the distance the arrow will appear from the coordinate.
-        'fill': 'cyan',
-        'thickness': 1,  # Line thickness.
-        'arrow': 'first',  # This is the end of the line that the arrow will attach.
-        'arrowshape': (5, 5, 2),  # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
-        'matrix_override': '&_cl',  # This allows us to pass alternate alert "triggers" instead of just geometry.
-        'triggers': '&_dtrends',
-        'tb': 'b',
-        'signal': 'TR.UP',
-        'icon': 'img/icons/x1.png',  # Schematic view icon.
-        'icon_fill': 'white',  # Icon color.
-        'tag_fill': 'white',  # Schematic text color.
-        'use_schematic': True  # Toggle schematics.
-    },
-    'icing_top1': {
-        'geometry': '&_price_matrix',
-        'triggers': '&_trend',
-        'thickness': 1,
-        'smooth': False,
-        # 'dash': (1, 1),
-        'color1': 'magenta',
-        'color2': 'magenta',
-        'tb': 't'
-    },
-    'icing_top2': {
-            'geometry': '&_price_matrix',
-            'triggers': '&_super_trend',
-            'thickness': 2,
-            'smooth': False,
-            'dash': (1, 1),
-            'color1': 'white',
-            'color2': 'white',
-            'tb': 't'
-        },
-    'icing_bottom1': {
-        'geometry': '&_price_matrix',
-        'triggers': '&_anti_trend',
-        'thickness': 1,
-        'smooth': False,
-        # 'dash': (1, 1),
-        'color1': '#1eced9',
-        'color2': '#1eced9',
-        'tb': 'b'
-    },
+    # 'top_arrows': {
+    #     'geometry': '&_price_matrix',
+    #     'height': 10,
+    #     'offset': 10,  # This is the distance the arrow will appear from the coordinate.
+    #     'fill': 'magenta',
+    #     'thickness': 1,  # Line thickness.
+    #     'arrow': 'first',  # This is the end of the line that thhe arrow will attach.
+    #     'arrowshape': (4, 4, 1),  # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
+    #     'matrix_override': '&_cu',  # This allows us to pass alternate alert "triggers" instead of just geometry.
+    #     'triggers': '&_utrends',
+    #     'tb': 't',
+    #     'signal': 'TR.DN',
+    #     'icon': 'img/icons/minus_circle.png',  # Schematic view icon.
+    #     'icon_fill': 'white',  # Icon color.
+    #     'tag_fill': 'white',  # Schematic text color.
+    #     'use_schematic': True  # Toggle schematics.
+    # },
+    # 'bottom_arrows': {
+    #     'geometry': '&_price_matrix',
+    #     'height': 10,
+    #     'offset': 10,  # This is the distance the arrow will appear from the coordinate.
+    #     'fill': 'cyan',
+    #     'thickness': 1,  # Line thickness.
+    #     'arrow': 'first',  # This is the end of the line that the arrow will attach.
+    #     'arrowshape': (5, 5, 2),  # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
+    #     'matrix_override': '&_cl',  # This allows us to pass alternate alert "triggers" instead of just geometry.
+    #     'triggers': '&_dtrends',
+    #     'tb': 'b',
+    #     'signal': 'TR.UP',
+    #     'icon': 'img/icons/x1.png',  # Schematic view icon.
+    #     'icon_fill': 'white',  # Icon color.
+    #     'tag_fill': 'white',  # Schematic text color.
+    #     'use_schematic': True  # Toggle schematics.
+    # },
+    # 'icing_top1': {
+    #     'geometry': '&_price_matrix',
+    #     'triggers': '&_trend',
+    #     'thickness': 1,
+    #     'smooth': False,
+    #     # 'dash': (1, 1),
+    #     'color1': 'magenta',
+    #     'color2': 'magenta',
+    #     'tb': 't'
+    # },
+    # 'icing_top2': {
+    #         'geometry': '&_price_matrix',
+    #         'triggers': '&_super_trend',
+    #         'thickness': 2,
+    #         'smooth': False,
+    #         'dash': (1, 1),
+    #         'color1': 'white',
+    #         'color2': 'white',
+    #         'tb': 't'
+    #     },
+    # 'icing_bottom1': {
+    #     'geometry': '&_price_matrix',
+    #     'triggers': '&_anti_trend',
+    #     'thickness': 1,
+    #     'smooth': False,
+    #     # 'dash': (1, 1),
+    #     'color1': '#1eced9',
+    #     'color2': '#1eced9',
+    #     'tb': 'b'
+    # },
     'tics1': {  # These are the little ruler ticks that run down the edges.
         'coords': (1841, 35, 1841, 305),  # top x, y, bottom x, y
         'tics': [3, 5, 9],  # shorts, longs, increment.
@@ -366,32 +419,32 @@ style = {
             'width': 1,
         }
     },
-    'schematic': {  # This is where all the fancy pointer lines go to show information.
-        'geometry': '&_price_matrix',
-        'coords': (0, 0),
-        'width': 79,
-        'height': 427,
-        'path_spacing': 20,  # This is how close the lines are allowed to get to one another.
-        'path_relief': 5,  # Distance from the target pointer to the start of the line.
-        'pointer_relief': -5,  # Distance between line end and the ruler.
-        'font': 'Arial 10 normal normal',
-        'linetype': 'line',  # More options to come in the future.
-        'style': {
-            'smooth': True,
-            'dash': (1, 2),
-            'arrow': 'last',
-            'arrowshape': (5, 5, 2),
-            'tag_fill': 'white',
-            'outlinestyle': (0, 0, 1, 1),
-            'linecolor': '#adadad',
-            'linethickness': 1,
-            'fill': '#3a3d3d',
-        },
-        'background': {
-            'fill': '#262929',
-            'alpha': 0.5
-        }
-    },
+    # 'schematic': {  # This is where all the fancy pointer lines go to show information.
+    #     'geometry': '&_price_matrix',
+    #     'coords': (0, 0),
+    #     'width': 79,
+    #     'height': 427,
+    #     'path_spacing': 20,  # This is how close the lines are allowed to get to one another.
+    #     'path_relief': 5,  # Distance from the target pointer to the start of the line.
+    #     'pointer_relief': -5,  # Distance between line end and the ruler.
+    #     'font': 'Arial 10 normal normal',
+    #     'linetype': 'line',  # More options to come in the future.
+    #     'style': {
+    #         'smooth': True,
+    #         'dash': (1, 2),
+    #         'arrow': 'last',
+    #         'arrowshape': (5, 5, 2),
+    #         'tag_fill': 'white',
+    #         'outlinestyle': (0, 0, 1, 1),
+    #         'linecolor': '#adadad',
+    #         'linethickness': 1,
+    #         'fill': '#3a3d3d',
+    #     },
+    #     'background': {
+    #         'fill': '#262929',
+    #         'alpha': 0.5
+    #     }
+    # },
     'ticker': {
         'style': {
             'background': '#1a1c1c',
