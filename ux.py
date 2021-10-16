@@ -30,6 +30,7 @@ from utils import (
     test_o_random,
     get_index,
 )
+from indicators.base import Dummy
 from uxutils import ScrCap
 from extras import Filters
 from rpi import wifi_sig
@@ -67,6 +68,8 @@ class OnScreen(tk.Tk):
     chart_data = None
     matrix_solver = None
     delay = None
+
+    indicators = list()
 
     sugar = None
 
@@ -124,7 +127,7 @@ class OnScreen(tk.Tk):
             self.alerts = gp.samples.alerts['alert_data']
         return self
 
-    def solve_matrices(self, matrix: [list, np.array], prefix: str = None) -> np.array:
+    def solve_matrices(self, matrix: [list, np.array], options: dict, prefix: str = '') -> np.array:
         """
         This will convert price data into sweet sweet pixels.
 
@@ -142,17 +145,58 @@ class OnScreen(tk.Tk):
             s['main']['price_canvas_width'],
             s['main']['price_canvas_height']
         ))
+        options = options
         mat.solve(
             price_data=matrix,
             increment=s['main']['price_increment'],
-            timequote=timequote
+            timequote=timequote,
+            **options
         )
         matrix_sorter(
             mat,
             self.matrices,
             prefix
         )
+        if prefix:
+            prefix += '_'
+        self.style[prefix + 'extras'] = mat.extras
         return mat
+
+    def process_indicators(self) -> dict:
+        """
+        This will import and process the various indicators that are specified in our style.
+        """
+        indicator = Dummy
+        opts = indicator().options
+        if 'indicators' in self.style.keys():
+            idrs = self.style['indicators']
+            if not self.indicators:
+                for idr in idrs:
+                    cmd = 'from indicators.' + idr + ' import indicator as ' + idr
+                    exec(cmd)
+                    indicator = eval(idr)
+                    for kw in self.style['indicators'][idr]:
+                        i = indicator().configure(opts, self.style, **kw)
+                        opts = i.options
+                        self.indicators.append(i)
+            else:
+                slip = 0
+                for idr in idrs:
+                    for kw in self.style['indicators'][idr]:
+                        i = self.indicators[slip]
+                        i.configure(opts, self.style, **kw)
+                        opts = i.options
+                        slip += 1
+        return opts
+
+    def solve_indicators(self):
+        """
+        This will go though and trigger the math processes to add our indicator coordinated into the main style.
+        """
+        for indicator in self.indicators:
+            indicator.solve(self.price_matrix, self.feed_matrix)
+
+        return self
 
     def update_style_matrices(self):
         """
@@ -162,8 +206,10 @@ class OnScreen(tk.Tk):
         """
         self.style['main']['_alerts'] = self.alerts  # Pull sample alert data for the ticker tape.
         self.matrices = dict()
-        self.price_matrix = self.solve_matrices(self.price_chart)
-        self.feed_matrix = self.solve_matrices(self.feed_chart, 'feed')
+        # TODO: Process indicators here and pass options to solve_matrices.
+        options = self.process_indicators()
+        self.price_matrix = self.solve_matrices(self.price_chart, options['popt'])
+        self.feed_matrix = self.solve_matrices(self.feed_chart, options['fopt'], 'feed')
         if self.settings['style'] == 'tutorial':  # This is for the example setup only.
             self.matrices.update({  # Here we are making a buncha test triggers to show in the tutorial.
                 '_triggers1': test_o_random(self.matrices['_cu'], 5),
@@ -174,17 +220,18 @@ class OnScreen(tk.Tk):
                 '_triggers6': test_o_random(self.matrices['_cu'], 5),
             })
         self.filters = Filters()
-        self.filters.configure(self.style, self.feed_matrix)
-        self.filters.drifter(self.feed_matrix.price_matrix[-1], 'super')  # Build top smoothi.
-        normal = self.filters.normalize(self.feed_matrix.price_matrix[-1], 100, 1)  # Build bottom smoothi.
-        trend = self.filters.trender(np.array(normal))  # Build icing trends.
-        self.filters.cross_normalize(normal, self.matrices['_ac'], spread=9, offset=60)
-        self.filters.cross_normalize(normal, self.matrices['_ac'], spread=26, offset=60)  # noqa
-        self.filters.oscillator(np.array(trend))  # Build arrow triggers.
-        self.style = self.filters.style  # Update style
+        # self.filters.configure(self.style, self.feed_matrix)
+        # self.filters.drifter(self.feed_matrix.price_matrix[-1], 'super')  # Build top smoothi.
+        # normal = self.filters.normalize(self.feed_matrix.price_matrix[-1], 100, 1)  # Build bottom smoothi.
+        # trend = self.filters.trender(np.array(normal))  # Build icing trends.
+        # self.filters.cross_normalize(normal, self.matrices['_ac'], spread=9, offset=60)
+        # self.filters.cross_normalize(normal, self.matrices['_ac'], spread=26, offset=60)  # noqa
+        # self.filters.oscillator(np.array(trend))  # Build arrow triggers.
+        # self.style = self.filters.style  # Update style
         # Add some variables we can use for later.
         self.style['main']['_drf'] = [str(np.round(float(self.feed_chart[-1][-1]), 3))]
-
+        # TODO: Solve indicators here.
+        self.solve_indicators()
         self.style = matrix_parser(self.style, self.matrices)  # Explode coordinates into style.
         return self
 
