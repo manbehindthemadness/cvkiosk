@@ -39,20 +39,90 @@ class Triggers(Indicator):
         cmd = 'self.' + trigger_type + '(**self.kwargs)'
         exec(cmd)
 
-    def updown(self, base: str, target: str, name: str):
+    def adjust_length(self, base: str, target: str):
         """
-        This will create a trigger array based on if one point is more than the other.
+        This will verify that our base and target arrays are the same length.
         """
         s = self.style['main']
         gp = self.gp
         np = self.np
         base, target = np.array(s[base]), np.array(s[target])
         base, target = gp.un_jag([base, target])
+        return base, target
+
+    def updown(self, base: str, target: str, name: str):
+        """
+        This will create a trigger array based on if one point is more than the other.
+        """
+        base, target = self.adjust_length(base, target)
         triggers = list()
         for bpoint, tpoint in zip(base[1::2], target[1::2]):
-            # print(bpoint, tpoint)
             tr = 0
             if bpoint < tpoint:
+                tr = 1
+            triggers.append(tr)
+        self.style['main'][name] = triggers
+        return self
+
+    def crossup(self, base: str, target: str, name: str):
+        """
+        This is for point alerts when the target trend crosses up on the base trend.
+        """
+        base, target = self.adjust_length(base, target)
+        triggers = list()
+        last_points = (0, 0)
+        for idx, (bpoint, tpoint) in enumerate(zip(base[1::2], target[1::2])):
+            tr = 0
+            if idx:
+                a, b = last_points
+                if a > b and bpoint < tpoint:
+                    tr = 1
+            last_points = (bpoint, tpoint)
+            triggers.append(tr)
+        self.style['main'][name] = triggers
+        return self
+
+    def crossdown(self, base: str, target: str, name: str):
+        """
+        This is for point alerts when the target trend crosses up on the base trend.
+        """
+        base, target = self.adjust_length(base, target)
+        triggers = list()
+        last_points = (0, 0)
+        for idx, (bpoint, tpoint) in enumerate(zip(base[1::2], target[1::2])):
+            tr = 0
+            if idx:
+                a, b = last_points
+                if a < b and bpoint > tpoint:
+                    tr = 1
+            last_points = (bpoint, tpoint)
+            triggers.append(tr)
+        self.style['main'][name] = triggers
+        return self
+
+    def trend(self, target: str, name: str):
+        """
+        This is for icing alerts to use.
+        """
+        triggers = list()
+        target = self.style['main'][target]
+        for point in target[1::2]:
+            tr = 0
+            if point:
+                tr = 1
+            triggers.append(tr)
+        self.style['main'][name] = triggers
+        return self
+
+    def point_trend(self, target: str, point: float, name: str):
+        """
+        This is for icing alerts to use.
+        """
+        triggers = list()
+        target = self.style['main'][target]
+        for pt in target[1::2]:
+            tr = 0
+            if pt != point:
                 tr = 1
             triggers.append(tr)
         self.style['main'][name] = triggers
