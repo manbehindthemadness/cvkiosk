@@ -43,6 +43,9 @@ style = {
         ],
         'triggers': [
             {'type': 'updown', 'base': '_faema_100_1_26', 'target': '_faema_100_1_9', 'name': '_ema_9_trig'},
+            {'type': 'crossup', 'base': '_faema_100_1_26', 'target': '_faema_100_1_9', 'name': '_ema_9_point_trig_down'},
+            {'type': 'crossdown', 'base': '_faema_100_1_26', 'target': '_faema_100_1_9', 'name': '_ema_9_point_trig_up'},
+            {'type': 'cross_filter', 'crossup': '_ema_9_point_trig_up', 'crossdown': '_ema_9_point_trig_down', 'limit': 10},
             {'type': 'updown', 'base': '_ac', 'target': '_faema_100_1_26', 'name': '_ema_26_trig'},
             {'type': 'crossup', 'base': '_ac', 'target': '_faema_100_1_26', 'name': '_ema_26_point_trig_up'},
             {'type': 'crossdown', 'base': '_ac', 'target': '_faema_100_1_26', 'name': '_ema_26_point_trig_down'},
@@ -59,6 +62,8 @@ style = {
         'volume',
         'top_arrows',
         'bottom_arrows',
+        'points1',
+        'points2',
         'line1',
         'line2',
         'candlesticks',
@@ -239,6 +244,36 @@ style = {
         'icon_fill': 'white',  # Icon color.
         'tag_fill': 'white',  # Schematic text color.
         'use_schematic': True  # Toggle schematics.
+    },
+    'points1': {
+        'geometry': '&_price_matrix',
+        'triggers': '&_ema_9_point_trig_down',
+        'color': 'magenta',
+        'rad': 3,
+        'alpha': 0.9,
+        'offset': 10,
+        'tb': 't',
+        'direction': 'up',
+        'icon': 'img/icons/minus.png',
+        'icon_fill': 'white',
+        'tag_fill': 'white',
+        'signal': 'MT.DN',
+        'use_schematic': True
+    },
+    'points2': {
+        'geometry': '&_price_matrix',
+        'triggers': '&_ema_9_point_trig_up',
+        'color': 'cyan',
+        'rad': 3,
+        'alpha': 0.9,
+        'offset': 10,
+        'tb': 'b',
+        'direction': 'down',
+        'icon': 'img/icons/minus.png',
+        'icon_fill': 'white',
+        'tag_fill': 'white',
+        'signal': 'MT.UP',
+        'use_schematic': True
     },
     'icing_top1': {
         'geometry': '&_price_matrix',
@@ -447,7 +482,7 @@ style = {
         'width': 79,
         'height': 427,
         'path_spacing': 20,  # This is how close the lines are allowed to get to one another.
-        'path_relief': 5,  # Distance from the target pointer to the start of the line.
+        'path_relief': 15,  # Distance from the target pointer to the start of the line.
         'pointer_relief': -5,  # Distance between line end and the ruler.
         'font': 'Arial 10 normal normal',
         'linetype': 'line',  # More options to come in the future.

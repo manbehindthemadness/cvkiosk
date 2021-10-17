@@ -8,6 +8,8 @@ Please see the license file for more details.
 ------------------------------------------------------------------------------------------------------------------------
 This is a unique indicator that need to be run LAST. This is because it requires the output of the other indicators to
     already be solved in order to work.
+
+TODO: We may want to reverse some of these indicators depending on the FGI.
 """
 
 from indicators.base import Indicator

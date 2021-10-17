@@ -203,11 +203,9 @@ class OnScreen(tk.Tk):
         """
         This updates the price and volume matrices in our style so it can bbe passed to the widgets.
 
-        TODO: It's become clear that all these calculations are going to have to be moved to the server in the next release.
         """
         self.style['main']['_alerts'] = self.alerts  # Pull sample alert data for the ticker tape.
         self.matrices = dict()
-        # TODO: Process indicators here and pass options to solve_matrices.
         options = self.process_indicators()
         self.price_matrix = self.solve_matrices(self.price_chart, options['popt'])
         self.feed_matrix = self.solve_matrices(self.feed_chart, options['fopt'], 'feed')
@@ -220,18 +218,7 @@ class OnScreen(tk.Tk):
                 '_triggers5': test_o_random(self.matrices['_cl'], 5),
                 '_triggers6': test_o_random(self.matrices['_cu'], 5),
             })
-        # self.filters = Filters()
-        # self.filters.configure(self.style, self.feed_matrix)
-        # self.filters.drifter(self.feed_matrix.price_matrix[-1], 'super')  # Build top smoothi.
-        # normal = self.filters.normalize(self.feed_matrix.price_matrix[-1], 100, 1)  # Build bottom smoothi.
-        # trend = self.filters.trender(np.array(normal))  # Build icing trends.
-        # self.filters.cross_normalize(normal, self.matrices['_ac'], spread=9, offset=60)
-        # self.filters.cross_normalize(normal, self.matrices['_ac'], spread=26, offset=60)  # noqa
-        # self.filters.oscillator(np.array(trend))  # Build arrow triggers.
-        # self.style = self.filters.style  # Update style
-        # Add some variables we can use for later.
         self.style['main']['_drf'] = [str(np.round(float(self.feed_chart[-1][-1]), 3))]
-        # TODO: Solve indicators here.
         self.solve_indicators()
         self.style = matrix_parser(self.style, self.matrices)  # Explode coordinates into style.
         return self
