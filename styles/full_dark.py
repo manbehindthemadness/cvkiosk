@@ -26,7 +26,7 @@ style = {
     },
     'indicators': {
         'moving_average': [
-            {'ema_spread': 9, 'source': 'price'}
+            {'ema_spread': 9, 'source': 'price'},
         ],
         'normal': [
             {'normal_base': 100, 'normal_spread': 1, 'source': 'feed'},
@@ -37,11 +37,14 @@ style = {
         ],
         'directional_drift': [
             {'ema_spread': 1, 'source': 'feed', 'polarity': 'negative'},
-            {'ema_spread': 1, 'source': 'feed', 'polarity': 'positive', 'matrix_override': '_normal_100_1'}
         ],
         'normalized_directional_drift': [
-            {'source': 'feed'}
+            {'source': 'feed'},
         ],
+        'triggers': [
+            {'type': 'updown', 'base': '_faema_100_1_26', 'target': '_faema_100_1_9', 'name': '_ema_9_trig'},
+            {'type': 'updown', 'base': '_ac', 'target': '_faema_100_1_26', 'name': '_ema_26_trig'}
+        ]
     },
     'asset_order': [  # This is our draw_order widgets will be drawn starting with the farthest back into the foreground.
         'smoothi_bottom_backdrop',
@@ -96,11 +99,12 @@ style = {
     },
     'line1': {
         'matrix_override': '&_faema_100_1_9',
-        # 'matrix_override': '&_price_ema_9',
         'geometry': '&_price_matrix',
         'smooth': 0,
         'width': 1,
-        'fill': 'purple',
+        'color1': 'green',
+        'color2': 'purple',
+        'triggers': '&_ema_9_trig',
         'linetype': 'scatter',
         'lineinterpol': 2,
         'rad': 2,
@@ -111,7 +115,9 @@ style = {
         'geometry': '&_price_matrix',
         'smooth': 0,
         'width': 1,
-        'fill': 'magenta',
+        'color1': 'magenta',
+        'color2': 'lime',
+        'triggers': '&_ema_26_trig',
         'linetype': 'scatter',
         'lineinterpol': 2,
         'rad': 2,

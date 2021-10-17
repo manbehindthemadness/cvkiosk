@@ -32,7 +32,7 @@ from utils import (
 )
 from indicators.base import Dummy
 from uxutils import ScrCap
-from extras import Filters
+# from extras import Filters
 from rpi import wifi_sig
 if config('settings')['debug_memory']:
     from diagnostics import MemTrace
@@ -193,6 +193,7 @@ class OnScreen(tk.Tk):
         """
         This will go though and trigger the math processes to add our indicator coordinated into the main style.
         """
+        self.style['main']['_ac'] = self.price_matrix.price_matrix[-1]  # pull this early in the event we need it for an indicator.
         for indicator in self.indicators:
             indicator.solve(self.price_matrix, self.feed_matrix)
 
@@ -219,7 +220,7 @@ class OnScreen(tk.Tk):
                 '_triggers5': test_o_random(self.matrices['_cl'], 5),
                 '_triggers6': test_o_random(self.matrices['_cu'], 5),
             })
-        self.filters = Filters()
+        # self.filters = Filters()
         # self.filters.configure(self.style, self.feed_matrix)
         # self.filters.drifter(self.feed_matrix.price_matrix[-1], 'super')  # Build top smoothi.
         # normal = self.filters.normalize(self.feed_matrix.price_matrix[-1], 100, 1)  # Build bottom smoothi.
@@ -422,7 +423,7 @@ class OnScreen(tk.Tk):
             self.matrix_solver = None
             self.style = dict(self.base_style)
             self.layout.purge()
-            self.filters.clear()
+            # self.filters.clear()
         else:
             self.layout.delete('all')
         return self
