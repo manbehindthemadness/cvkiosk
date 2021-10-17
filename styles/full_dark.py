@@ -77,7 +77,7 @@ style = {
         'price_ruler',
         'tics1',
         'date_ruler',
-        # 'schematic',
+        'schematic',
         'tics2',
     ],
     'actor_order': [  # Animate order for moving actors.
