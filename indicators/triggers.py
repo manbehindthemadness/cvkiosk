@@ -100,6 +100,29 @@ class Triggers(Indicator):
         self.style['main'][name] = triggers
         return self
 
+    def cross_filter(self, crossup: str, crossdown: str, limit: int):
+        """
+        This will filter false positives out of a pair of one crossup and one crossdown trigger array.
+        """
+        s = self.style['main']
+        np = self.np
+        cup, cdown = s[crossup], s[crossdown]
+        for idx, (up, down) in enumerate(zip(cup, cdown)):
+            if idx < limit:
+                start = 0
+                stop = idx
+            else:
+                start = np.subtract(idx, limit)
+                stop = idx  # np.subtract(idx, 1)
+            if up or down:
+                "set both lists [start:stop] to zero"
+                block = [0] * int(np.subtract(stop, start))
+                cup[start:stop] = block
+                cdown[start:stop] = block
+        self.style['main'][crossup] = cup
+        self.style['main'][crossdown] = cdown
+        return self
+
     def trend(self, target: str, name: str):
         """
         This is for icing alerts to use.

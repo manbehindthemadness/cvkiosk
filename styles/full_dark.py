@@ -46,6 +46,7 @@ style = {
             {'type': 'updown', 'base': '_ac', 'target': '_faema_100_1_26', 'name': '_ema_26_trig'},
             {'type': 'crossup', 'base': '_ac', 'target': '_faema_100_1_26', 'name': '_ema_26_point_trig_up'},
             {'type': 'crossdown', 'base': '_ac', 'target': '_faema_100_1_26', 'name': '_ema_26_point_trig_down'},
+            {'type': 'cross_filter', 'crossup': '_ema_26_point_trig_up', 'crossdown': '_ema_26_point_trig_down', 'limit': 10},
             {'type': 'trend', 'target': '_eno_feed', 'name': '_eno_feed_trig'},
             {'type': 'point_trend', 'target': '_feed_dd_1_negative', 'point': 304.0, 'name': '_feed_dd_1_negative_trig'},
         ]
