@@ -17,15 +17,15 @@ NOTE: We need to keep this between 500 and 2000 hz
 
 """
 import time
-from legacy.client import settings
+from utils import config, log
 # NOTE: The below warnings are muted as these requirements aren't loaded unless we are on the raspi platform.
 # noinspection PyUnresolvedReferences,PyPackageRequirements
 import RPi.GPIO as GPIO
-from warehouse.logs import JournalD
 
-log = JournalD(settings).log
-buz = settings.ALERT_PIN
-tm = settings.ALERT_LENGTH
+
+settings = config('settings')
+buz = settings['alert_pin']
+tm = settings['alert_length']
 
 
 def cycle_buzzer(freq, length):
@@ -41,7 +41,7 @@ def cycle_buzzer(freq, length):
     GPIO.setup(buz, GPIO.OUT)
     p = GPIO.PWM(buz, 1000)
     p.ChangeFrequency(freq)
-    p.start(settings.VOLUME)
+    p.start(50)
     time.sleep(length)
     p.stop()
     GPIO.cleanup()
@@ -122,7 +122,7 @@ def cycle_alert(alert):
     :type alert: str
     :return: Nothing.
     """
-    cycle = settings.ALERT_REPITITION
+    cycle = settings['alert_repetition']
     alert = alerts[alert]
     while cycle:
         alert()
@@ -130,7 +130,7 @@ def cycle_alert(alert):
         cycle -= 1
 
 
-if settings.SOUND_TEST and not settings.DEV_MODE:  # Perform sound test.
+if settings['sound_test']:  # Perform sound test.
     log('Performing sound test')
     for a in alerts:
         alerts[a]()

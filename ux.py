@@ -70,6 +70,8 @@ class OnScreen(tk.Tk):
     delay = None
 
     indicators = list()
+    delayed_indicators = ['audio_alerts']  # These indicators need to be processed after the rest have been solved.
+    indicator_alerts = list()
 
     sugar = None
 
@@ -167,11 +169,12 @@ class OnScreen(tk.Tk):
         This will import and process the various indicators that are specified in our style.
         """
         indicator = Dummy
+
         opts = indicator().options
-        if 'indicators' in self.style.keys():
-            idrs = self.style['indicators']
-            if not self.indicators:
-                for idr in idrs:
+        idrs = self.style['indicators']
+        if not self.indicators:
+            for idr in idrs:
+                if idr not in self.delayed_indicators:
                     cmd = 'from indicators.' + idr + ' import indicator as ' + idr
                     exec(cmd)
                     indicator = eval(idr)
@@ -179,9 +182,10 @@ class OnScreen(tk.Tk):
                         i = indicator().configure(opts, self.style, **kw)
                         opts = i.options
                         self.indicators.append(i)
-            else:
-                slip = 0
-                for idr in idrs:
+        else:
+            slip = 0
+            for idr in idrs:
+                if idr not in self.delayed_indicators:
                     for kw in self.style['indicators'][idr]:
                         i = self.indicators[slip]
                         i.configure(opts, self.style, **kw)
@@ -196,7 +200,35 @@ class OnScreen(tk.Tk):
         self.style['main']['_ac'] = self.price_matrix.price_matrix[-1]  # pull this early in the event we need it for an indicator.
         for indicator in self.indicators:
             indicator.solve(self.price_matrix, self.feed_matrix)
+        return self
 
+    def solve_delayed_indicators(self):
+        """
+        This will process the delayed indicators.
+        """
+        alert = Dummy
+
+        opts = alert().options
+        idrs = self.style['indicators']
+        if not self.indicator_alerts:
+            for idr in idrs:
+                if idr in self.delayed_indicators:
+                    cmd = 'from indicators.' + idr + ' import indicator as ' + idr
+                    exec(cmd)
+                    alert = eval(idr)
+                    for kw in self.style['indicators'][idr]:
+                        i = alert().configure(opts, self.style, **kw)
+                        self.indicator_alerts.append(i)
+        else:
+            slip = 0
+            for idr in idrs:
+                if idr in self.delayed_indicators:
+                    for kw in self.style['indicators'][idr]:
+                        i = self.indicator_alerts[slip]
+                        i.configure(opts, self.style, **kw)
+                        slip += 1
+        for alert in self.indicator_alerts:
+            alert.solve()
         return self
 
     def update_style_matrices(self):
@@ -221,6 +253,7 @@ class OnScreen(tk.Tk):
         self.style['main']['_drf'] = [str(np.round(float(self.feed_chart[-1][-1]), 3))]
         self.solve_indicators()
         self.style = matrix_parser(self.style, self.matrices)  # Explode coordinates into style.
+        self.solve_delayed_indicators()
         return self
 
     def screen_cap(self, coords: tuple, enhance: bool = False):
