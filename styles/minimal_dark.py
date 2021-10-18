@@ -176,7 +176,7 @@ style = {
         'offset': 192,
         'padding': (0, 0, 0, 0),  # left, right, top, bottom.
         # 'outline': 'black',
-        'alpha': 0.7,
+        'alpha': 0.8,
         'aa': (10, 0),
     },
     'smoothi_top_backdrop': {
@@ -191,7 +191,7 @@ style = {
         'offset': 194,
         'padding': (0, 0, 0, 0),  # left, right, top, bottom.
         # 'outline': 'black',
-        'alpha': 0.2,
+        'alpha': 0.4,
         'aa': (10, 0),
     },
     'volume': {
