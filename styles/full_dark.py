@@ -286,15 +286,15 @@ style = {
         'tb': 't'
     },
     'icing_top2': {
-            'geometry': '&_price_matrix',
-            'triggers': '&_feed_dd_1_negative_trig',
-            'thickness': 2,
-            'smooth': False,
-            'dash': (1, 1),
-            'color1': 'white',
-            'color2': 'white',
-            'tb': 't'
-        },
+        'geometry': '&_price_matrix',
+        'triggers': '&_feed_dd_1_negative_trig',
+        'thickness': 2,
+        'smooth': False,
+        # 'dash': (1, 1),
+        'color1': 'white',
+        'color2': 'white',
+        'tb': 't'
+    },
     'icing_bottom1': {
         'geometry': '&_price_matrix',
         'triggers': '&_eno_feed_trig',
