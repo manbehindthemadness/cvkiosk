@@ -24,16 +24,53 @@ style = {
         'background': '#1a1c1c',
         'utc_format': '%H:%M:%p',
     },
+    'indicators': {
+        'moving_average': [
+            {'ema_spread': 9, 'source': 'price'},
+        ],
+        'normal': [
+            {'normal_base': 100, 'normal_spread': 1, 'source': 'feed'},
+        ],
+        'faema': [
+            {'normal_base': 100, 'normal_spread': 1, 'ema_spread': 9},
+            {'normal_base': 100, 'normal_spread': 1, 'ema_spread': 26},
+        ],
+        'directional_drift': [
+            {'ema_spread': 1, 'source': 'feed', 'polarity': 'negative'},
+        ],
+        'normalized_directional_drift': [
+            {'source': 'feed'},
+        ],
+        'triggers': [
+            {'type': 'updown', 'base': '_faema_100_1_26', 'target': '_faema_100_1_9', 'name': '_ema_9_trig'},
+            {'type': 'crossup', 'base': '_faema_100_1_26', 'target': '_faema_100_1_9', 'name': '_ema_9_point_trig_down'},
+            {'type': 'crossdown', 'base': '_faema_100_1_26', 'target': '_faema_100_1_9', 'name': '_ema_9_point_trig_up'},
+            {'type': 'cross_filter', 'crossup': '_ema_9_point_trig_up', 'crossdown': '_ema_9_point_trig_down', 'limit': 10},
+            {'type': 'updown', 'base': '_ac', 'target': '_faema_100_1_26', 'name': '_ema_26_trig'},
+            {'type': 'crossup', 'base': '_ac', 'target': '_faema_100_1_26', 'name': '_ema_26_point_trig_up'},
+            {'type': 'crossdown', 'base': '_ac', 'target': '_faema_100_1_26', 'name': '_ema_26_point_trig_down'},
+            {'type': 'cross_filter', 'crossup': '_ema_26_point_trig_up', 'crossdown': '_ema_26_point_trig_down', 'limit': 10},
+            {'type': 'trend', 'target': '_eno_feed', 'name': '_eno_feed_trig'},
+            {'type': 'point_trend', 'target': '_feed_dd_1_negative', 'point': 304.0, 'name': '_feed_dd_1_negative_trig'},
+        ]
+    },
     'asset_order': [  # This is our draw_order widgets will be drawn starting with the farthest back into the foreground.
+        'smoothi_bottom_backdrop',
         'smoothi_bottom',
+        'smoothi_top_backdrop',
         'smoothi_top',
         'volume',
         'top_arrows',
         'bottom_arrows',
+        'points1',
+        'points2',
+        'line1',
+        'line2',
         'candlesticks',
         'icing_top1',
         'icing_top2',
         'icing_bottom1',
+        'icing_bottom2',
         'tics1',
         'date_ruler',
         'tics2',
@@ -66,6 +103,32 @@ style = {
         'alpha': 0.75,
         'hollow': []  # ['red']  # This can hole one none or both of the colors.
     },
+    'line1': {
+        'matrix_override': '&_faema_100_1_9',
+        'geometry': '&_price_matrix',
+        'smooth': 0,
+        'width': 1,
+        'color1': 'green',
+        'color2': 'purple',
+        'triggers': '&_ema_9_trig',
+        'linetype': 'scatter',
+        'lineinterpol': 2,
+        'rad': 2,
+        'alpha': 0.5
+    },
+    'line2': {
+        'matrix_override': '&_faema_100_1_26',
+        'geometry': '&_price_matrix',
+        'smooth': 0,
+        'width': 1,
+        'color1': 'magenta',
+        'color2': 'lime',
+        'triggers': '&_ema_26_trig',
+        'linetype': 'scatter',
+        'lineinterpol': 2,
+        'rad': 2,
+        'alpha': 0.5
+    },
     'smoothi_bottom': {
         'geometry': '&_feed_price_matrix',
         'matrix_override': '&_normal_100_1',
@@ -83,9 +146,26 @@ style = {
         'alphamask': True,  # Transparency following a gradient.
         'aa': (10, 0)  # Antialiasing (sample_size, passes).
     },
+    'smoothi_bottom_backdrop': {
+        'geometry': '&_feed_price_matrix',
+        'matrix_override': '&_faema_100_1_9',
+        'height': 60,
+        'fill': 'aqua',
+        'grad': ('violet', 'purple', 'v'),  # Gradient.
+        'graph_type': 'prices',
+        'tb': 'b',  # Top or bottom style.
+        # 'outline': 'black',
+        'smooth': 1,  # Smooths average out the measurements.
+        'lineinterpol': 2,  # Linear interpolation adds points and then rounds off the edges.
+        'offset': 150,
+        'padding': (0, 0, 0, 0),  # left, right, top, bottom.
+        'alpha': 0.1,  # Transparency.
+        'alphamask': True,  # Transparency following a gradient.
+        'aa': (10, 0)  # Antialiasing (sample_size, passes).
+    },
     'smoothi_top': {
         'geometry': '&_price_matrix',
-        'matrix_override': '&_super_drift',
+        'matrix_override': '&_feed_dd_1_negative',
         'height': 20,
         'fill': '#ff2e2e',
         'graph_type': 'prices',
@@ -97,6 +177,21 @@ style = {
         'padding': (0, 0, 0, 0),  # left, right, top, bottom.
         # 'outline': 'black',
         'alpha': 0.7,
+        'aa': (10, 0),
+    },
+    'smoothi_top_backdrop': {
+        'geometry': '&_price_matrix',
+        'matrix_override': '&_eno_feed',
+        'height': 20,
+        'fill': '#ff2e2e',
+        'graph_type': 'prices',
+        'tb': 't',
+        'smooth': 2,
+        'lineinterpol': 4,
+        'offset': 194,
+        'padding': (0, 0, 0, 0),  # left, right, top, bottom.
+        # 'outline': 'black',
+        'alpha': 0.2,
         'aa': (10, 0),
     },
     'volume': {
@@ -121,7 +216,7 @@ style = {
         'arrow': 'first',  # This is the end of the line that thhe arrow will attach.
         'arrowshape': (4, 4, 1),  # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
         'matrix_override': '&_cu',  # This allows us to pass alternate alert "triggers" instead of just geometry.
-        'triggers': '&_utrends',
+        'triggers': '&_ema_26_point_trig_down',
         'tb': 't',
         'signal': 'TR.DN',
         'icon': 'img/icons/minus_circle.png',  # Schematic view icon.
@@ -138,7 +233,7 @@ style = {
         'arrow': 'first',  # This is the end of the line that thhe arrow will attach.
         'arrowshape': (5, 5, 2),  # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
         'matrix_override': '&_cl',  # This allows us to pass alternate alert "triggers" instead of just geometry.
-        'triggers': '&_dtrends',
+        'triggers': '&_ema_26_point_trig_up',
         'tb': 'b',
         'signal': 'TR.UP',
         'icon': 'img/icons/x1.png',  # Schematic view icon.
@@ -146,34 +241,74 @@ style = {
         'tag_fill': 'black',  # Schematic text color.
         'use_schematic': True  # Toggle schematics.
     },
+    'points1': {
+        'geometry': '&_price_matrix',
+        'triggers': '&_ema_9_point_trig_down',
+        'color': 'magenta',
+        'rad': 3,
+        'alpha': 0.9,
+        'offset': 25,
+        'tb': 't',
+        'direction': 'up',
+        'icon': 'img/icons/minus.png',
+        'icon_fill': 'white',
+        'tag_fill': 'white',
+        'signal': 'MT.DN',
+        'use_schematic': False
+    },
+    'points2': {
+        'geometry': '&_price_matrix',
+        'triggers': '&_ema_9_point_trig_up',
+        'color': 'cyan',
+        'rad': 3,
+        'alpha': 0.9,
+        'offset': 25,
+        'tb': 'b',
+        'direction': 'down',
+        'icon': 'img/icons/minus.png',
+        'icon_fill': 'white',
+        'tag_fill': 'white',
+        'signal': 'MT.UP',
+        'use_schematic': False
+    },
     'icing_top1': {
         'geometry': '&_price_matrix',
-        'triggers': '&_trend',
+        'triggers': '&_eno_feed_trig',
         'thickness': 1,
         'smooth': False,
         # 'dash': (1, 1),
-        'color1': 'magenta',
-        'color2': 'magenta',
+        'color1': '#ededed',
+        'color2': '#dbdbdb',
         'tb': 't'
     },
     'icing_top2': {
-            'geometry': '&_price_matrix',
-            'triggers': '&_super_trend',
-            'thickness': 2,
-            'smooth': False,
-            'dash': (1, 1),
-            'color1': '#ff9cf8',
-            'color2': '#ff9cf8',
-            'tb': 't'
-        },
+        'geometry': '&_price_matrix',
+        'triggers': '&_feed_dd_1_negative_trig',
+        'thickness': 2,
+        'smooth': False,
+        # 'dash': (1, 1),
+        'color1': 'white',
+        'color2': 'white',
+        'tb': 't'
+    },
     'icing_bottom1': {
         'geometry': '&_price_matrix',
-        'triggers': '&_anti_trend',
+        'triggers': '&_eno_feed_trig',
         'thickness': 1,
         'smooth': False,
         # 'dash': (1, 1),
-        'color1': '#1eced9',
-        'color2': '#1eced9',
+        'color1': '#ededed',
+        'color2': '#dbdbdb',
+        'tb': 'b'
+    },
+    'icing_bottom2': {
+        'geometry': '&_price_matrix',
+        'triggers': '&_feed_dd_1_negative_trig',
+        'thickness': 2,
+        'smooth': False,
+        # 'dash': (1, 1),
+        'color1': 'white',
+        'color2': 'white',
         'tb': 'b'
     },
     'tics1': {  # These are the little ruler ticks that run down the edges.
