@@ -50,16 +50,16 @@ class Alert(Indicator):
         """
         Perform actions.
         """
-        if settings['use_sound']:
-            if self.source[-1] and not self.alert_triggered:
-                print('-------------------TRIGGERING ALERT')
+        if self.source[-1] and not self.alert_triggered:
+            print('-------------------TRIGGERING ALERT')
+            if settings['use_sound']:
                 thread = threading.Thread(target=self.sound_alert, args=())
                 thread.start()
-                self.alert_triggered = True
-            else:
-                if self.source[-2] and not self.source[-1]:
-                    print('-------------------RESETTING ALERT')
-                    self.alert_triggered = False
+            self.alert_triggered = True
+        else:
+            if self.source[-2] and not self.source[-1]:
+                print('-------------------RESETTING ALERT')
+                self.alert_triggered = False
         return self
 
 
