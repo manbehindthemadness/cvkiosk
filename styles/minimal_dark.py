@@ -21,7 +21,7 @@ style = {
         # This scales the candlestick matrix in order to make room for the other widgets.
         'price_matrix_offsets': (2, 2, 20, 85),  # left, right, top, bottom.
         'price_increment': 4,  # The width of one candlestick in pixels.
-        'background': '#1a1c1c',
+        'background': 'black',
         'utc_format': '%H:%M:%p',
     },
     'indicators': {
@@ -98,7 +98,7 @@ style = {
         'meter_label_width_right': 40,
         'font': 'Arial 5 normal bold',
         'average': 3,   # This averages the readout across a few samples (useful for noisy sensors).
-        'background': '#1a1c1c',
+        'background': 'black',
     },
     'candlesticks': {
         # The bar_width will alter the X coordinates of all the price related widgets.
@@ -358,7 +358,7 @@ style = {
             'hide_info_text': True,
         },
         'background': {
-            'fill': '#1a1c1c',
+            'fill': 'black',
             'alpha': 0.1
         }
     },
@@ -373,18 +373,18 @@ style = {
     },
     'ticker': {
         'style': {
-            'background': '#1a1c1c',
+            'background': 'black',
             'colorup': '#2eff62',
             'colordown': '#ff2e2e',
             'tickerfont': 'Arial 6 normal bold',
             'tickerfontcolorup': 'white',
             'tickerfontcolordown': 'white',
-            'tickerbgup': '#1a1c1c',
-            'tickerbgdown': '#1a1c1c',
+            'tickerbgup': 'black',
+            'tickerbgdown': 'black',
             'quotefont': 'Arial 6 normal bold',
             'quotefontcolorup': '#2eff62',
-            'quotebgdown': '#1a1c1c',
-            'quotebgup': '#1a1c1c',
+            'quotebgdown': 'black',
+            'quotebgup': 'black',
             'quotefontcolordown': '#ff2e2e',
             'iconup': None,
             'icondown': None,
