@@ -27,6 +27,10 @@ class Indicator:
     normal_base = None
     normal_spread = None
     ema_spread = None
+    history = None
+    alert = None
+    alert_type = None
+    repeat = None
 
     solution = None
     triggers = None
@@ -42,7 +46,9 @@ class Indicator:
         'ema_spread',
         'source',
         'polarity',
-        'matrix_override'
+        'matrix_override',
+        'alert_type',
+        'repeat'
     ]
 
     def_options = {
