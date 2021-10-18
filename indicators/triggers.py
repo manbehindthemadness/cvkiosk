@@ -147,7 +147,7 @@ class Triggers(Indicator):
         target = self.style['main'][target]
         for pt in target[1::2]:
             tr = 0
-            if pt != point:
+            if pt and pt != point:
                 tr = 1
             triggers.append(tr)
         self.style['main'][name] = triggers

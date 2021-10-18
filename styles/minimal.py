@@ -67,10 +67,10 @@ style = {
         'line1',
         'line2',
         'candlesticks',
-        # 'icing_top1',
-        # 'icing_top2',
-        # 'icing_bottom1',
-        # 'icing_bottom2',
+        'icing_top1',
+        'icing_top2',
+        'icing_bottom1',
+        'icing_bottom2',
         'tics1',
         'date_ruler',
         'tics2',
@@ -137,7 +137,7 @@ style = {
         'grad': ('deepskyblue', 'blue', 'v'),  # Gradient.
         'graph_type': 'prices',
         'tb': 'b',  # Top or bottom style.
-        'outline': 'black',
+        # 'outline': 'black',
         'smooth': 1,  # Smooths average out the measurements.
         'lineinterpol': 2,  # Linear interpolation adds points and then rounds off the edges.
         'offset': 150,
@@ -154,7 +154,7 @@ style = {
         'grad': ('violet', 'purple', 'v'),  # Gradient.
         'graph_type': 'prices',
         'tb': 'b',  # Top or bottom style.
-        'outline': 'black',
+        # 'outline': 'black',
         'smooth': 1,  # Smooths average out the measurements.
         'lineinterpol': 2,  # Linear interpolation adds points and then rounds off the edges.
         'offset': 150,
