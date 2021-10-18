@@ -143,7 +143,7 @@ style = {
         'graph_type': 'prices',
         'tb': 'b',  # Top or bottom style.
         # 'outline': 'black',
-        'smooth': 1,  # Smooths average out the measurements.
+        'smooth': 0,  # Smooths average out the measurements.
         'lineinterpol': 2,  # Linear interpolation adds points and then rounds off the edges.
         'offset': 317,
         'padding': (75, 75, 0, 25),  # left, right, top, bottom.
@@ -160,7 +160,7 @@ style = {
         'graph_type': 'prices',
         'tb': 'b',  # Top or bottom style.
         'outline': 'black',
-        'smooth': 1,  # Smooths average out the measurements.
+        'smooth': 0,  # Smooths average out the measurements.
         'lineinterpol': 2,  # Linear interpolation adds points and then rounds off the edges.
         'offset': 317,
         'padding': (75, 75, 0, 25),  # left, right, top, bottom.
@@ -175,7 +175,7 @@ style = {
         'fill': '#ff2e2e',
         'graph_type': 'prices',
         'tb': 't',
-        'smooth': 2,
+        'smooth': 1,
         'lineinterpol': 4,
         'offset': 415,
         'padding': (75, 75, 0, 0),  # left, right, top, bottom.
@@ -190,7 +190,7 @@ style = {
         'fill': '#ff2e2e',
         'graph_type': 'prices',
         'tb': 't',
-        'smooth': 2,
+        'smooth': 1,
         'lineinterpol': 4,
         'offset': 415,
         'padding': (75, 75, 0, 0),  # left, right, top, bottom.
