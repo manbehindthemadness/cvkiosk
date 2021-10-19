@@ -246,6 +246,18 @@ def num(exp: str) -> float:
     return float(re.findall(r'\d+', exp)[0])
 
 
+def mk_arry(arry):
+    """
+    This converts whatever it can into a numpy array.
+    """
+    if isinstance(arry, (np.ndarray, list, tuple)):
+        try:
+            arry = np.array(arry)
+        except AttributeError:
+            pass
+    return arry
+
+
 def evaluate_expression(expression, style: dict, constants: dict):
     """
     This will basically check to see if we have an expression, if so we will return the evaluated result.
@@ -335,7 +347,7 @@ def evaluate_matrix(expression: str, main: dict):
     """
     result = expression
     if '&' in str(expression):
-        result = main[expression.replace('&', '')]
+        result = mk_arry(main[expression.replace('&', '')])
     return result
 
 
@@ -382,14 +394,14 @@ def matrix_sorter(price_matrix, matrices: dict, prefix: str = None) -> dict:
     else:
         prefix = '_' + prefix + '_'
     for coord, matrix in zip(coords, np.array(price_matrix.price_matrix)):
-        matrices[prefix + coord] = matrix
+        matrices[prefix + coord] = np.array(matrix)
 
     matrices[prefix + 'price_matrix'] = price_matrix
-    matrices[prefix + 'volume'] = price_matrix.volume
-    matrices[prefix + 'prices'] = price_matrix.prices
+    matrices[prefix + 'volume'] = np.array(price_matrix.volume)
+    matrices[prefix + 'prices'] = np.array(price_matrix.prices)
     matrices[prefix + 'volume_quote'] = [price_matrix.volume[-1]]
     matrices[prefix + 'price_quote'] = [price_matrix.prices[-1]]
-    matrices[prefix + 'adjusted_price_points'] = price_matrix.adjusted_price_points
+    matrices[prefix + 'adjusted_price_points'] = np.array(price_matrix.adjusted_price_points)
     return matrices
 
 

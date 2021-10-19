@@ -91,6 +91,8 @@ class Indicator:
         exec(cmd)
         if not self.matrix_override:
             self.matrix_override = list()
+        else:
+            self.matrix_override = np.array(self.matrix_override)
         return self
 
     def collect(self, pmatrix, fmatrix):
@@ -108,9 +110,9 @@ class Indicator:
                 if value in ['mas', 'vas']:
                     pref = value
                     for sub_value in ext[value]:
-                        result[prefix + pref + '_' + sub_value] = ext[value][sub_value]
+                        result[prefix + pref + '_' + sub_value] = np.array(ext[value][sub_value])
                 else:
-                    result[prefix + value] = ext[value]
+                    result[prefix + value] = np.array(ext[value])
             return result
 
         pextras, fextras = pmatrix.extras, fmatrix.extras
