@@ -28,12 +28,10 @@ from utils import (
     layout_parser,
     matrix_parser,
     matrix_sorter,
-    test_o_random,
     get_index,
 )
 from indicators.base import Dummy
 from uxutils import ScrCap
-# from extras import Filters
 from rpi import wifi_sig
 if config('settings')['debug_memory']:
     from diagnostics import MemTrace
@@ -237,15 +235,6 @@ class OnScreen(tk.Tk):
         options = self.process_indicators()
         self.price_matrix = self.solve_matrices(self.price_chart, options['popt'])
         self.feed_matrix = self.solve_matrices(self.feed_chart, options['fopt'], 'feed')
-        if self.settings['style'] == 'tutorial':  # This is for the example setup only.
-            self.matrices.update({  # Here we are making a buncha test triggers to show in the tutorial.
-                '_triggers1': test_o_random(self.matrices['_cu'], 5),
-                '_triggers2': test_o_random(self.matrices['_cl'], 5),
-                '_triggers3': test_o_random(self.matrices['_ac'], 5),
-                '_triggers4': test_o_random(self.matrices['_cu'], 5),
-                '_triggers5': test_o_random(self.matrices['_cl'], 5),
-                '_triggers6': test_o_random(self.matrices['_cu'], 5),
-            })
         self.style['main']['_drf'] = [str(np.round(float(self.feed_chart[-1][-1]), 3))]
         self.solve_indicators()
         self.style = matrix_parser(self.style, self.matrices)  # Explode coordinates into style.
@@ -389,7 +378,7 @@ class OnScreen(tk.Tk):
             highlightthickness=0
         )  # Configure the price chart size.
 
-        self.base_style = copy.deepcopy(self.style)
+        self.base_style = copy.deepcopy(self.style)  # Turns out this is the only way to handle nested dicts.
         self.update_style_matrices()  # Add the values into the style.
 
         if 'ticker' in self.style.keys() and not self.ticker:
@@ -437,9 +426,8 @@ class OnScreen(tk.Tk):
             self.alerts = None
             self.chart_data = None
             self.matrix_solver = None
-            self.style = copy.deepcopy(self.base_style)
+            self.style = copy.deepcopy(self.base_style)  # Turns out this is the only way to handle nested dicts.
             self.layout.purge()
-            # self.filters.clear()
         else:
             self.layout.delete('all')
         return self
