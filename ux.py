@@ -10,6 +10,7 @@ TODO: We need to go over every inch of this and confirm we are actually cleaning
         https://github.com/pythonprofilers/memory_profiler
 
 """
+import copy
 import threading
 import datetime
 import gc
@@ -116,17 +117,12 @@ class OnScreen(tk.Tk):
         """
         This will refresh the imformation from the api.
         """
-        if not self.debug_mode:
-            self.chart_data = self.api.get_chart()
-            cd = self.chart_data
-            self.alerts, self.price_chart, self.feed_chart = cd.alerts, cd.chart, cd.feed
-        else:
-            data = gp.samples.price_data
-            random.shuffle(data)
-            self.price_chart = list(data)
-            random.shuffle(data)
-            self.feed_chart = list(data)
-            self.alerts = gp.samples.alerts['alert_data']
+        self.chart_data = self.api.get_chart()
+        cd = self.chart_data
+        if self.debug_mode:
+            random.shuffle(cd.chart)
+            random.shuffle(cd.feed)
+        self.alerts, self.price_chart, self.feed_chart = cd.alerts, cd.chart, cd.feed
         return self
 
     def solve_matrices(self, matrix: [list, np.array], options: dict, prefix: str = '') -> np.array:
@@ -393,7 +389,7 @@ class OnScreen(tk.Tk):
             highlightthickness=0
         )  # Configure the price chart size.
 
-        self.base_style = dict(self.style)
+        self.base_style = copy.deepcopy(self.style)
         self.update_style_matrices()  # Add the values into the style.
 
         if 'ticker' in self.style.keys() and not self.ticker:
@@ -441,7 +437,7 @@ class OnScreen(tk.Tk):
             self.alerts = None
             self.chart_data = None
             self.matrix_solver = None
-            self.style = dict(self.base_style)
+            self.style = copy.deepcopy(self.base_style)
             self.layout.purge()
             # self.filters.clear()
         else:
