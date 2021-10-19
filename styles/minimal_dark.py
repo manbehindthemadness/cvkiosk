@@ -24,7 +24,7 @@ style = {
         'background': 'black',
         'utc_format': '%H:%M:%p',
     },
-    'indicators': {
+    'indicators': {  # noqa
         'moving_average': [
             {'ema_spread': 9, 'source': 'price'},
         ],
@@ -41,7 +41,7 @@ style = {
         'normalized_directional_drift': [
             {'source': 'feed'},
         ],
-        'triggers': [
+        'triggers': [  # noqa
             {'type': 'updown', 'base': '_faema_100_1_26', 'target': '_faema_100_1_9', 'name': '_ema_9_trig'},
             {'type': 'crossup', 'base': '_faema_100_1_26', 'target': '_faema_100_1_9', 'name': '_ema_9_point_trig_down'},
             {'type': 'crossdown', 'base': '_faema_100_1_26', 'target': '_faema_100_1_9', 'name': '_ema_9_point_trig_up'},
@@ -53,7 +53,7 @@ style = {
             {'type': 'trend', 'target': '_eno_feed', 'name': '_eno_feed_trig'},
             {'type': 'point_trend', 'target': '_feed_dd_1_negative', 'point': 304.0, 'name': '_feed_dd_1_negative_trig'},
         ],
-        'audio_alerts': [  # TODO: Hmmmmmm, looks like the triggers aren't solved yet... How to go about this....
+        'audio_alerts': [
             {'source': '_ema_26_point_trig_down', 'alert_type': 'high_med_low', 'repeat': False},
             {'source': '_ema_26_point_trig_up', 'alert_type': 'low_med_high', 'repeat': False},
             {'source': '_ema_9_point_trig_down', 'alert_type': 'single_low', 'repeat': False},

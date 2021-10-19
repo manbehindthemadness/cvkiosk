@@ -41,7 +41,7 @@ style = {
         'normalized_directional_drift': [
             {'source': 'feed'},
         ],
-        'triggers': [
+        'triggers': [  # noqa
             {'type': 'updown', 'base': '_faema_100_1_26', 'target': '_faema_100_1_9', 'name': '_ema_9_trig'},
             {'type': 'crossup', 'base': '_faema_100_1_26', 'target': '_faema_100_1_9', 'name': '_ema_9_point_trig_down'},
             {'type': 'crossdown', 'base': '_faema_100_1_26', 'target': '_faema_100_1_9', 'name': '_ema_9_point_trig_up'},
