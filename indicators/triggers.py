@@ -13,6 +13,7 @@ TODO: We may want to reverse some of these indicators depending on the FGI.
 """
 
 from indicators.base import Indicator
+from utils import get_median
 
 
 class Triggers(Indicator):
@@ -139,12 +140,14 @@ class Triggers(Indicator):
         self.style['main'][name] = triggers
         return self
 
-    def point_trend(self, target: str, point: float, name: str):
+    def point_trend(self, target: str, name: str):
         """
         This is for icing alerts to use.
         """
+
         triggers = list()
         target = self.style['main'][target]
+        point = get_median(target)
         for pt in target[1::2]:
             tr = 0
             if pt and pt != point:

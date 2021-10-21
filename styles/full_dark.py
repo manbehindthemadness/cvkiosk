@@ -25,12 +25,18 @@ style = {
         'utc_format': '%H:%M:%p',
     },
     'indicators': {
+        'on_balance_volume': [
+            {'source': 'price'}
+        ],
         'moving_average': [
             {'ema_spread': 9, 'source': 'price'},
         ],
         'normal': [
             {'normal_base': 100, 'normal_spread': 1, 'source': 'feed'},
         ],
+        # 'faobv': [
+        #     {'normal_base': 100, 'normal_spread': 1, 'obv_spread': 3},
+        # ],
         'faema': [
             {'normal_base': 100, 'normal_spread': 1, 'ema_spread': 9},
             {'normal_base': 100, 'normal_spread': 1, 'ema_spread': 26},
@@ -51,7 +57,7 @@ style = {
             {'type': 'crossdown', 'base': '_ac', 'target': '_faema_100_1_26', 'name': '_ema_26_point_trig_down'},
             {'type': 'cross_filter', 'crossup': '_ema_26_point_trig_up', 'crossdown': '_ema_26_point_trig_down', 'limit': 10},
             {'type': 'trend', 'target': '_eno_feed', 'name': '_eno_feed_trig'},
-            {'type': 'point_trend', 'target': '_feed_dd_1_negative', 'point': 35.0, 'name': '_feed_dd_1_negative_trig'},
+            {'type': 'point_trend', 'target': '_feed_dd_1_negative', 'name': '_feed_dd_1_negative_trig'},
         ]
     },
     'asset_order': [  # This is our draw_order widgets will be drawn starting with the farthest back into the foreground.
@@ -66,6 +72,7 @@ style = {
         'points2',
         'line1',
         'line2',
+        # 'line3',
         'candlesticks',
         'icing_top1',
         'icing_top2',
@@ -131,6 +138,20 @@ style = {
         'triggers': '&_ema_26_trig',
         'linetype': 'scatter',
         'lineinterpol': 2,
+        'rad': 2,
+        'alpha': 0.5
+    },
+    'line3': {
+        'matrix_override': '&_price_obv',
+        # 'matrix_override': '&_faobv_100_1_3',
+        'geometry': '&_price_matrix',
+        'smooth': 4,
+        'width': 1,
+        'color1': 'yellow',
+        'color2': 'yellow',
+        'triggers': '&_ema_26_trig',
+        'linetype': 'scatter',
+        'lineinterpol': 10,
         'rad': 2,
         'alpha': 0.5
     },

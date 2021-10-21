@@ -457,3 +457,10 @@ def get_index():
     except (IndexError, TypeError, AttributeError):
         fgi = FGI
     return fgi
+
+
+def get_median(arry: np.array) -> [int, float]:
+    """
+    This will return the most common element in a list
+    """
+    return max(set(arry), key=arry.count)

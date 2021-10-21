@@ -38,9 +38,10 @@ class OBV(Indicator):
         source = pmatrix
         if self.source == 'feed':
             source = fmatrix
-        name = self.source + '_obv'
-        self.solution = gp.convert_to_pixels(source, self.style['main'][name])
-        self.style['main']['_' + name] = self.solution
+        name = '_' + self.source + '_obv'
+        points = source.extras['obv']
+        self.solution = gp.convert_to_pixels(source, points)
+        self.style['main'][name] = self.solution
         self.collect(pmatrix, fmatrix)
         return self
 

@@ -37,6 +37,7 @@ class Format(Layout):
             'points2',
             'line1',
             'line2',
+            'line3',
             'volume_ruler_top',
             'volume_ruler_bottom1',
             'volume_ruler_bottom2',
