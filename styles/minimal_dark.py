@@ -25,8 +25,13 @@ style = {
         'utc_format': '%H:%M:%p',
     },
     'indicators': {  # noqa
+    'on_balance_volume': [
+            {'source': 'price'}
+        ],
         'moving_average': [
             {'ema_spread': 9, 'source': 'price'},
+            {'ema_spread': 26, 'source': 'price'},
+            {'ema_spread': 26, 'source': 'feed'},
         ],
         'normal': [
             {'normal_base': 100, 'normal_spread': 1, 'source': 'feed'},
@@ -35,6 +40,9 @@ style = {
             {'normal_base': 100, 'normal_spread': 1, 'ema_spread': 9},
             {'normal_base': 100, 'normal_spread': 1, 'ema_spread': 26},
         ],
+        'faobv': [
+            {'normal_spread': 1, 'obv_spread': 12, 'faobv_spread': 1},
+        ],
         'directional_drift': [
             {'ema_spread': 1, 'source': 'feed', 'polarity': 'negative'},
         ],
@@ -42,14 +50,20 @@ style = {
             {'source': 'feed'},
         ],
         'triggers': [  # noqa
+            {'type': 'updown', 'base': 'feed_ema_26', 'target': 'price_ema_26', 'name': '_faobv_1_12_trig',
+             'transform': True},
             {'type': 'updown', 'base': '_faema_100_1_26', 'target': '_faema_100_1_9', 'name': '_ema_9_trig'},
-            {'type': 'crossup', 'base': '_faema_100_1_26', 'target': '_faema_100_1_9', 'name': '_ema_9_point_trig_down'},
-            {'type': 'crossdown', 'base': '_faema_100_1_26', 'target': '_faema_100_1_9', 'name': '_ema_9_point_trig_up'},
-            {'type': 'cross_filter', 'crossup': '_ema_9_point_trig_up', 'crossdown': '_ema_9_point_trig_down', 'limit': 10},
+            {'type': 'crossup', 'base': '_faema_100_1_26', 'target': '_faema_100_1_9',
+             'name': '_ema_9_point_trig_down'},
+            {'type': 'crossdown', 'base': '_faema_100_1_26', 'target': '_faema_100_1_9',
+             'name': '_ema_9_point_trig_up'},
+            {'type': 'cross_filter', 'crossup': '_ema_9_point_trig_up', 'crossdown': '_ema_9_point_trig_down',
+             'limit': 10},
             {'type': 'updown', 'base': '_ac', 'target': '_faema_100_1_26', 'name': '_ema_26_trig'},
             {'type': 'crossup', 'base': '_ac', 'target': '_faema_100_1_26', 'name': '_ema_26_point_trig_up'},
             {'type': 'crossdown', 'base': '_ac', 'target': '_faema_100_1_26', 'name': '_ema_26_point_trig_down'},
-            {'type': 'cross_filter', 'crossup': '_ema_26_point_trig_up', 'crossdown': '_ema_26_point_trig_down', 'limit': 10},
+            {'type': 'cross_filter', 'crossup': '_ema_26_point_trig_up', 'crossdown': '_ema_26_point_trig_down',
+             'limit': 10},
             {'type': 'trend', 'target': '_eno_feed', 'name': '_eno_feed_trig'},
             {'type': 'point_trend', 'target': '_feed_dd_1_negative', 'name': '_feed_dd_1_negative_trig'},
         ],
@@ -72,6 +86,7 @@ style = {
         'points2',
         'line1',
         'line2',
+        'line3',
         'candlesticks',
         'icing_top1',
         'icing_top2',
@@ -135,9 +150,22 @@ style = {
         'rad': 2,
         'alpha': 0.5
     },
+    'line3': {
+        'matrix_override': '&_faobv_1_12',
+        'geometry': '&_price_matrix',
+        'smooth': 4,
+        'width': 1,
+        'color1': 'deepskyblue',
+        'color2': 'violet',
+        'triggers': '&_faobv_1_12_trig',
+        'linetype': 'scatter',
+        'lineinterpol': 2,
+        'rad': 2,
+        'alpha': 0.5
+    },
     'smoothi_bottom': {
         'geometry': '&_feed_price_matrix',
-        'matrix_override': '&_normal_100_1',
+        'matrix_override': '&_feed_normal_100_1',
         'height': 60,
         'fill': 'aqua',
         'grad': ('deepskyblue', 'blue', 'v'),  # Gradient.

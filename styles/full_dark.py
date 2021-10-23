@@ -146,7 +146,6 @@ style = {
         'alpha': 0.5
     },
     'line3': {
-        # 'matrix_override': '&_price_obv',
         'matrix_override': '&_faobv_1_12',
         'geometry': '&_price_matrix',
         'smooth': 4,
