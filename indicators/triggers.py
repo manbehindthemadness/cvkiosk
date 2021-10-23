@@ -65,17 +65,23 @@ class Triggers(Indicator):
             This will handle array transformations from non-pixel coordinates.
             """
             np = self.np
+            vic = self.pmatrix.viewable_increment_count
             pts = np.array(arry)
             pts[1::2] = np.multiply(pts[1::2], -1)
-            pmin = np.amin(pts[1::2][-self.pmatrix.viewable_increment_count:])
+            pmin = np.amin(pts[1::2][-vic:])
             pts[1::2] = np.subtract(pts[1::2], pmin)
+            pts[1::2] = gp.zero_v_scale(
+                pts[1::2],
+                200,
+                vic
+            )
             return pts
 
         base, target = self.adjust_length(base, target)
         if transform:
             gp = self.gp
-            base, target = gp.convert_to_pixels(self.pmatrix, base), gp.convert_to_pixels(self.pmatrix, target)
-            # base, target = tf(base), tf(target)
+            # base, target = gp.convert_to_pixels(self.pmatrix, base), gp.convert_to_pixels(self.pmatrix, target)
+            base, target = tf(base), tf(target)
         triggers = list()
         for bpoint, tpoint in zip(base[1::2], target[1::2]):
             tr = 0
