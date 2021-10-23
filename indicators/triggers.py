@@ -80,7 +80,6 @@ class Triggers(Indicator):
         base, target = self.adjust_length(base, target)
         if transform:
             gp = self.gp
-            # base, target = gp.convert_to_pixels(self.pmatrix, base), gp.convert_to_pixels(self.pmatrix, target)
             base, target = tf(base), tf(target)
         triggers = list()
         for bpoint, tpoint in zip(base[1::2], target[1::2]):
