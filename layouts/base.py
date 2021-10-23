@@ -70,6 +70,7 @@ class Layout(gp.Diagram):
         self.line1 = gp.Line(self, cache)
         self.line2 = gp.Line(self, cache)
         self.line3 = gp.Line(self, cache)
+        self.line4 = gp.Line(self, cache)
         self.points1 = gp.PointAlert(self, cache)
         self.points2 = gp.PointAlert(self, cache)
         self.points3 = gp.PointAlert(self, cache)

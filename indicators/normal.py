@@ -6,7 +6,7 @@ Copyright (c) 2021 Kevin Eales.
 This program is experimental and proprietary, redistribution is prohibited.
 Please see the license file for more details.
 ------------------------------------------------------------------------------------------------------------------------
-This normalized moving average.
+This is normalized moving average.
 """
 
 from indicators.base import Indicator
@@ -38,11 +38,10 @@ class Normal(Indicator):
         source = pmatrix
         if self.source == 'feed':
             source = fmatrix
-        normal_name = '_normal_' + str(self.normal_base) + '_' + str(self.normal_spread)
+        normal_name = '_' + self.source + '_normal_' + str(self.normal_base) + '_' + str(self.normal_spread)
         if normal_name not in self.style['main'].keys():  # Ensure we don't re-calculate something we already have.
             self.normal = gp.normalize(
                 source,
-                # source.price_matrix[-1],
                 gp.convert_to_pixels(source, source.center_averages),  # Convert to pixels so the scaling is accurate.
                 self.normal_base,
                 self.normal_spread,

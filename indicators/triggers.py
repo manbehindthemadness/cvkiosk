@@ -23,6 +23,8 @@ class Triggers(Indicator):
     colors = dict()
     color_ranges = dict()
     triggers = dict()
+    pmatrix = None
+    fmatrix = None
 
     def __init__(self):
         Indicator.__init__(self)
@@ -34,10 +36,11 @@ class Triggers(Indicator):
         self.config(options, style, **kwargs)
         return self
 
-    def solve(self, *args):  # noqa
+    def solve(self, *args):
         """
         This will do the actual math and build our solution.
         """
+        self.pmatrix, self.fmatrix = args
         trigger_type = self.kwargs.pop('type')
         cmd = 'self.' + trigger_type + '(**self.kwargs)'
         exec(cmd)
@@ -53,11 +56,26 @@ class Triggers(Indicator):
         base, target = gp.un_jag([base, target])
         return base, target
 
-    def updown(self, base: str, target: str, name: str):
+    def updown(self, base: str, target: str, name: str, transform: bool = False):
         """
         This will create a trigger array based on if one point is more than the other.
         """
+        def tf(arry):
+            """
+            This will handle array transformations from non-pixel coordinates.
+            """
+            np = self.np
+            pts = np.array(arry)
+            pts[1::2] = np.multiply(pts[1::2], -1)
+            pmin = np.amin(pts[1::2][-self.pmatrix.viewable_increment_count:])
+            pts[1::2] = np.subtract(pts[1::2], pmin)
+            return pts
+
         base, target = self.adjust_length(base, target)
+        if transform:
+            gp = self.gp
+            base, target = gp.convert_to_pixels(self.pmatrix, base), gp.convert_to_pixels(self.pmatrix, target)
+            # base, target = tf(base), tf(target)
         triggers = list()
         for bpoint, tpoint in zip(base[1::2], target[1::2]):
             tr = 0

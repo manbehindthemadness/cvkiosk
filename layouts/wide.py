@@ -38,6 +38,7 @@ class Format(Layout):
             'line1',
             'line2',
             'line3',
+            'line4',
             'volume_ruler_top',
             'volume_ruler_bottom1',
             'volume_ruler_bottom2',

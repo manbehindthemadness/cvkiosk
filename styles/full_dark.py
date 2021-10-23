@@ -30,16 +30,18 @@ style = {
         ],
         'moving_average': [
             {'ema_spread': 9, 'source': 'price'},
+            {'ema_spread': 26, 'source': 'price'},
+            {'ema_spread': 26, 'source': 'feed'},
         ],
         'normal': [
             {'normal_base': 100, 'normal_spread': 1, 'source': 'feed'},
         ],
-        # 'faobv': [
-        #     {'normal_base': 100, 'normal_spread': 1, 'obv_spread': 3},
-        # ],
         'faema': [
             {'normal_base': 100, 'normal_spread': 1, 'ema_spread': 9},
             {'normal_base': 100, 'normal_spread': 1, 'ema_spread': 26},
+        ],
+        'faobv': [
+            {'normal_spread': 1, 'obv_spread': 12, 'faobv_spread': 1},
         ],
         'directional_drift': [
             {'ema_spread': 1, 'source': 'feed', 'polarity': 'negative'},
@@ -48,6 +50,7 @@ style = {
             {'source': 'feed'},
         ],
         'triggers': [  # noqa
+            {'type': 'updown', 'base': 'feed_ema_26', 'target': 'price_ema_26', 'name': '_faobv_1_12_trig', 'transform': True},
             {'type': 'updown', 'base': '_faema_100_1_26', 'target': '_faema_100_1_9', 'name': '_ema_9_trig'},
             {'type': 'crossup', 'base': '_faema_100_1_26', 'target': '_faema_100_1_9', 'name': '_ema_9_point_trig_down'},
             {'type': 'crossdown', 'base': '_faema_100_1_26', 'target': '_faema_100_1_9', 'name': '_ema_9_point_trig_up'},
@@ -72,7 +75,8 @@ style = {
         'points2',
         'line1',
         'line2',
-        # 'line3',
+        'line3',
+        # 'line4',
         'candlesticks',
         'icing_top1',
         'icing_top2',
@@ -142,22 +146,35 @@ style = {
         'alpha': 0.5
     },
     'line3': {
-        'matrix_override': '&_price_obv',
-        # 'matrix_override': '&_faobv_100_1_3',
+        # 'matrix_override': '&_price_obv',
+        'matrix_override': '&_faobv_1_12',
         'geometry': '&_price_matrix',
         'smooth': 4,
         'width': 1,
-        'color1': 'yellow',
+        'color1': '#239fa6',
         'color2': 'yellow',
-        'triggers': '&_ema_26_trig',
+        'triggers': '&_faobv_1_12_trig',
         'linetype': 'scatter',
-        'lineinterpol': 10,
+        'lineinterpol': 2,
         'rad': 2,
         'alpha': 0.5
     },
+    # 'line4': {
+    #     'matrix_override': '&_price_obv',
+    #     'geometry': '&_price_matrix',
+    #     'smooth': 4,
+    #     'width': 1,
+    #     'color1': 'yellow',
+    #     'color2': 'yellow',
+    #     # 'triggers': '&_ema_26_trig',
+    #     'linetype': 'scatter',
+    #     'lineinterpol': 2,
+    #     'rad': 2,
+    #     'alpha': 0.5
+    # },
     'smoothi_bottom': {
         'geometry': '&_feed_price_matrix',
-        'matrix_override': '&_normal_100_1',
+        'matrix_override': '&_feed_normal_100_1',
         'height': 93,
         'fill': 'aqua',
         'grad': ('deepskyblue', 'blue', 'v'),  # Gradient.

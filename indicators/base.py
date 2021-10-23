@@ -28,6 +28,7 @@ class Indicator:
     normal_spread = None
     ema_spread = None
     obv_spread = None
+    faobv_spread = None
     history = None
     alert = None
     alert_type = None
@@ -46,6 +47,7 @@ class Indicator:
         'normal_spread',
         'ema_spread',
         'obv_spread',
+        'faobv_spread',
         'source',
         'polarity',
         'matrix_override',

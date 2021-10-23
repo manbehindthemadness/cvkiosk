@@ -38,13 +38,13 @@ class MA(Indicator):
         source = pmatrix
         if self.source == 'feed':
             source = fmatrix
-        ma_name = '_' + self.source + '_ema_' + str(self.ema_spread)
+        ma_name = self.source + '_ema_' + str(self.ema_spread)
         if ma_name not in self.style['main'].keys():  # Ensure we don't re-calculate something we already have.
             self.ma = gp.ema(
                 source,
                 gp.convert_to_pixels(source, source.center_averages),  # Convert to pixels so the scaling is accurate.
                 self.ema_spread,
-                prefix=self.source
+                prefix=''
             )
             self.style['main'][ma_name] = self.ma
         else:
