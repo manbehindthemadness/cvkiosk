@@ -158,19 +158,19 @@ style = {
         'rad': 2,
         'alpha': 0.5
     },
-    # 'line4': {
-    #     'matrix_override': '&_price_obv',
-    #     'geometry': '&_price_matrix',
-    #     'smooth': 4,
-    #     'width': 1,
-    #     'color1': 'yellow',
-    #     'color2': 'yellow',
-    #     # 'triggers': '&_ema_26_trig',
-    #     'linetype': 'scatter',
-    #     'lineinterpol': 2,
-    #     'rad': 2,
-    #     'alpha': 0.5
-    # },
+    'line4': {
+        'matrix_override': '&_price_obv',
+        'geometry': '&_price_matrix',
+        'smooth': 4,
+        'width': 1,
+        'color1': 'yellow',
+        'color2': 'yellow',
+        # 'triggers': '&_ema_26_trig',
+        'linetype': 'scatter',
+        'lineinterpol': 2,
+        'rad': 2,
+        'alpha': 0.5
+    },
     'smoothi_bottom': {
         'geometry': '&_feed_price_matrix',
         'matrix_override': '&_feed_normal_100_1',

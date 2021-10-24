@@ -42,7 +42,7 @@ class MA(Indicator):
         if ma_name not in self.style['main'].keys():  # Ensure we don't re-calculate something we already have.
             self.ma = gp.ema(
                 source,
-                gp.convert_to_pixels(source, source.center_averages),  # Convert to pixels so the scaling is accurate.
+                gp.convert_to_pixels(source, source.center_averages, relative_transform=True),  # Convert to pixels so the scaling is accurate.
                 self.ema_spread,
                 prefix=''
             )

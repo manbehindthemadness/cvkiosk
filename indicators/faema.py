@@ -45,7 +45,7 @@ class FAEMA(Indicator):
         if name not in self.style['main'].keys():
             norm.solve(*args)
             self.normal = norm.solution
-            cross = gp.convert_to_pixels(pmatrix, pmatrix.center_averages)  # Convert to pixels so the scaling is accurate.
+            cross = gp.convert_to_pixels(pmatrix, pmatrix.center_averages, relative_transform=True)  # Convert to pixels so the scaling is accurate.
             solution = gp.cross_normalize(
                 pmatrix,
                 self.normal,
