@@ -24,7 +24,7 @@ style = {
         'background': '#1a1c1c',
         'utc_format': '%H:%M:%p',
     },
-    'indicators': {
+    'indicators': {  # noqa
         'on_balance_volume': [
             {'source': 'price'}
         ],
@@ -130,7 +130,7 @@ style = {
         'linetype': 'scatter',
         'lineinterpol': 2,
         'rad': 2,
-        'alpha': 0.5
+        'alpha': 0.9
     },
     'line2': {
         'matrix_override': '&_faema_100_1_26',
