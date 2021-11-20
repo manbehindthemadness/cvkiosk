@@ -20,7 +20,7 @@ style = {
         'price_canvas_height': '$_screen_height:26-',
         # This scales the candlestick matrix in order to make room for the other widgets.
         'price_matrix_offsets': (75, 75, 35, 150),  # left, right, top, bottom.
-        'price_increment': 6,  # The width of one candlestick in pixels.
+        'price_increment': 8,  # The width of one candlestick in pixels.
         'background': '#1a1c1c',
         'utc_format': '%H:%M:%p',
     },
@@ -75,7 +75,7 @@ style = {
         'points2',
         'line1',
         'line2',
-        # 'line3',
+        'line3',
         # 'line4',
         'candlesticks',
         'icing_top1',
@@ -182,7 +182,7 @@ style = {
         # 'outline': 'black',
         'smooth': 0,  # Smooths average out the measurements.
         'lineinterpol': 2,  # Linear interpolation adds points and then rounds off the edges.
-        'offset': 917,
+        'offset': 317,
         'padding': (75, 75, 0, 25),  # left, right, top, bottom.
         'alpha': 0.9,  # Transparency.
         'alphamask': True,  # Transparency following a gradient.
@@ -199,7 +199,7 @@ style = {
         'outline': 'black',
         'smooth': 0,  # Smooths average out the measurements.
         'lineinterpol': 2,  # Linear interpolation adds points and then rounds off the edges.
-        'offset': 917,
+        'offset': 317,
         'padding': (75, 75, 0, 25),  # left, right, top, bottom.
         'alpha': 0.1,  # Transparency.
         'alphamask': True,  # Transparency following a gradient.
@@ -214,7 +214,7 @@ style = {
         'tb': 't',
         'smooth': 1,
         'lineinterpol': 4,
-        'offset': 1015,
+        'offset': 415,
         'padding': (75, 75, 0, 0),  # left, right, top, bottom.
         # 'outline': 'black',
         'alpha': 0.7,
@@ -229,7 +229,7 @@ style = {
         'tb': 't',
         'smooth': 1,
         'lineinterpol': 4,
-        'offset': 1015,
+        'offset': 415,
         'padding': (75, 75, 0, 0),  # left, right, top, bottom.
         # 'outline': 'black',
         'alpha': 0.2,
@@ -239,8 +239,8 @@ style = {
         'geometry': '&_price_matrix',
         'height': 40,
         'top': 50,
-        'bottom': 978,
-        'offset': 935,
+        'bottom': 378,
+        'offset': 335,
         'alpha': 0.6,
         'aa': (10, 0),
         'color1': '#2eff62',
@@ -353,7 +353,7 @@ style = {
         'tb': 'b'
     },
     'tics1': {  # These are the little ruler ticks that run down the edges.
-        'coords': (1841, 35, 1841, 905),  # top x, y, bottom x, y
+        'coords': (1841, 35, 1841, 305),  # top x, y, bottom x, y
         'tics': [3, 5, 9],  # shorts, longs, increment.
         'style': {
             'fill': '#adadad',
@@ -389,7 +389,7 @@ style = {
     },
     'volume_ruler_bottom1': {
         'geometry': '&_price_matrix',
-        'coords': (1841, 955),
+        'coords': (1841, 355),
         'height': 32,
         'width': 79,
         'price_range': '&_volume',
@@ -415,7 +415,7 @@ style = {
     },
     'volume_ruler_bottom2': {
         'geometry': '&_price_matrix',
-        'coords': (1841, 987),
+        'coords': (1841, 387),
         'height': 40,
         'width': 79,
         'price_range': '&_volume',
@@ -442,7 +442,7 @@ style = {
     'price_ruler': {
         'geometry': '&_price_matrix',
         'coords': (1841, 35),
-        'height': 870,
+        'height': 270,
         'width': 79,
         'price_range': '&_prices',
         'quotes': '&_price_quote',
@@ -470,7 +470,7 @@ style = {
     },
     'date_ruler': {
         'geometry': '&_price_matrix',
-        'coords': (1841, 905),
+        'coords': (1841, 305),
         'time_coord': 75,
         'height': 50,
         'width': 79,
@@ -505,7 +505,7 @@ style = {
         }
     },
     'tics2': {  # These are the little ruler ticks that run down the edges.
-        'coords': (78, 0, 79, 1027),  # top x, y, bottom x, y
+        'coords': (78, 0, 79, 427),  # top x, y, bottom x, y
         'tics': [3, 5, 9],  # shorts, longs, increment.
         'style': {
             'fill': '#adadad',
@@ -517,7 +517,7 @@ style = {
         'geometry': '&_price_matrix',
         'coords': (0, 0),
         'width': 79,
-        'height': 1027,
+        'height': 427,
         'path_spacing': 20,  # This is how close the lines are allowed to get to one another.
         'path_relief': 15,  # Distance from the target pointer to the start of the line.
         'pointer_relief': -5,  # Distance between line end and the ruler.
@@ -565,7 +565,7 @@ style = {
             'height': 25,
             'width': '$_screen_width:100%',
             'x': 0,
-            'y': 1058
+            'y': 458
             },
         'clear': True,
         'content': '&_alerts',
