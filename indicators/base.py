@@ -20,6 +20,7 @@ class Indicator:
     """
     name = None
     source = None
+    source_type = None
 
     matrix_override = list()
 
@@ -49,6 +50,7 @@ class Indicator:
         'obv_spread',
         'faobv_spread',
         'source',
+        'source_type',
         'polarity',
         'matrix_override',
         'alert_type',
