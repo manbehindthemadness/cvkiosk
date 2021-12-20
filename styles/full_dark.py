@@ -267,12 +267,12 @@ style = {
     },
     'top_arrows': {
         'geometry': '&_price_matrix',
-        'height': 10,
+        'height': 25,
         'offset': 10,  # This is the distance the arrow will appear from the coordinate.
         'fill': 'magenta',
         'thickness': 1,  # Line thickness.
         'arrow': 'first',  # This is the end of the line that thhe arrow will attach.
-        'arrowshape': (4, 4, 1),  # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
+        'arrowshape': (7, 7, 4),  # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
         'matrix_override': '&_cu',  # This allows us to pass alternate alert "triggers" instead of just geometry.
         'triggers': '&_ema_26_point_trig_down',
         'tb': 't',
@@ -284,12 +284,12 @@ style = {
     },
     'bottom_arrows': {
         'geometry': '&_price_matrix',
-        'height': 10,
+        'height': 25,
         'offset': 10,  # This is the distance the arrow will appear from the coordinate.
         'fill': 'cyan',
         'thickness': 1,  # Line thickness.
         'arrow': 'first',  # This is the end of the line that the arrow will attach.
-        'arrowshape': (5, 5, 2),  # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
+        'arrowshape': (7, 7, 4),  # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
         'matrix_override': '&_cl',  # This allows us to pass alternate alert "triggers" instead of just geometry.
         'triggers': '&_ema_26_point_trig_up',
         'tb': 'b',
@@ -303,7 +303,7 @@ style = {
         'geometry': '&_price_matrix',
         'triggers': '&_ema_9_point_trig_down',
         'color': 'magenta',
-        'rad': 3,
+        'rad': 4,
         'alpha': 0.9,
         'offset': 10,
         'tb': 't',
@@ -318,7 +318,7 @@ style = {
         'geometry': '&_price_matrix',
         'triggers': '&_ema_9_point_trig_up',
         'color': 'cyan',
-        'rad': 3,
+        'rad': 4,
         'alpha': 0.9,
         'offset': 10,
         'tb': 'b',
