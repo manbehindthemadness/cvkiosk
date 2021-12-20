@@ -11,7 +11,7 @@ dash-table
 Flask
 Flask-Compress
 graphiend>=0.3
-mttkinte
+mttkinter
 numpy
 pathlib
 Pillow
