@@ -53,6 +53,7 @@ class Layout(gp.Diagram):
         self.smoothi_bottom = gp.SmoothiVolumeH(self, cache)
         self.smoothi_top_backdrop = gp.SmoothiVolumeH(self, cache)
         self.smoothi_bottom_backdrop = gp.SmoothiVolumeH(self, cache)
+        self.smoothi_bottom_backdrop_shadow = gp.SmoothiVolumeH(self, cache)
         self.schematic = gp.SchematicRuler(self, cache)
         self.schematic_tics = gp.TicArray(self)
         self.volume = gp.SpikyVolumeH(self, cache)
@@ -89,6 +90,10 @@ class Layout(gp.Diagram):
         self.icon_alerts2 = gp.IconAlert(self, cache)
         self.icon_alerts3 = gp.IconAlert(self, cache)
         self.icon_alerts4 = gp.IconAlert(self, cache)
+        self.macd1 = gp.MACD(self, cache)
+        self.macd2 = gp.MACD(self, cache)
+        self.flats1 = gp.BarChartH(self, cache)
+        self.flats2 = gp.BarChartH(self, cache)
         self.chart_background = gp.Background(self, cache)
 
         # Widgets attached to parent (stuff attached to the master frame).
