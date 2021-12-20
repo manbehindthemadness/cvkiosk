@@ -19,7 +19,7 @@ style = {
         'price_canvas_width': '$_screen_width:100%',  # The size of the graphiend canvas.
         'price_canvas_height': '$_screen_height:26-',
         # This scales the candlestick matrix in order to make room for the other widgets.
-        'price_matrix_offsets': (75, 75, 35, 150),  # left, right, top, bottom.
+        'price_matrix_offsets': (81, 75, 35, 150),  # left, right, top, bottom.
         'price_increment': 6,  # The width of one candlestick in pixels.
         'background': '#1a1c1c',
         'utc_format': '%H:%M:%p',
@@ -66,6 +66,7 @@ style = {
     'asset_order': [  # This is our draw_order widgets will be drawn starting with the farthest back into the foreground.
         'smoothi_bottom_backdrop',
         'smoothi_bottom',
+        'smoothi_top_backdrop_shadow',
         'smoothi_top_backdrop',
         'smoothi_top',
         'volume',
@@ -183,7 +184,7 @@ style = {
         'smooth': 0,  # Smooths average out the measurements.
         'lineinterpol': 2,  # Linear interpolation adds points and then rounds off the edges.
         'offset': 917,
-        'padding': (75, 75, 0, 25),  # left, right, top, bottom.
+        'padding': (75, 69, 0, 25),  # left, right, top, bottom.
         'alpha': 0.9,  # Transparency.
         'alphamask': True,  # Transparency following a gradient.
         'aa': (10, 0)  # Antialiasing (sample_size, passes).
@@ -200,7 +201,7 @@ style = {
         'smooth': 0,  # Smooths average out the measurements.
         'lineinterpol': 2,  # Linear interpolation adds points and then rounds off the edges.
         'offset': 917,
-        'padding': (75, 75, 0, 25),  # left, right, top, bottom.
+        'padding': (75, 69, 0, 25),  # left, right, top, bottom.
         'alpha': 0.1,  # Transparency.
         'alphamask': True,  # Transparency following a gradient.
         'aa': (10, 0)  # Antialiasing (sample_size, passes).
@@ -215,7 +216,7 @@ style = {
         'smooth': 1,
         'lineinterpol': 4,
         'offset': 1015,
-        'padding': (75, 75, 0, 0),  # left, right, top, bottom.
+        'padding': (69, 75, 0, 0),  # left, right, top, bottom.
         # 'outline': 'black',
         'alpha': 0.7,
         'aa': (10, 0),
@@ -230,9 +231,25 @@ style = {
         'smooth': 1,
         'lineinterpol': 4,
         'offset': 1015,
-        'padding': (75, 75, 0, 0),  # left, right, top, bottom.
+        'padding': (69, 75, 0, 0),  # left, right, top, bottom.
         # 'outline': 'black',
         'alpha': 0.2,
+        'aa': (10, 0),
+    },
+    'smoothi_top_backdrop_shadow': {
+        'geometry': '&_feed_price_matrix',
+        # 'matrix_override': '&_feed_dd_1_negative_volume',
+        'height': 135,
+        'fill': 'yellow',
+        # 'grad': ('yellow', '#262929', 'v'),
+        'graph_type': 'volume',
+        'tb': 't',
+        'smooth': 3,
+        'lineinterpol': 4,
+        'offset': 915,
+        'padding': (69, 75, 0, 0),  # left, right, top, bottom.
+        # 'outline': 'black',
+        'alpha': 0.05,
         'aa': (10, 0),
     },
     'volume': {
@@ -353,7 +370,7 @@ style = {
         'tb': 'b'
     },
     'tics1': {  # These are the little ruler ticks that run down the edges.
-        'coords': (1841, 35, 1841, 905),  # top x, y, bottom x, y
+        'coords': (1847, 35, 1847, 905),  # top x, y, bottom x, y
         'tics': [3, 5, 9],  # shorts, longs, increment.
         'style': {
             'fill': '#adadad',
@@ -363,9 +380,9 @@ style = {
     },
     'volume_ruler_top': {
         'geometry': '&_price_matrix',
-        'coords': (1841, 0),
+        'coords': (1847, 0),
         'height': 35,
-        'width': 79,
+        'width': 73,
         'price_range': '&_volume',
         'quotes': '&_drf',
         'style': {
@@ -389,9 +406,9 @@ style = {
     },
     'volume_ruler_bottom1': {
         'geometry': '&_price_matrix',
-        'coords': (1841, 955),
+        'coords': (1847, 955),
         'height': 32,
-        'width': 79,
+        'width': 73,
         'price_range': '&_volume',
         'quotes': '&_drf',
         'style': {
@@ -415,9 +432,9 @@ style = {
     },
     'volume_ruler_bottom2': {
         'geometry': '&_price_matrix',
-        'coords': (1841, 987),
+        'coords': (1847, 987),
         'height': 40,
-        'width': 79,
+        'width': 73,
         'price_range': '&_volume',
         'quotes': '&_volume_quote',
         'style': {
@@ -441,9 +458,9 @@ style = {
     },
     'price_ruler': {
         'geometry': '&_price_matrix',
-        'coords': (1841, 35),
+        'coords': (1847, 35),
         'height': 870,
-        'width': 79,
+        'width': 73,
         'price_range': '&_prices',
         'quotes': '&_price_quote',
         'style': {
@@ -470,10 +487,10 @@ style = {
     },
     'date_ruler': {
         'geometry': '&_price_matrix',
-        'coords': (1841, 905),
+        'coords': (1847, 905),
         'time_coord': 75,
         'height': 50,
-        'width': 79,
+        'width': 73,
         'style': {
             'font': 'Arial 10 normal bold',
             'timequotefont': 'Arial 9 normal normal',

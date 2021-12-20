@@ -23,6 +23,7 @@ class Format(Layout):
             'smoothi_bottom',
             'smoothi_bottom_backdrop',
             'smoothi_bottom_backdrop_shadow',
+            'smoothi_top_backdrop_shadow',
             'smoothi_top_backdrop',
             'smoothi_top',
             'volume',

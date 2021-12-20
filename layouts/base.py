@@ -52,6 +52,7 @@ class Layout(gp.Diagram):
         self.smoothi_top = gp.SmoothiVolumeH(self, cache)
         self.smoothi_bottom = gp.SmoothiVolumeH(self, cache)
         self.smoothi_top_backdrop = gp.SmoothiVolumeH(self, cache)
+        self.smoothi_top_backdrop_shadow = gp.SmoothiVolumeH(self, cache)
         self.smoothi_bottom_backdrop = gp.SmoothiVolumeH(self, cache)
         self.smoothi_bottom_backdrop_shadow = gp.SmoothiVolumeH(self, cache)
         self.schematic = gp.SchematicRuler(self, cache)
