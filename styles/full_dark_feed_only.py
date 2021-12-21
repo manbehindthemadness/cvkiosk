@@ -50,16 +50,16 @@ style = {
         'normalized_directional_drift': [
             {'source': 'feed'},
         ],
+        'variety': [
+            {'ema_spread': 0},
+        ],
         'triggers': [  # noqa
             {'type': 'updown', 'base': '_feed_normal_100_1', 'target': 'feed_ema_26', 'name': '_ema_26_trig'},
         ]
     },
     'asset_order': [  # This is our draw_order widgets will be drawn starting with the farthest back into the foreground.
-        # 'smoothi_bottom_backdrop_shadow',
         'smoothi_bottom_backdrop',
         'smoothi_bottom',
-        # 'smoothi_top_backdrop_shadow',
-        'smoothi_top_backdrop',
         'smoothi_top',
         'macd1',
         'flats1',
@@ -179,68 +179,22 @@ style = {
         'alphamask': True,  # Transparency following a gradient.
         'aa': (10, 0),  # Antialiasing (sample_size, passes).
     },
-    # 'smoothi_bottom_backdrop_shadow': {
-    #     'geometry': '&_feed_price_matrix',
-    #     'matrix_override': '&_eno_feed',
-    #     'height': 293,
-    #     'fill': 'aqua',
-    #     'grad': ('red', 'blue', 'v'),  # Gradient.
-    #     'graph_type': 'prices',
-    #     'tb': 'b',  # Top or bottom style.
-    #     'outline': 'black',
-    #     'smooth': 2,  # Smooths average out the measurements.
-    #     'lineinterpol': 2,  # Linear interpolation adds points and then rounds off the edges.
-    #     'offset': 517,
-    #     'padding': (75, 75, 0, 25),  # left, right, top, bottom.
-    #     'alpha': 0.1,  # Transparency.
-    #     'alphamask': True,  # Transparency following a gradient.
-    #     'aa': (10, 0)  # Antialiasing (sample_size, passes).
-    # },
     'smoothi_top': {
         'geometry': '&_feed_price_matrix',
-        'matrix_override': '&_feed_dd_1_negative',
+        'matrix_override': '&feed_variety_0',
         'height': 135,
-        'fill': '#ff2e2e',
-        'graph_type': 'prices',
+        'fill': 'aqua',
+        'grad': ('deepskyblue', 'dodgerblue', 'v'),  # Gradient.
+        'graph_type': 'volume',
         'tb': 't',
         'smooth': 3,
         'lineinterpol': 4,
         'offset': 915,
         'padding': (69, 75, 0, 0),  # left, right, top, bottom.
         # 'outline': 'black',
-        'alpha': 0.7,
+        'alpha': 0.9,
         'aa': (10, 0),
     },
-    'smoothi_top_backdrop': {
-        'geometry': '&_feed_price_matrix',
-        'matrix_override': '&_eno_feed',
-        'height': 135,
-        'fill': '#ff2e2e',
-        'graph_type': 'prices',
-        'tb': 't',
-        'smooth': 3,
-        'lineinterpol': 4,
-        'offset': 915,
-        'padding': (69, 75, 0, 0),  # left, right, top, bottom.
-        # 'outline': 'black',
-        'alpha': 0.2,
-        'aa': (10, 0),
-    },
-    'smoothi_top_backdrop_shadow': {
-            'geometry': '&_feed_price_matrix',
-            # 'matrix_override': '&_feed_dd_1_negative_volume',
-            'height': 135,
-            'fill': 'yellow',
-            'graph_type': 'volume',
-            'tb': 't',
-            'smooth': 3,
-            'lineinterpol': 4,
-            'offset': 915,
-            'padding': (69, 75, 0, 0),  # left, right, top, bottom.
-            # 'outline': 'black',
-            'alpha': 0.2,
-            'aa': (10, 0),
-        },
     'tics1': {  # These are the little ruler ticks that run down the edges.
         'coords': (1847, 0, 1847, 1027),  # top x, y, bottom x, y
         'tics': [3, 5, 9],  # shorts, longs, increment.

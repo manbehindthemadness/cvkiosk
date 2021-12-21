@@ -38,7 +38,10 @@ class MA(Indicator):
         source = pmatrix
         if self.source == 'feed':
             source = fmatrix
-        ma_name = self.source + '_ema_' + str(self.ema_spread)
+        suffix = str()
+        if self.suffix:
+            suffix = self.suffix
+        ma_name = self.source + '_ema_' + str(self.ema_spread) + suffix
         if ma_name not in self.style['main'].keys():  # Ensure we don't re-calculate something we already have.
             self.ma = gp.ema(
                 source,

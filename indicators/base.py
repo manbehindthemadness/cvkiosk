@@ -35,6 +35,8 @@ class Indicator:
     alert_type = None
     repeat = None
 
+    suffix = None
+
     solution = None
     triggers = None
     normal = None
@@ -54,7 +56,8 @@ class Indicator:
         'polarity',
         'matrix_override',
         'alert_type',
-        'repeat'
+        'repeat',
+        'suffix'
     ]
 
     def_options = {
