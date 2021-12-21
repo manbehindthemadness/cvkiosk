@@ -12,7 +12,7 @@ This is out API client module allowing us to query information from the remote s
 import time
 import numpy as np
 from cvclient import Client
-from utils import config, ticks_to_chart_time
+from utils import config
 
 
 class GetChart:
@@ -29,6 +29,7 @@ class GetChart:
         self.stamp = None
         self.dummy = None
         self.alerts = None
+        self.variety = None
 
     def get_chart(self):
         """
@@ -43,20 +44,20 @@ class GetChart:
             chart_focus=s['chart_focus'],
             chart_pair=s['chart_pair'],
             multiplier=s['chart_multiplier'],
+            include_variety=str(s['chart_variety']).lower(),
             include_alerts='true'
         )
         if 'chart_data' in data.keys():
             feed_data = data['chart_data']
             price_data = data['price_data']
             alert_data = data['alert_data']
+            variety_data = data['variety_data']
             pad_to = np.subtract(len(price_data), len(feed_data))
             if pad_to:
                 padding = [feed_data[0]] * pad_to
                 padding.extend(feed_data)
                 feed_data = padding
-            # for bar in price_data:
-            #     bar[0] = ticks_to_chart_time(bar[0])
-            self.alerts, self.chart, self.feed = alert_data, price_data, feed_data
+            self.variety, self.alerts, self.chart, self.feed = variety_data, alert_data, price_data, feed_data
         else:
             print('unable to fetch chart data, retrying')
             time.sleep(5)

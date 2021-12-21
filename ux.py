@@ -63,6 +63,7 @@ class OnScreen(tk.Tk):
     feed_matrix = None
     price_chart = None
     feed_chart = None
+    variety = None
     alerts = None
     chart_data = None
     matrix_solver = None
@@ -120,7 +121,7 @@ class OnScreen(tk.Tk):
         if self.debug_mode:
             random.shuffle(cd.chart)
             random.shuffle(cd.feed)
-        self.alerts, self.price_chart, self.feed_chart = cd.alerts, cd.chart, cd.feed
+        self.variety, self.alerts, self.price_chart, self.feed_chart = cd.variety, cd.alerts, cd.chart, cd.feed
         return self
 
     def solve_matrices(self, matrix: [list, np.array], options: dict, prefix: str = '') -> np.array:
