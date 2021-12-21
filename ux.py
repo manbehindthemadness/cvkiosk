@@ -232,6 +232,7 @@ class OnScreen(tk.Tk):
 
         """
         self.style['main']['_alerts'] = self.alerts  # Pull sample alert data for the ticker tape.
+        self.style['main']['_variety'] = self.variety
         self.matrices = dict()
         options = self.process_indicators()
         self.price_matrix = self.solve_matrices(self.price_chart, options['popt'])
