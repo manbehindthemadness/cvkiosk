@@ -19,7 +19,7 @@ style = {
         'price_canvas_width': '$_screen_width:100%',  # The size of the graphiend canvas.
         'price_canvas_height': '$_screen_height:26-',
         # This scales the candlestick matrix in order to make room for the other widgets.
-        'price_matrix_offsets': (81, 75, 35, 150),  # left, right, top, bottom.
+        'price_matrix_offsets': (81, 75, 145, 150),  # left, right, top, bottom.
         'price_increment': 6,  # The width of one candlestick in pixels.
         'background': '#1a1c1c',
         'utc_format': '%H:%M:%p',
@@ -209,47 +209,47 @@ style = {
     'smoothi_top': {
         'geometry': '&_price_matrix',
         'matrix_override': '&_feed_dd_1_negative',
-        'height': 35,
+        'height': 135,
         'fill': '#ff2e2e',
         'graph_type': 'prices',
         'tb': 't',
         'smooth': 1,
         'lineinterpol': 4,
-        'offset': 1015,
+        'offset': 915,
         'padding': (69, 75, 0, 0),  # left, right, top, bottom.
         # 'outline': 'black',
-        'alpha': 0.7,
+        'alpha': 0.9,
         'aa': (10, 0),
     },
     'smoothi_top_backdrop': {
         'geometry': '&_price_matrix',
         'matrix_override': '&_eno_feed',
-        'height': 35,
-        'fill': '#ff2e2e',
+        'height': 135,
+        'fill': 'firebrick',
         'graph_type': 'prices',
         'tb': 't',
         'smooth': 1,
         'lineinterpol': 4,
-        'offset': 1015,
+        'offset': 915,
         'padding': (69, 75, 0, 0),  # left, right, top, bottom.
         # 'outline': 'black',
-        'alpha': 0.2,
+        'alpha': 0.5,
         'aa': (10, 0),
     },
     'smoothi_top_backdrop_shadow': {
         'geometry': '&_feed_price_matrix',
         # 'matrix_override': '&_feed_dd_1_negative_volume',
         'height': 135,
-        'fill': 'yellow',
+        'fill': 'dodgerblue',
         # 'grad': ('yellow', '#262929', 'v'),
         'graph_type': 'volume',
         'tb': 't',
         'smooth': 3,
         'lineinterpol': 4,
         'offset': 915,
-        'padding': (69, 75, 0, 0),  # left, right, top, bottom.
+        'padding': (69, 75, 0, 6),  # left, right, top, bottom.
         # 'outline': 'black',
-        'alpha': 0.05,
+        'alpha': 0.25,
         'aa': (10, 0),
     },
     'volume': {
