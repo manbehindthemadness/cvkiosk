@@ -22,6 +22,7 @@ import graphiend as gp
 from pathlib import Path
 from api import GetChart
 from utils import (
+    log,
     config,
     style_parser,
     constants_parser,
@@ -104,7 +105,7 @@ class OnScreen(tk.Tk):
         try:
             self.sugar = Sugar()
             self.sugar.battery_gpio_set()
-        except NameError:
+        except (NameError, FileNotFoundError):
             pass
 
         if self.settings['debug_memory']:
@@ -116,7 +117,11 @@ class OnScreen(tk.Tk):
         """
         This will refresh the imformation from the api.
         """
-        self.chart_data = self.api.get_chart()
+        try:
+            self.chart_data = self.api.get_chart()
+        except TypeError as err:
+            log('Unable to acquire chart data, please check the API key and connection string', '*crit*')
+            exit()
         cd = self.chart_data
         if self.debug_mode:
             random.shuffle(cd.chart)
