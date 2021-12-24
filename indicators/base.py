@@ -12,6 +12,7 @@ This is the base indicator class.
 import graphiend as gp
 import numpy as np
 from utils import get_args
+from mergedeep import merge
 
 
 class Indicator:
@@ -23,6 +24,7 @@ class Indicator:
     source_type = None
 
     matrix_override = list()
+    overrides = dict()
 
     options = None
     normal_base = None
@@ -46,6 +48,7 @@ class Indicator:
     polarity = None
 
     kw = [
+        'overrides',
         'normal_base',
         'normal_spread',
         'ema_spread',
@@ -57,7 +60,7 @@ class Indicator:
         'matrix_override',
         'alert_type',
         'repeat',
-        'suffix'
+        'suffix',
     ]
 
     def_options = {
@@ -129,6 +132,21 @@ class Indicator:
         self.style['main'].update(itr(fextras, 'feed_'))
         return self
 
+    def configure(self, options: [dict, None], style: dict, **kwargs):
+        """
+        This is a dummy method used for options overrides.
+        """
+        self.config(options, style, **kwargs)
+        self.options = merge(self.options, self.overrides)
+        return self
+
+    def solve(self, *args):
+        """
+        This is a dummy method used for options overrides.
+        """
+        self.collect(*args)
+        return self
+
 
 class Dummy(Indicator):
     """
@@ -149,3 +167,6 @@ class Dummy(Indicator):
         This will do the actual math and build our solution.
         """
         return self
+
+
+indicator = Indicator

@@ -25,6 +25,14 @@ style = {
         'utc_format': '%H:%M:%p',
     },
     'indicators': {  # noqa
+        'base': [
+            {
+                'overrides': {
+                    'popt': {},
+                    'fopt': {'macd': True}
+                }
+            }
+        ],
         'on_balance_volume': [
             {'source': 'price'}
         ],
@@ -61,9 +69,10 @@ style = {
         'smoothi_bottom_backdrop',
         'smoothi_bottom',
         'smoothi_top',
+        # 'candlesticks',
+        'macd2',
         'macd1',
         'flats1',
-        'line1',
         'price_ruler',
         'tics1',
         'date_ruler',
@@ -91,7 +100,7 @@ style = {
     },
     'candlesticks': {
         # The bar_width will alter the X coordinates of all the price related widgets.
-        'geometry': '&_price_matrix',
+        'geometry': '&_feed_price_matrix',
         'height': '$_screen_height:50%',
         'color1': '#2eff62',
         'color2': '#ff2e2e',
@@ -101,12 +110,15 @@ style = {
     'macd1': {
         'geometry': '&_feed_price_matrix',
         'offset': 457,
-        'height': 600,
-        'lineinterpol': 4,
+        'height': 400,
+        'lineinterpol': 8,
+        'lengths': [9, 12, 26],
+        'x_shift': 6,
+        'graph_type': 'prices',
         'kwargs': {
             '9': {
                 'width': 1,
-                'fill': 'deepskyblue',
+                'fill': 'purple',
                 'smooth': 5,
                 'rad': 2,
                 'alpha': 0.8,
@@ -122,10 +134,44 @@ style = {
             },
             '26': {
                 'width': 2,
-                'fill': 'purple',
+                'fill': 'deepskyblue',
                 'rad': 2,
                 'alpha': 0.8,
                 'linetype': 'scatter'
+            },
+        }
+    },
+    'macd2': {
+        'geometry': '&_feed_price_matrix',
+        'offset': 457,
+        'height': 600,
+        'lineinterpol': 8,
+        'lengths': [9, 12, 26],
+        'x_shift': 6,
+        # 'normalize': True,
+        'kwargs': {
+            '9': {
+                'width': 1,
+                'fill': 'black',
+                'smooth': 5,
+                'rad': 2,
+                'alpha': 0.8,
+                # 'linetype': 'scatter'
+            },
+            '12': {
+                'width': 1,
+                'fill': 'black',
+                'smooth': 5,
+                'rad': 2,
+                'alpha': 0.8,
+                # 'linetype': 'scatter'
+            },
+            '26': {
+                'width': 2,
+                'fill': 'black',
+                'rad': 2,
+                'alpha': 0.8,
+                # 'linetype': 'scatter'
             },
         }
     },
@@ -183,8 +229,8 @@ style = {
         'geometry': '&_feed_price_matrix',
         'matrix_override': '&feed_variety_0',
         'height': 135,
-        'fill': 'aqua',
-        'grad': ('deepskyblue', 'dodgerblue', 'v'),  # Gradient.
+        'fill': 'dodgerblue',
+        # 'grad': ('deepskyblue', 'dodgerblue', 'v'),  # Gradient.
         'graph_type': 'volume',
         'tb': 't',
         'smooth': 3,
@@ -192,7 +238,7 @@ style = {
         'offset': 915,
         'padding': (69, 75, 0, 0),  # left, right, top, bottom.
         # 'outline': 'black',
-        'alpha': 0.9,
+        'alpha': 0.2,
         'aa': (10, 0),
     },
     'tics1': {  # These are the little ruler ticks that run down the edges.

@@ -38,6 +38,7 @@ class Format(Layout):
             'points1',
             'points2',
             'macd1',
+            'macd2',
             'flats1',
             'line1',
             'line2',

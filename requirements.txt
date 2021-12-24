@@ -20,5 +20,7 @@ pyscreenshot
 requests
 Rpi.GPIO
 smbus2
-
-
+future
+setuptools
+beautifulsoup4
+mergedeep
