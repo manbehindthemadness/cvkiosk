@@ -246,6 +246,7 @@ class OnScreen(tk.Tk):
         self.solve_indicators()
         self.style = matrix_parser(self.style, self.matrices)  # Explode coordinates into style.
         self.solve_delayed_indicators()
+        log(self.style['main']['feed_variety_0'])
         return self
 
     def screen_cap(self, coords: tuple, enhance: bool = False):
