@@ -238,7 +238,7 @@ style = {
         'offset': 915,
         'padding': (69, 75, 0, 0),  # left, right, top, bottom.
         # 'outline': 'black',
-        'alpha': 0.2,
+        'alpha': 0.4,
         'aa': (10, 0),
     },
     'tics1': {  # These are the little ruler ticks that run down the edges.
