@@ -21,7 +21,7 @@ style = {
         # This scales the candlestick matrix in order to make room for the other widgets.
         'price_matrix_offsets': (75, 75, 35, 150),  # left, right, top, bottom.
         'price_increment': 6,  # The width of one candlestick in pixels.
-        'background': '#1a1c1c',
+        'background': 'black',
         'utc_format': '%H:%M:%p',
     },
     'indicators': {  # noqa
