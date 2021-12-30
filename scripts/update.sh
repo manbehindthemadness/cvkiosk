@@ -66,3 +66,5 @@ rm -f /bin/update_c* 2> /dev/null
 cp /opt/cvkiosk/scripts/update.sh /bin/update_cvkiosk
 cp /opt/cvkiosk/scripts/backup_system.sh /bin/backup_system
 cp /opt/cvkiosk/scripts/start_cvkiosk /usr/bin/start_cvkiosk
+
+chown -R cvkiosk:cvkiosk /opt/cvkiosk

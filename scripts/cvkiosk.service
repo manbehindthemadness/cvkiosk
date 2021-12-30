@@ -7,6 +7,7 @@ WorkingDirectory=/opt/
 ExecStart=/bin/sh /bin/start_cvkiosk
 # ExecStartPost=
 TimeoutSec=20
+User=cvkiosk
 
 ExecStop= /bin/sleep 20
 ExecStop= /bin/kill -2 $MAINPID
