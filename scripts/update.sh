@@ -68,3 +68,4 @@ cp /opt/cvkiosk/scripts/backup_system.sh /bin/backup_system
 cp /opt/cvkiosk/scripts/start_cvkiosk /usr/bin/start_cvkiosk
 
 chown -R cvkiosk:cvkiosk /opt/cvkiosk
+usermod -a -G i2c cvkiosk
