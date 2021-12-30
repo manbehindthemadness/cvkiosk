@@ -23,6 +23,7 @@ cp cfg.ini "$bkp/$bkp_name" 2> /dev/null
 echo 'updating cvkiosk'
 git reset --hard
 git pull
+$pi install -r requirements.txt
 
 echo 'updating graphiend'
 if [ ! -d "/usr/src/graphiend" ] 2> /dev/null
@@ -34,7 +35,7 @@ fi
 cd /usr/src/graphiend || return
 git reset --hard
 git pull
-# $pi install -r requirements.txt
+$pi install -r requirements.txt
 $py setup.py install
 
 echo 'updating cvclient'
@@ -47,7 +48,7 @@ fi
 cd /usr/src/cvclient || return
 git reset --hard
 git pull
-# $pi install -r requirements.txt
+$pi install -r requirements.txt
 $py setup.py install
 
 systemctl daemon-reload
