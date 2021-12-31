@@ -23,6 +23,7 @@ cp cfg.ini "$bkp/$bkp_name" 2> /dev/null
 echo 'updating cvkiosk'
 git reset --hard
 git pull
+$py -m pip install --upgrade pip
 $pi install -r requirements.txt
 
 echo 'updating graphiend'
