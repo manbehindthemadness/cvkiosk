@@ -456,7 +456,7 @@ class OnScreen(tk.Tk):
         self.draw()  # Test to see if we are properly clearing the images.
         self.update_statbar_variables()
         self.after(self.settings['capture_delay'], self.hide_faker)
-
+        self.cache.refresh(resave=True)
         return self
 
     def cycle(self):
