@@ -139,14 +139,13 @@ class Layout(gp.Diagram):
         """
         self.actors = list()
         inventory = self.__dict__.keys()
-        if not self.config['headless']:
-            for actor in self.style:
-                if actor in inventory and actor in self.style['actor_order'] and actor in self.widgets:
-                    cmd = 'self.' + actor
-                    self.actor = eval(cmd)
-                    self.actor.build_content(
-                        **self.style[actor]
-                    )
+        for actor in self.style:
+            if actor in inventory and actor in self.style['actor_order'] and actor in self.widgets:
+                cmd = 'self.' + actor
+                self.actor = eval(cmd)
+                self.actor.build_content(
+                    **self.style[actor]
+                )
         return self
 
     def draw_widgets(self):
