@@ -135,17 +135,18 @@ class Layout(gp.Diagram):
 
     def configure_actors(self):
         """
-        Same as above but for the animted actors.
+        Same as above but for the animated actors.
         """
         self.actors = list()
         inventory = self.__dict__.keys()
-        for actor in self.style:
-            if actor in inventory and actor in self.style['actor_order'] and actor in self.widgets:
-                cmd = 'self.' + actor
-                self.actor = eval(cmd)
-                self.actor.build_content(
-                    **self.style[actor]
-                )
+        if not self.config['headless']:
+            for actor in self.style:
+                if actor in inventory and actor in self.style['actor_order'] and actor in self.widgets:
+                    cmd = 'self.' + actor
+                    self.actor = eval(cmd)
+                    self.actor.build_content(
+                        **self.style[actor]
+                    )
         return self
 
     def draw_widgets(self):
@@ -161,9 +162,11 @@ class Layout(gp.Diagram):
         """
         animates our moving actors.
         """
-        actors = self.style['actor_order']
-        for actor in actors:
-            exec('self.' + actor + '.animate()')
+        if not self.config['headless']:
+            actors = self.style['actor_order']
+            for actor in actors:
+                exec('self.' + actor + '.animate()')
+        return self
 
     def purge(self):
         """

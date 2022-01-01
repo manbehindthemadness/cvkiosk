@@ -302,28 +302,29 @@ class OnScreen(tk.Tk):
 
         NOTE: THese are for the statbar only.
         """
-        self.read_hardware()
-        try:
-            asset = self.settings['chart_focus'].upper()
-            if not asset:
-                asset = 'BTC'
-            asset += ' / ' + self.settings['chart_pair'].upper()
-            self.statvars['TIK'] = asset
-            self.statvars['WFI'] = wifi_sig()
-            self.statvars['UTC'] = datetime.datetime.utcnow().strftime(self.style['main']['utc_format'])  # noqa
-            self.statvars['DRF'] = np.round(float(self.feed_chart[-1][-1]), 3)
-            self.statvars['QUO'] = np.round(float(self.price_chart[-1][-2]), 3)  # TODO: Need to figure out how we handle small values.
-            for var in self.statvars:
-                if var in self.layout.labelvars.keys() and var not in ['WFI', 'BAT']:
-                    rnd = var + ': ' + str(self.statvars[var])  # noqa
-                    exec('self.layout.statbar.' + var + '.set(rnd)')
-                elif var in self.layout.labelvars.keys() and var in ['WFI', 'BAT']:
-                    self.layout.labelvars[var].set(self.statvars[var])
-            self.layout.statbar.refresh()
-        except (AttributeError, TypeError) as err:
-            print('failed to populate variables')
-            print(err)
-            pass
+        if not self.settings['headless']:
+            self.read_hardware()
+            try:
+                asset = self.settings['chart_focus'].upper()
+                if not asset:
+                    asset = 'BTC'
+                asset += ' / ' + self.settings['chart_pair'].upper()
+                self.statvars['TIK'] = asset
+                self.statvars['WFI'] = wifi_sig()
+                self.statvars['UTC'] = datetime.datetime.utcnow().strftime(self.style['main']['utc_format'])  # noqa
+                self.statvars['DRF'] = np.round(float(self.feed_chart[-1][-1]), 3)
+                self.statvars['QUO'] = np.round(float(self.price_chart[-1][-2]), 3)  # TODO: Need to figure out how we handle small values.
+                for var in self.statvars:
+                    if var in self.layout.labelvars.keys() and var not in ['WFI', 'BAT']:
+                        rnd = var + ': ' + str(self.statvars[var])  # noqa
+                        exec('self.layout.statbar.' + var + '.set(rnd)')
+                    elif var in self.layout.labelvars.keys() and var in ['WFI', 'BAT']:
+                        self.layout.labelvars[var].set(self.statvars[var])
+                self.layout.statbar.refresh()
+            except (AttributeError, TypeError) as err:
+                print('failed to populate variables')
+                print(err)
+                pass
         return self
 
     def cycle_index(self):
