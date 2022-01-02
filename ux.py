@@ -120,7 +120,7 @@ class OnScreen(tk.Tk):
         try:
             self.chart_data = self.api.get_chart()
         except TypeError as err:
-            log('Unable to acquire chart data, please check the API key and connection string', '*crit*')
+            log('Unable to acquire chart data, please check the API key and connection string', err, '*crit*')
             exit()
         cd = self.chart_data
         if self.debug_mode:
@@ -444,19 +444,33 @@ class OnScreen(tk.Tk):
         """
         This will refresh our chart data.
         """
-        if not self.init:
+        print('refreshing data')
+        if not self.init and not self.settings['headless']:
+            print('waiting on foreign lock')
             self.wait_variable(self.layout.ticker.foreign_lock)
+            print('setting initial ticker')
             self.layout.ticker.initial = True  # This prevents the extra delay cycle.
+        print('showing faker')
         self.faker.show()
+        print('purging memory with prep')
         self.purge(prep=True)
+        print('refreshing api')
         self.refresh_api()  # Launching this here will fire off the api twice really fast.... need to fix this.
+        print('updating style matrices')
         self.update_style_matrices()
+        print('configuring layout')
         self.configure_layout()
+        print('purging memory')
         self.purge()
+        print('handling memory usage')
         self.handle_memory()
+        print('drawing interface')
         self.draw()  # Test to see if we are properly clearing the images.
+        print('updating stat bar variables')
         self.update_statbar_variables()
+        print('waiting on capture')
         self.after(self.settings['capture_delay'], self.hide_faker)
+        print('refreshing cache')
         self.cache.refresh(resave=True)
         return self
 
