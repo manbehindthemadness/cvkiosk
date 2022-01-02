@@ -111,7 +111,7 @@ class Layout(gp.Diagram):
         This will take our style and use it to set up all of our widgets.
         """
         if "WFI" not in self.labelvars.keys():
-            self.labelvars.update({  # These are the static wifi and battery meters.
+            self.labelvars.update({  # These are the static Wi-Fi and battery meters.
                 'BAT': tk.IntVar(),
                 'WFI': tk.IntVar()  # Remember these are being passed from OnScreen.update_variables
             })

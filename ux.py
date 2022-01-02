@@ -297,10 +297,10 @@ class OnScreen(tk.Tk):
 
     def update_statbar_variables(self):
         """
-        This is where we will iterate through the layout.labelvars dict and pass the statbar variables.
+        This is where we will iterate through the layout.labelvars dict and pass the stat-bar variables.
         We can loop this method in an alternate thread for faster updates.
 
-        NOTE: THese are for the statbar only.
+        NOTE: These are for the stat-bar only.
         """
         if not self.settings['headless']:
             self.read_hardware()

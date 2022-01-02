@@ -87,7 +87,7 @@ style = {
     'statbar': {
         'height': 25,
         'width': '$_screen_width:100%',
-        'coords': (0, 0),  # Upper left hand corner.
+        'coords': (0, 0),  # Upper left-hand corner.
         'border': 0,
         'text_color': 'white',
         'meter_colors_left': "@gp.color_range(0, 100, 'red', 'green')",  # This is an eval statement, it can pass anything in utils.py
