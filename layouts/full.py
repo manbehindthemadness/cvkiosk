@@ -29,6 +29,8 @@ class Format(Layout):
             'volume',
             'top_arrows',
             'bottom_arrows',
+            'top_arrows_invalid',
+            'bottom_arrows_invalid',
             'candlesticks',
             'icing_top1',
             'icing_top2',

@@ -60,6 +60,8 @@ class Layout(gp.Diagram):
         self.volume = gp.SpikyVolumeH(self, cache)
         self.top_arrows = gp.ArrowAlert(self, cache)
         self.bottom_arrows = gp.ArrowAlert(self, cache)
+        self.top_arrows_invalid = gp.ArrowAlert(self, cache)
+        self.bottom_arrows_invalid = gp.ArrowAlert(self, cache)
         self.onions1 = gp.OnionRingAlert(self, cache)
         self.onions2 = gp.OnionRingAlert(self, cache)
         self.onions3 = gp.OnionRingAlert(self, cache)

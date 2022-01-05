@@ -71,7 +71,9 @@ style = {
         'smoothi_top',
         'volume',
         'top_arrows',
+        'top_arrows_invalid',
         'bottom_arrows',
+        'bottom_arrows_invalid',
         'points1',
         'points2',
         'line1',
@@ -282,6 +284,23 @@ style = {
         'tag_fill': 'white',  # Schematic text color.
         'use_schematic': True  # Toggle schematics.
     },
+    'top_arrows_invalid': {
+        'geometry': '&_price_matrix',
+        'height': 25,
+        'offset': 10,  # This is the distance the arrow will appear from the coordinate.
+        'fill': '#380136',
+        'thickness': 1,  # Line thickness.
+        'arrow': 'first',  # This is the end of the line that thhe arrow will attach.
+        'arrowshape': (7, 7, 4),  # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
+        'matrix_override': '&_cu',  # This allows us to pass alternate alert "triggers" instead of just geometry.
+        'triggers': '&_ema_26_point_trig_down_invalid',
+        'tb': 't',
+        'signal': 'TR.DN',
+        'icon': 'img/icons/minus_circle.png',  # Schematic view icon.
+        'icon_fill': 'white',  # Icon color.
+        'tag_fill': 'white',  # Schematic text color.
+        'use_schematic': False  # Toggle schematics.
+    },
     'bottom_arrows': {
         'geometry': '&_price_matrix',
         'height': 25,
@@ -298,6 +317,23 @@ style = {
         'icon_fill': 'white',  # Icon color.
         'tag_fill': 'white',  # Schematic text color.
         'use_schematic': True  # Toggle schematics.
+    },
+    'bottom_arrows_invalid': {
+        'geometry': '&_price_matrix',
+        'height': 25,
+        'offset': 10,  # This is the distance the arrow will appear from the coordinate.
+        'fill': '#013836',
+        'thickness': 1,  # Line thickness.
+        'arrow': 'first',  # This is the end of the line that the arrow will attach.
+        'arrowshape': (7, 7, 4),  # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
+        'matrix_override': '&_cl',  # This allows us to pass alternate alert "triggers" instead of just geometry.
+        'triggers': '&_ema_26_point_trig_up_invalid',
+        'tb': 'b',
+        'signal': 'TR.UP',
+        'icon': 'img/icons/x1.png',  # Schematic view icon.
+        'icon_fill': 'white',  # Icon color.
+        'tag_fill': 'white',  # Schematic text color.
+        'use_schematic': False  # Toggle schematics.
     },
     'points1': {
         'geometry': '&_price_matrix',

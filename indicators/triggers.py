@@ -133,6 +133,7 @@ class Triggers(Indicator):
         s = self.style['main']
         np = self.np
         cup, cdown = s[crossup], s[crossdown]
+        cup_invalid, cdown_invalid = list(cup), list(cdown)  # Collect invalidated signals.
         for idx, (up, down) in enumerate(zip(cup, cdown)):
             if idx < limit:
                 start = 0
@@ -145,8 +146,16 @@ class Triggers(Indicator):
                 block = [0] * int(np.subtract(stop, start))
                 cup[start:stop] = block
                 cdown[start:stop] = block
+        # Collect the invalidated signals.
+        for idx, (inval_up, inval_down, val_up, val_down) in enumerate(zip(cup_invalid, cdown_invalid, cup, cdown)):
+            if inval_up and val_up:
+                cup_invalid[idx] = 0
+            if inval_down and val_down:
+                cdown_invalid[idx] = 0
         self.style['main'][crossup] = cup
+        self.style['main'][crossup + '_invalid'] = cup_invalid
         self.style['main'][crossdown] = cdown
+        self.style['main'][crossdown + '_invalid'] = cdown_invalid
         return self
 
     def trend(self, target: str, name: str):
