@@ -26,7 +26,9 @@ class Format(Layout):
             'smoothi_top',
             'volume',
             'top_arrows',
+            'top_arrows_invalid',
             'bottom_arrows',
+            'bottom_arrows_invalid',
             'candlesticks',
             'icing_top1',
             'icing_top2',
@@ -49,4 +51,3 @@ class Format(Layout):
             'FGI': tk.StringVar(),
             'QUO': tk.StringVar(),
         }
-

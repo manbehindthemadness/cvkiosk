@@ -152,6 +152,7 @@ class Triggers(Indicator):
                 cup_invalid[idx] = 0
             if inval_down and val_down:
                 cdown_invalid[idx] = 0
+        # TODO: We need to gather information for the trading bot here.
         self.style['main'][crossup] = cup
         self.style['main'][crossup + '_invalid'] = cup_invalid
         self.style['main'][crossdown] = cdown
