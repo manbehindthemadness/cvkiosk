@@ -10,7 +10,7 @@ Please see the license file for more details.
 """
 
 
-style = {
+style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 400
     'main': {  # The elements in the 'main' section must be defined for the style to parse.
         'style_name': 'full_dark',  # Name style for organization.
         # Configure global settings in relation to screen size and what have you.
@@ -19,7 +19,7 @@ style = {
         'price_canvas_width': '$_screen_width:100%',  # The size of the graphiend canvas.
         'price_canvas_height': '$_screen_height:26-',
         # This scales the candlestick matrix in order to make room for the other widgets.
-        'price_matrix_offsets': (81, 75, 0, 150),  # left, right, top, bottom.
+        'price_matrix_offsets': (81, 75, 145, 150),  # left, right, top, bottom.
         'price_increment': 6,  # The width of one candlestick in pixels.
         'background': 'black',
         'utc_format': '%H:%M:%p',
