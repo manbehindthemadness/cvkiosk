@@ -19,7 +19,7 @@ style = {
         'price_canvas_width': '$_screen_width:100%',  # The size of the graphiend canvas.
         'price_canvas_height': '$_screen_height:26-',
         # This scales the candlestick matrix in order to make room for the other widgets.
-        'price_matrix_offsets': (81, 75, 145, 150),  # left, right, top, bottom.
+        'price_matrix_offsets': (81, 75, 0, 150),  # left, right, top, bottom.
         'price_increment': 6,  # The width of one candlestick in pixels.
         'background': '#1a1c1c',
         'utc_format': '%H:%M:%p',
@@ -33,9 +33,6 @@ style = {
             {'ema_spread': 26, 'source': 'price'},
             {'ema_spread': 26, 'source': 'feed'},
         ],
-        # 'pure_normal': [
-        #     {'normal_base': 101, 'normal_spread': 2, 'source': 'feed'},
-        # ],
         'pure_faema': [
             {'normal_base': 101, 'normal_spread': 2, 'ema_spread': 10},
             {'normal_base': 101, 'normal_spread': 2, 'ema_spread': 25},
