@@ -33,6 +33,13 @@ style = {
             {'ema_spread': 26, 'source': 'price'},
             {'ema_spread': 26, 'source': 'feed'},
         ],
+        # 'pure_normal': [
+        #     {'normal_base': 101, 'normal_spread': 2, 'source': 'feed'},
+        # ],
+        'pure_faema': [
+            {'normal_base': 101, 'normal_spread': 2, 'ema_spread': 10},
+            {'normal_base': 101, 'normal_spread': 2, 'ema_spread': 25},
+        ],
         'normal': [
             {'normal_base': 100, 'normal_spread': 1, 'source': 'feed'},
         ],
@@ -51,13 +58,13 @@ style = {
         ],
         'triggers': [  # noqa
             {'type': 'updown', 'base': 'feed_ema_26', 'target': 'price_ema_26', 'name': '_faobv_1_12_trig', 'transform': True},
-            {'type': 'updown', 'base': '_faema_100_1_26', 'target': '_faema_100_1_9', 'name': '_ema_9_trig'},
-            {'type': 'crossup', 'base': '_faema_100_1_26', 'target': '_faema_100_1_9', 'name': '_ema_9_point_trig_down'},
-            {'type': 'crossdown', 'base': '_faema_100_1_26', 'target': '_faema_100_1_9', 'name': '_ema_9_point_trig_up'},
+            {'type': 'updown', 'base': '_pure_faema_101_2_25', 'target': '_pure_faema_101_2_10', 'name': '_ema_9_trig'},
+            {'type': 'crossup', 'base': '_pure_faema_101_2_25', 'target': '_pure_faema_101_2_10', 'name': '_ema_9_point_trig_down'},
+            {'type': 'crossdown', 'base': '_pure_faema_101_2_25', 'target': '_pure_faema_101_2_10', 'name': '_ema_9_point_trig_up'},
             {'type': 'cross_filter', 'crossup': '_ema_9_point_trig_up', 'crossdown': '_ema_9_point_trig_down', 'limit': 10},
-            {'type': 'updown', 'base': '_ac', 'target': '_faema_100_1_26', 'name': '_ema_26_trig'},
-            {'type': 'crossup', 'base': '_ac', 'target': '_faema_100_1_26', 'name': '_ema_26_point_trig_up'},
-            {'type': 'crossdown', 'base': '_ac', 'target': '_faema_100_1_26', 'name': '_ema_26_point_trig_down'},
+            {'type': 'updown', 'base': '_ac', 'target': '_pure_faema_101_2_25', 'name': '_ema_26_trig'},
+            {'type': 'crossup', 'base': '_ac', 'target': '_pure_faema_101_2_25', 'name': '_ema_26_point_trig_up'},
+            {'type': 'crossdown', 'base': '_ac', 'target': '_pure_faema_101_2_25', 'name': '_ema_26_point_trig_down'},
             {'type': 'cross_filter', 'crossup': '_ema_26_point_trig_up', 'crossdown': '_ema_26_point_trig_down', 'limit': 10},
             {'type': 'trend', 'target': '_eno_feed', 'name': '_eno_feed_trig'},
             {'type': 'point_trend', 'target': '_feed_dd_1_negative', 'name': '_feed_dd_1_negative_trig'},
@@ -123,7 +130,7 @@ style = {
         'hollow': []  # ['red']  # This can hole one none or both of the colors.
     },
     'line1': {
-        'matrix_override': '&_faema_100_1_9',
+        'matrix_override': '&_pure_faema_101_2_10',  # '&_faema_100_1_9',
         'geometry': '&_price_matrix',
         'smooth': 0,
         'width': 1,
@@ -136,7 +143,7 @@ style = {
         'alpha': 0.9
     },
     'line2': {
-        'matrix_override': '&_faema_100_1_26',
+        'matrix_override': '&_pure_faema_101_2_25',  # '&_faema_100_1_26',
         'geometry': '&_price_matrix',
         'smooth': 0,
         'width': 1,
@@ -149,7 +156,7 @@ style = {
         'alpha': 0.5
     },
     'line3': {
-        'matrix_override': '&_faobv_1_12',
+        'matrix_override': '&_feed_pure_normal_101_2',
         'geometry': '&_price_matrix',
         'smooth': 4,
         'width': 1,
@@ -162,7 +169,7 @@ style = {
         'alpha': 0.5
     },
     'line4': {
-        'matrix_override': '&_price_obv',
+        'matrix_override': '&_pure_faema_101_2_10',
         'geometry': '&_price_matrix',
         'smooth': 4,
         'width': 1,

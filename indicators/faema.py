@@ -31,6 +31,7 @@ class FAEMA(Indicator):
         if self.ema_spread not in mas:
             mas.append(self.ema_spread)
         self.options['popt'].update({'mas': mas})
+        self.options['fopt'].update({'mas': mas})
         kwargs.update({'source': 'feed'})
         norm.configure(self.options, self.style, **kwargs)
         return self
