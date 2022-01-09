@@ -37,16 +37,6 @@ style = {
             {'normal_base': 101, 'normal_spread': 2, 'ema_spread': 10},
             {'normal_base': 101, 'normal_spread': 2, 'ema_spread': 25},
         ],
-        'normal': [
-            {'normal_base': 100, 'normal_spread': 1, 'source': 'feed'},
-        ],
-        'faema': [
-            {'normal_base': 100, 'normal_spread': 1, 'ema_spread': 9},
-            {'normal_base': 100, 'normal_spread': 1, 'ema_spread': 26},
-        ],
-        'faobv': [
-            {'normal_spread': 1, 'obv_spread': 12, 'faobv_spread': 1},
-        ],
         'directional_drift': [
             {'ema_spread': 1, 'source': 'feed', 'polarity': 'negative'},
         ],
@@ -54,7 +44,6 @@ style = {
             {'source': 'feed'},
         ],
         'triggers': [  # noqa
-            {'type': 'updown', 'base': 'feed_ema_26', 'target': 'price_ema_26', 'name': '_faobv_1_12_trig', 'transform': True},
             {'type': 'updown', 'base': '_pure_faema_101_2_25', 'target': '_pure_faema_101_2_10', 'name': '_ema_9_trig'},
             {'type': 'crossup', 'base': '_pure_faema_101_2_25', 'target': '_pure_faema_101_2_10', 'name': '_ema_9_point_trig_down'},
             {'type': 'crossdown', 'base': '_pure_faema_101_2_25', 'target': '_pure_faema_101_2_10', 'name': '_ema_9_point_trig_up'},
@@ -127,7 +116,7 @@ style = {
         'hollow': []  # ['red']  # This can hole one none or both of the colors.
     },
     'line1': {
-        'matrix_override': '&_pure_faema_101_2_10',  # '&_faema_100_1_9',
+        'matrix_override': '&_pure_faema_101_2_10',
         'geometry': '&_price_matrix',
         'smooth': 0,
         'width': 1,
@@ -140,7 +129,7 @@ style = {
         'alpha': 0.9
     },
     'line2': {
-        'matrix_override': '&_pure_faema_101_2_25',  # '&_faema_100_1_26',
+        'matrix_override': '&_pure_faema_101_2_25',
         'geometry': '&_price_matrix',
         'smooth': 0,
         'width': 1,
@@ -152,41 +141,40 @@ style = {
         'rad': 2,
         'alpha': 0.5
     },
-    'line3': {
-        'matrix_override': '&_feed_pure_normal_101_2',
-        'geometry': '&_price_matrix',
-        'smooth': 4,
-        'width': 1,
-        'color1': 'deepskyblue',
-        'color2': 'violet',
-        'triggers': '&_faobv_1_12_trig',
-        'linetype': 'scatter',
-        'lineinterpol': 2,
-        'rad': 2,
-        'alpha': 0.5
-    },
-    'line4': {
-        'matrix_override': '&_pure_faema_101_2_10',
-        'geometry': '&_price_matrix',
-        'smooth': 4,
-        'width': 1,
-        'color1': 'yellow',
-        'color2': 'yellow',
-        # 'triggers': '&_ema_26_trig',
-        'linetype': 'scatter',
-        'lineinterpol': 2,
-        'rad': 2,
-        'alpha': 0.5
-    },
+    # 'line3': {
+    #     'matrix_override': '&_feed_pure_normal_101_2',
+    #     'geometry': '&_price_matrix',
+    #     'smooth': 4,
+    #     'width': 1,
+    #     'color1': 'deepskyblue',
+    #     'color2': 'violet',
+    #     'triggers': '&_faobv_1_12_trig',
+    #     'linetype': 'scatter',
+    #     'lineinterpol': 2,
+    #     'rad': 2,
+    #     'alpha': 0.5
+    # },
+    # 'line4': {
+    #     'matrix_override': '&_pure_faema_101_2_10',
+    #     'geometry': '&_price_matrix',
+    #     'smooth': 4,
+    #     'width': 1,
+    #     'color1': 'yellow',
+    #     'color2': 'yellow',
+    #     # 'triggers': '&_ema_26_trig',
+    #     'linetype': 'scatter',
+    #     'lineinterpol': 2,
+    #     'rad': 2,
+    #     'alpha': 0.5
+    # },
     'smoothi_bottom': {
         'geometry': '&_feed_price_matrix',
-        'matrix_override': '&_feed_normal_100_1',
+        'matrix_override': '&_feed_pure_normal_101_2',
         'height': 93,
         'fill': 'aqua',
         'grad': ('deepskyblue', 'blue', 'v'),  # Gradient.
         'graph_type': 'prices',
         'tb': 'b',  # Top or bottom style.
-        # 'outline': 'black',
         'smooth': 0,  # Smooths average out the measurements.
         'lineinterpol': 2,  # Linear interpolation adds points and then rounds off the edges.
         'offset': 917,
@@ -197,7 +185,7 @@ style = {
     },
     'smoothi_bottom_backdrop': {
         'geometry': '&_feed_price_matrix',
-        'matrix_override': '&_faema_100_1_9',
+        'matrix_override': '&_pure_faema_101_2_10',
         'height': 93,
         'fill': 'aqua',
         'grad': ('violet', 'purple', 'v'),  # Gradient.
@@ -223,7 +211,6 @@ style = {
         'lineinterpol': 4,
         'offset': 915,
         'padding': (69, 75, 0, 0),  # left, right, top, bottom.
-        # 'outline': 'black',
         'alpha': 0.9,
         'aa': (10, 0),
     },
@@ -238,23 +225,19 @@ style = {
         'lineinterpol': 4,
         'offset': 915,
         'padding': (69, 75, 0, 0),  # left, right, top, bottom.
-        # 'outline': 'black',
         'alpha': 0.5,
         'aa': (10, 0),
     },
     'smoothi_top_backdrop_shadow': {
         'geometry': '&_feed_price_matrix',
-        # 'matrix_override': '&_feed_dd_1_negative_volume',
         'height': 135,
         'fill': 'dodgerblue',
-        # 'grad': ('yellow', '#262929', 'v'),
         'graph_type': 'volume',
         'tb': 't',
         'smooth': 3,
         'lineinterpol': 4,
         'offset': 915,
         'padding': (69, 75, 0, 6),  # left, right, top, bottom.
-        # 'outline': 'black',
         'alpha': 0.25,
         'aa': (10, 0),
     },
