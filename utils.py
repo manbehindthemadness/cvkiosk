@@ -401,7 +401,7 @@ def matrix_sorter(price_matrix, matrices: dict, prefix: str = None) -> dict:
     matrices[prefix + 'prices'] = np.array(price_matrix.prices)
     matrices[prefix + 'volume_quote'] = [price_matrix.volume[-1]]
     matrices[prefix + 'price_quote'] = [price_matrix.prices[-1]]
-    matrices[prefix + 'adjusted_price_points'] = np.array(price_matrix.adjusted_price_points)
+    matrices[prefix + ''] = np.array(price_matrix.adjusted_price_points)
     return matrices
 
 

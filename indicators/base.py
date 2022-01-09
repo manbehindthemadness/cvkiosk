@@ -152,9 +152,24 @@ class Dummy(Indicator):
     """
     This is a dummy class so the IDE can see pas the exec statements.
     """
+    def_options = {
+        'popt': {  # Price matrix options.
+            'mas': list(),
+            'vas': list(),
+            'macd': False,
+            'obv': False
+        },
+        'fopt': {  # Feed matrix options.
+            'mas': list(),
+            'vas': list(),
+            'macd': False,
+            'obv': False
+        },
+    }
 
     def __init__(self):
         Indicator.__init__(self)
+
 
     def configure(self, options: [dict, None], style: dict, **kwargs):  # noqa
         """

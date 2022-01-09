@@ -19,13 +19,13 @@ style = {
         'price_canvas_width': '$_screen_width:100%',  # The size of the graphiend canvas.
         'price_canvas_height': '$_screen_height:26-',
         # This scales the candlestick matrix in order to make room for the other widgets.
-        'price_matrix_offsets': (2, 2, 20, 85),  # left, right, top, bottom.
+        'price_matrix_offsets': (2, 2, 35, 85),  # left, right, top, bottom.
         'price_increment': 4,  # The width of one candlestick in pixels.
         'background': 'black',
         'utc_format': '%H:%M:%p',
     },
     'indicators': {  # noqa
-    'on_balance_volume': [
+        'on_balance_volume': [
             {'source': 'price'}
         ],
         'moving_average': [
@@ -33,15 +33,9 @@ style = {
             {'ema_spread': 26, 'source': 'price'},
             {'ema_spread': 26, 'source': 'feed'},
         ],
-        'normal': [
-            {'normal_base': 100, 'normal_spread': 1, 'source': 'feed'},
-        ],
-        'faema': [
-            {'normal_base': 100, 'normal_spread': 1, 'ema_spread': 9},
-            {'normal_base': 100, 'normal_spread': 1, 'ema_spread': 26},
-        ],
-        'faobv': [
-            {'normal_spread': 1, 'obv_spread': 12, 'faobv_spread': 1},
+        'pure_faema': [
+            {'normal_base': 101, 'normal_spread': 2, 'ema_spread': 10},
+            {'normal_base': 101, 'normal_spread': 2, 'ema_spread': 25},
         ],
         'directional_drift': [
             {'ema_spread': 1, 'source': 'feed', 'polarity': 'negative'},
@@ -50,28 +44,16 @@ style = {
             {'source': 'feed'},
         ],
         'triggers': [  # noqa
-            {'type': 'updown', 'base': 'feed_ema_26', 'target': 'price_ema_26', 'name': '_faobv_1_12_trig',
-             'transform': True},
-            {'type': 'updown', 'base': '_faema_100_1_26', 'target': '_faema_100_1_9', 'name': '_ema_9_trig'},
-            {'type': 'crossup', 'base': '_faema_100_1_26', 'target': '_faema_100_1_9',
-             'name': '_ema_9_point_trig_down'},
-            {'type': 'crossdown', 'base': '_faema_100_1_26', 'target': '_faema_100_1_9',
-             'name': '_ema_9_point_trig_up'},
-            {'type': 'cross_filter', 'crossup': '_ema_9_point_trig_up', 'crossdown': '_ema_9_point_trig_down',
-             'limit': 10},
-            {'type': 'updown', 'base': '_ac', 'target': '_faema_100_1_26', 'name': '_ema_26_trig'},
-            {'type': 'crossup', 'base': '_ac', 'target': '_faema_100_1_26', 'name': '_ema_26_point_trig_up'},
-            {'type': 'crossdown', 'base': '_ac', 'target': '_faema_100_1_26', 'name': '_ema_26_point_trig_down'},
-            {'type': 'cross_filter', 'crossup': '_ema_26_point_trig_up', 'crossdown': '_ema_26_point_trig_down',
-             'limit': 10},
+            {'type': 'updown', 'base': '_pure_faema_101_2_25', 'target': '_pure_faema_101_2_10', 'name': '_ema_9_trig'},
+            {'type': 'crossup', 'base': '_pure_faema_101_2_25', 'target': '_pure_faema_101_2_10', 'name': '_ema_9_point_trig_down'},
+            {'type': 'crossdown', 'base': '_pure_faema_101_2_25', 'target': '_pure_faema_101_2_10', 'name': '_ema_9_point_trig_up'},
+            {'type': 'cross_filter', 'crossup': '_ema_9_point_trig_up', 'crossdown': '_ema_9_point_trig_down', 'limit': 10},
+            {'type': 'updown', 'base': '_ac', 'target': '_pure_faema_101_2_25', 'name': '_ema_26_trig'},
+            {'type': 'crossup', 'base': '_ac', 'target': '_pure_faema_101_2_25', 'name': '_ema_26_point_trig_up'},
+            {'type': 'crossdown', 'base': '_ac', 'target': '_pure_faema_101_2_25', 'name': '_ema_26_point_trig_down'},
+            {'type': 'cross_filter', 'crossup': '_ema_26_point_trig_up', 'crossdown': '_ema_26_point_trig_down', 'limit': 10},
             {'type': 'trend', 'target': '_eno_feed', 'name': '_eno_feed_trig'},
             {'type': 'point_trend', 'target': '_feed_dd_1_negative', 'name': '_feed_dd_1_negative_trig'},
-        ],
-        'audio_alerts': [
-            {'source': '_ema_26_point_trig_down', 'alert_type': 'high_med_low', 'repeat': False},
-            {'source': '_ema_26_point_trig_up', 'alert_type': 'low_med_high', 'repeat': False},
-            {'source': '_ema_9_point_trig_down', 'alert_type': 'single_low', 'repeat': False},
-            {'source': '_ema_9_point_trig_up', 'alert_type': 'single_high', 'repeat': False},
         ]
     },
     'asset_order': [  # This is our draw_order widgets will be drawn starting with the farthest back into the foreground.
@@ -127,7 +109,7 @@ style = {
         'hollow': []  # ['red']  # This can hole one none or both of the colors.
     },
     'line1': {
-        'matrix_override': '&_faema_100_1_9',
+        'matrix_override': '&_pure_faema_101_2_10',
         'geometry': '&_price_matrix',
         'smooth': 0,
         'width': 1,
@@ -140,7 +122,7 @@ style = {
         'alpha': 0.5
     },
     'line2': {
-        'matrix_override': '&_faema_100_1_26',
+        'matrix_override': '&_pure_faema_101_2_25',
         'geometry': '&_price_matrix',
         'smooth': 0,
         'width': 1,
@@ -152,22 +134,22 @@ style = {
         'rad': 2,
         'alpha': 0.5
     },
-    'line3': {
-        'matrix_override': '&_faobv_1_12',
-        'geometry': '&_price_matrix',
-        'smooth': 4,
-        'width': 1,
-        'color1': 'deepskyblue',
-        'color2': 'violet',
-        'triggers': '&_faobv_1_12_trig',
-        'linetype': 'scatter',
-        'lineinterpol': 2,
-        'rad': 2,
-        'alpha': 0.5
-    },
+    # 'line3': {
+    #     'matrix_override': '&_faobv_1_12',
+    #     'geometry': '&_price_matrix',
+    #     'smooth': 4,
+    #     'width': 1,
+    #     'color1': 'deepskyblue',
+    #     'color2': 'violet',
+    #     'triggers': '&_faobv_1_12_trig',
+    #     'linetype': 'scatter',
+    #     'lineinterpol': 2,
+    #     'rad': 2,
+    #     'alpha': 0.5
+    # },
     'smoothi_bottom': {
         'geometry': '&_feed_price_matrix',
-        'matrix_override': '&_feed_normal_100_1',
+        'matrix_override': '&_feed_pure_normal_101_2',
         'height': 60,
         'fill': 'aqua',
         'grad': ('deepskyblue', 'blue', 'v'),  # Gradient.
@@ -184,7 +166,7 @@ style = {
     },
     'smoothi_bottom_backdrop': {
         'geometry': '&_feed_price_matrix',
-        'matrix_override': '&_faema_100_1_9',
+        'matrix_override': '&_pure_faema_101_2_10',
         'height': 60,
         'fill': 'aqua',
         'grad': ('violet', 'purple', 'v'),  # Gradient.

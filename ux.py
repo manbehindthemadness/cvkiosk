@@ -135,6 +135,7 @@ class OnScreen(tk.Tk):
 
         NOTE: The extras options will allow us to add in custom post processing for our feed values
         """
+        matrix = np.array(matrix)
         focus = self.settings['chart_focus']
         if not focus:
             focus = 'BTC'
@@ -191,6 +192,8 @@ class OnScreen(tk.Tk):
                         i.configure(opts, self.style, **kw)
                         opts = i.options
                         slip += 1
+        if not opts:
+            opts = indicator().def_options
         return opts
 
     def solve_indicators(self):
