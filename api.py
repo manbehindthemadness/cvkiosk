@@ -73,7 +73,9 @@ class GetChart:
                 comparing the second to last price bar with the last update, when this changes we know it's time to 
                 increment to the next sample.
                 """
-                updates = ['chart_data', 'price_data', 'variety_data']
+                updates = ['chart_data', 'price_data']
+                if s['chart_variety']:
+                    updates.append('variety_data')
                 if self.cursor[0] == data['price_data'][-2]:  # We are on the same bar, so we just update the latest cached quotes.
                     # print('updating sample')
                     for update in updates:
@@ -97,7 +99,7 @@ class GetChart:
                 feed_data = padding
             self.variety, self.alerts, self.chart, self.feed = variety_data, alert_data, price_data, feed_data
             self.resample = False
-            self.length = 2
+            self.length = '2'
         else:
             print('unable to fetch chart data, retrying')
             time.sleep(5)
