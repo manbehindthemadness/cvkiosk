@@ -16,6 +16,7 @@ import os
 import tkinter as tk
 import numpy as np
 from colour import Color
+from pathlib import Path
 from PIL import (
     Image,
     ImageTk,
@@ -89,11 +90,12 @@ class ScrCap:
     This is a screen capture class that (we hope) will stabalize the wacky failures behind the python screenshot
     libraries.
     """
-    def __init__(self, target_file):
+    def __init__(self, target_file: Path):
         """
         NOTE: This class cannot init until the above 'setup' function has been run.
         """
         self.target_image = target_file
+        self.temp_image = self.target_image.with_suffix('.tmp' + self.target_image.suffix)
         self.grab = None
         self.imp()
 
@@ -105,6 +107,7 @@ class ScrCap:
         if pys:
             del pys
         import pyscreenshot as pys
+        from pyscreenshot.err import FailedBackendError  # noqa
         self.grab = pys.grab
 
     def capture(self, region: tuple):
@@ -115,20 +118,21 @@ class ScrCap:
         :return:
         """
         img = None
+        while not self.temp_image.is_file():
+            try:
+                img = self.grab(bbox=region)
+                img.save(self.temp_image)
+            except FailedBackendError:  # noqa
+                pass
+            if not self.temp_image.is_file():
+                print('capture failed', '*warn*')
+                self.imp()
+                time.sleep(0.5)
         try:
             os.remove(self.target_image)
         except FileNotFoundError:
             pass
-        while not self.target_image.is_file():
-            try:
-                img = self.grab(bbox=region)
-                img.save(self.target_image)
-            except self.grab.err.FailedBackendError:
-                pass
-            if not self.target_image.is_file():
-                print('capture failed', '*warn*')
-                self.imp()
-                time.sleep(0.5)
+        os.rename(self.temp_image, self.target_image)
         return img
 
     def enhance(self):
@@ -338,7 +342,7 @@ class StatBar(tk.Frame):
                 padx=pad_x,
                 pady=pad_y,
                 textvariable=self.meter_text,
-                anchor=anchor
+                anchor=anchor  # noqa
             )
             self.label.place(
                 x=0,
