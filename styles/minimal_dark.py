@@ -25,14 +25,6 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 181
         'utc_format': '%H:%M:%p',
     },
     'indicators': {  # noqa
-        'on_balance_volume': [
-            {'source': 'price'}
-        ],
-        'moving_average': [
-            {'ema_spread': 9, 'source': 'price'},
-            {'ema_spread': 26, 'source': 'price'},
-            {'ema_spread': 26, 'source': 'feed'},
-        ],
         'pure_faema': [
             {'normal_base': 101, 'normal_spread': 2, 'ema_spread': 10},
             {'normal_base': 101, 'normal_spread': 2, 'ema_spread': 25},
@@ -41,7 +33,7 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 181
             {'ema_spread': 1, 'source': 'feed', 'polarity': 'negative'},
         ],
         'normalized_directional_drift': [
-            {'source': 'feed'},
+            {'source': 'feed', 'polarity': 'negative', 'normal_base': 101, 'normal_spread': 2, 'ema_spread': 10, }
         ],
         'triggers': [  # noqa
             {'type': 'updown', 'base': '_pure_faema_101_2_25', 'target': '_pure_faema_101_2_10', 'name': '_ema_9_trig'},
@@ -52,7 +44,7 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 181
             {'type': 'crossup', 'base': '_ac', 'target': '_pure_faema_101_2_25', 'name': '_ema_26_point_trig_up'},
             {'type': 'crossdown', 'base': '_ac', 'target': '_pure_faema_101_2_25', 'name': '_ema_26_point_trig_down'},
             {'type': 'cross_filter', 'crossup': '_ema_26_point_trig_up', 'crossdown': '_ema_26_point_trig_down', 'limit': 10},
-            {'type': 'trend', 'target': '_eno_feed', 'name': '_eno_feed_trig'},
+            {'type': 'trend', 'target': '_eno_feed_101_2_10_negative', 'name': '_eno_feed_trig'},
             {'type': 'point_trend', 'target': '_feed_dd_1_negative', 'name': '_feed_dd_1_negative_trig'},
         ]
     },
@@ -156,7 +148,7 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 181
         'graph_type': 'prices',
         'tb': 'b',  # Top or bottom style.
         'outline': 'black',
-        'smooth': 1,  # Smooths average out the measurements.
+        'smooth': 4,  # Smooths average out the measurements.
         'lineinterpol': 2,  # Linear interpolation adds points and then rounds off the edges.
         'offset': 150,
         'padding': (0, 0, 0, 0),  # left, right, top, bottom.
@@ -173,7 +165,7 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 181
         'graph_type': 'prices',
         'tb': 'b',  # Top or bottom style.
         # 'outline': 'black',
-        'smooth': 1,  # Smooths average out the measurements.
+        'smooth': 4,  # Smooths average out the measurements.
         'lineinterpol': 2,  # Linear interpolation adds points and then rounds off the edges.
         'offset': 150,
         'padding': (0, 0, 0, 0),  # left, right, top, bottom.
@@ -199,7 +191,7 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 181
     },
     'smoothi_top_backdrop': {
         'geometry': '&_price_matrix',
-        'matrix_override': '&_eno_feed',
+        'matrix_override': '&_eno_feed_101_2_10_negative',
         'height': 20,
         'fill': '#ff2e2e',
         'graph_type': 'prices',
