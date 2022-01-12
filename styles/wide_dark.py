@@ -40,6 +40,10 @@ style = {
             {'normal_base': 100, 'normal_spread': 1, 'ema_spread': 9},
             {'normal_base': 100, 'normal_spread': 1, 'ema_spread': 26},
         ],
+        # 'pure_faema': [
+        #     {'normal_base': 101, 'normal_spread': 2, 'ema_spread': 10},
+        #     {'normal_base': 101, 'normal_spread': 2, 'ema_spread': 25},
+        # ],
         'faobv': [
             {'normal_spread': 1, 'obv_spread': 12, 'faobv_spread': 1},
         ],
@@ -47,7 +51,7 @@ style = {
             {'ema_spread': 1, 'source': 'feed', 'polarity': 'negative'},
         ],
         'normalized_directional_drift': [
-            {'source': 'feed'},
+            {'source': 'feed', 'polarity': 'negative', 'normal_base': 101, 'normal_spread': 2, 'ema_spread': 10, }
         ],
         'triggers': [  # noqa
             {'type': 'updown', 'base': 'feed_ema_26', 'target': 'price_ema_26', 'name': '_faobv_1_12_trig', 'transform': True},
@@ -59,7 +63,7 @@ style = {
             {'type': 'crossup', 'base': '_ac', 'target': '_faema_100_1_26', 'name': '_ema_26_point_trig_up'},
             {'type': 'crossdown', 'base': '_ac', 'target': '_faema_100_1_26', 'name': '_ema_26_point_trig_down'},
             {'type': 'cross_filter', 'crossup': '_ema_26_point_trig_up', 'crossdown': '_ema_26_point_trig_down', 'limit': 10},
-            {'type': 'trend', 'target': '_eno_feed', 'name': '_eno_feed_trig'},
+            {'type': 'trend', 'target': '_eno_feed_101_2_10_negative', 'name': '_eno_feed_trig'},
             {'type': 'point_trend', 'target': '_feed_dd_1_negative', 'name': '_feed_dd_1_negative_trig'},
         ]
     },
@@ -222,12 +226,12 @@ style = {
     },
     'smoothi_top_backdrop': {
         'geometry': '&_price_matrix',
-        'matrix_override': '&_eno_feed',
+        'matrix_override': '&_eno_feed_101_2_10_negative',
         'height': 35,
         'fill': '#ff2e2e',
         'graph_type': 'prices',
         'tb': 't',
-        'smooth': 1,
+        'smooth': 3,
         'lineinterpol': 4,
         'offset': 415,
         'padding': (75, 75, 0, 0),  # left, right, top, bottom.
