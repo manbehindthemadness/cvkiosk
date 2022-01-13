@@ -32,6 +32,7 @@ class Indicator:
     ema_spread = None
     obv_spread = None
     faobv_spread = None
+    guides = None
     history = None
     alert = None
     alert_type = None
@@ -61,6 +62,7 @@ class Indicator:
         'alert_type',
         'repeat',
         'suffix',
+        'guides',
     ]
 
     def_options = {

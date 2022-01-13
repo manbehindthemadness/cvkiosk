@@ -183,6 +183,7 @@ class OnScreen(tk.Tk):
                         i = indicator().configure(opts, self.style, **kw)
                         opts = i.options
                         self.indicators.append(i)
+                    pass  # For debugger.
         else:
             slip = 0
             for idr in idrs:

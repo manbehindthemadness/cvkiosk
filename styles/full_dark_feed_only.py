@@ -148,7 +148,6 @@ style = {
         'lineinterpol': 8,
         'lengths': [9, 12, 26],
         'x_shift': 6,
-        # 'normalize': True,
         'kwargs': {
             '9': {
                 'width': 1,
@@ -156,7 +155,6 @@ style = {
                 'smooth': 5,
                 'rad': 2,
                 'alpha': 0.8,
-                # 'linetype': 'scatter'
             },
             '12': {
                 'width': 1,
@@ -164,14 +162,12 @@ style = {
                 'smooth': 5,
                 'rad': 2,
                 'alpha': 0.8,
-                # 'linetype': 'scatter'
             },
             '26': {
                 'width': 2,
                 'fill': 'black',
                 'rad': 2,
                 'alpha': 0.8,
-                # 'linetype': 'scatter'
             },
         }
     },
