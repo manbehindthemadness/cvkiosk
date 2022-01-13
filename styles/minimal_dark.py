@@ -25,6 +25,9 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 181
         'utc_format': '%H:%M:%p',
     },
     'indicators': {  # noqa
+        'down_swing': [
+            {'source': 'feed', 'guides': (2, 50, 100)},
+        ],
         'pure_faema': [
             {'normal_base': 101, 'normal_spread': 2, 'ema_spread': 10},
             {'normal_base': 101, 'normal_spread': 2, 'ema_spread': 25},
@@ -191,7 +194,7 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 181
     },
     'smoothi_top_backdrop': {
         'geometry': '&_price_matrix',
-        'matrix_override': '&_eno_feed_101_2_10_negative',
+        'matrix_override': '&_down_swing_feed_2_50_100',
         'height': 20,
         'fill': '#ff2e2e',
         'graph_type': 'prices',
@@ -317,7 +320,7 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 181
     },
     'icing_top1': {
         'geometry': '&_price_matrix',
-        'triggers': '&_eno_feed_trig',
+        'triggers': '&_down_swing_feed_2_50_100_trig',
         'thickness': 1,
         'smooth': False,
         # 'dash': (1, 1),
@@ -337,7 +340,7 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 181
     },
     'icing_bottom1': {
         'geometry': '&_price_matrix',
-        'triggers': '&_eno_feed_trig',
+        'triggers': '&_down_swing_feed_2_50_100_trig',
         'thickness': 1,
         'smooth': False,
         # 'dash': (1, 1),

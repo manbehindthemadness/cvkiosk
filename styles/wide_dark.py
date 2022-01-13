@@ -25,6 +25,9 @@ style = {
         'utc_format': '%H:%M:%p',
     },
     'indicators': {
+        'down_swing': [
+            {'source': 'feed', 'guides': (2, 50, 100)},
+        ],
         'on_balance_volume': [
             {'source': 'price'}
         ],
@@ -226,7 +229,7 @@ style = {
     },
     'smoothi_top_backdrop': {
         'geometry': '&_price_matrix',
-        'matrix_override': '&_eno_feed_101_2_10_negative',
+        'matrix_override': '&_down_swing_feed_2_50_100',
         'height': 35,
         'fill': '#ff2e2e',
         'graph_type': 'prices',
@@ -318,7 +321,7 @@ style = {
     },
     'icing_top1': {
         'geometry': '&_price_matrix',
-        'triggers': '&_eno_feed_trig',
+        'triggers': '&_down_swing_feed_2_50_100_trig',
         'thickness': 1,
         'smooth': False,
         # 'dash': (1, 1),
@@ -338,7 +341,7 @@ style = {
     },
     'icing_bottom1': {
         'geometry': '&_price_matrix',
-        'triggers': '&_eno_feed_trig',
+        'triggers': '&_down_swing_feed_2_50_100_trig',
         'thickness': 1,
         'smooth': False,
         # 'dash': (1, 1),
