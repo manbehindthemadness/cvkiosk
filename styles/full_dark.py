@@ -133,19 +133,19 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 400
         'rad': 2,
         'alpha': 0.5
     },
-    # 'line3': {
-    #     'matrix_override': '&_feed_pure_normal_101_2',
-    #     'geometry': '&_price_matrix',
-    #     'smooth': 4,
-    #     'width': 1,
-    #     'color1': 'deepskyblue',
-    #     'color2': 'violet',
-    #     'triggers': '&_faobv_1_12_trig',
-    #     'linetype': 'scatter',
-    #     'lineinterpol': 2,
-    #     'rad': 2,
-    #     'alpha': 0.5
-    # },
+    'line3': {
+        'matrix_override': '&_eno_feed_101_2_10_negative',
+        'geometry': '&_price_matrix',
+        'smooth': 4,
+        'width': 1,
+        'color1': 'deepskyblue',
+        'color2': 'violet',
+        # 'triggers': '&_faobv_1_12_trig',
+        'linetype': 'scatter',
+        'lineinterpol': 2,
+        'rad': 2,
+        'alpha': 0.5
+    },
     # 'line4': {
     #     'matrix_override': '&_pure_faema_101_2_10',
     #     'geometry': '&_price_matrix',

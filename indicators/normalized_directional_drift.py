@@ -24,6 +24,8 @@ class ENO(Indicator):
         """
         self.config(options, style, **kwargs)
         mas = self.options['popt']['mas']
+        if self.ema_spread is None:
+            raise ValueError
         if self.ema_spread not in mas:
             mas.append(self.ema_spread)
         self.options['popt'].update({'mas': mas})

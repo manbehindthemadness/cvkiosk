@@ -56,7 +56,7 @@ style = {
             {'ema_spread': 1, 'source': 'feed', 'polarity': 'positive'},
         ],
         'normalized_directional_drift': [
-            {'source': 'feed'},
+            {'source': 'feed', 'polarity': 'negative', 'normal_base': 101, 'normal_spread': 2, 'ema_spread': 10, },
         ],
         'variety': [
             {'ema_spread': 0},
@@ -144,7 +144,7 @@ style = {
     'macd2': {
         'geometry': '&_feed_price_matrix',
         'offset': 457,
-        'height': 600,
+        'height': 400,
         'lineinterpol': 8,
         'lengths': [9, 12, 26],
         'x_shift': 6,
