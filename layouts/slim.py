@@ -20,6 +20,7 @@ class Format(Layout):
     def __init__(self, parent: tk.Frame, cache: gp.ImgCache, settings: config):
         Layout.__init__(self, parent, cache, settings)
         self.widgets = [  # This is the list of included widgets for this layout,
+            'shmacd',
             'smoothi_bottom',
             'smoothi_bottom_backdrop',
             'smoothi_top_backdrop',

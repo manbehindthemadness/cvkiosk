@@ -24,31 +24,13 @@ style = {
         'background': '#1a1c1c',
         'utc_format': '%H:%M:%p',
     },
-    'indicators': {
+    'indicators': {  # noqa
         'down_swing': [
             {'source': 'feed', 'guides': (2, 50, 100)},
         ],
-        'on_balance_volume': [
-            {'source': 'price'}
-        ],
-        'moving_average': [
-            {'ema_spread': 9, 'source': 'price'},
-            {'ema_spread': 26, 'source': 'price'},
-            {'ema_spread': 26, 'source': 'feed'},
-        ],
-        'normal': [
-            {'normal_base': 100, 'normal_spread': 1, 'source': 'feed'},
-        ],
-        'faema': [
-            {'normal_base': 100, 'normal_spread': 1, 'ema_spread': 9},
-            {'normal_base': 100, 'normal_spread': 1, 'ema_spread': 26},
-        ],
-        # 'pure_faema': [
-        #     {'normal_base': 101, 'normal_spread': 2, 'ema_spread': 10},
-        #     {'normal_base': 101, 'normal_spread': 2, 'ema_spread': 25},
-        # ],
-        'faobv': [
-            {'normal_spread': 1, 'obv_spread': 12, 'faobv_spread': 1},
+        'pure_faema': [
+            {'normal_base': 101, 'normal_spread': 2, 'ema_spread': 10},
+            {'normal_base': 101, 'normal_spread': 2, 'ema_spread': 25},
         ],
         'directional_drift': [
             {'ema_spread': 1, 'source': 'feed', 'polarity': 'negative'},
@@ -57,22 +39,22 @@ style = {
             {'source': 'feed', 'polarity': 'negative', 'normal_base': 101, 'normal_spread': 2, 'ema_spread': 10, }
         ],
         'triggers': [  # noqa
-            {'type': 'updown', 'base': 'feed_ema_26', 'target': 'price_ema_26', 'name': '_faobv_1_12_trig', 'transform': True},
-            {'type': 'updown', 'base': '_faema_100_1_26', 'target': '_faema_100_1_9', 'name': '_ema_9_trig'},
-            {'type': 'crossup', 'base': '_faema_100_1_26', 'target': '_faema_100_1_9', 'name': '_ema_9_point_trig_down'},
-            {'type': 'crossdown', 'base': '_faema_100_1_26', 'target': '_faema_100_1_9', 'name': '_ema_9_point_trig_up'},
+            {'type': 'updown', 'base': '_pure_faema_101_2_25', 'target': '_pure_faema_101_2_10', 'name': '_ema_9_trig'},
+            {'type': 'crossup', 'base': '_pure_faema_101_2_25', 'target': '_pure_faema_101_2_10', 'name': '_ema_9_point_trig_down'},
+            {'type': 'crossdown', 'base': '_pure_faema_101_2_25', 'target': '_pure_faema_101_2_10', 'name': '_ema_9_point_trig_up'},
             {'type': 'cross_filter', 'crossup': '_ema_9_point_trig_up', 'crossdown': '_ema_9_point_trig_down', 'limit': 10},
-            {'type': 'updown', 'base': '_ac', 'target': '_faema_100_1_26', 'name': '_ema_26_trig'},
-            {'type': 'crossup', 'base': '_ac', 'target': '_faema_100_1_26', 'name': '_ema_26_point_trig_up'},
-            {'type': 'crossdown', 'base': '_ac', 'target': '_faema_100_1_26', 'name': '_ema_26_point_trig_down'},
+            {'type': 'updown', 'base': '_ac', 'target': '_pure_faema_101_2_25', 'name': '_ema_26_trig'},
+            {'type': 'crossup', 'base': '_ac', 'target': '_pure_faema_101_2_25', 'name': '_ema_26_point_trig_up'},
+            {'type': 'crossdown', 'base': '_ac', 'target': '_pure_faema_101_2_25', 'name': '_ema_26_point_trig_down'},
             {'type': 'cross_filter', 'crossup': '_ema_26_point_trig_up', 'crossdown': '_ema_26_point_trig_down', 'limit': 10},
             {'type': 'trend', 'target': '_eno_feed_101_2_10_negative', 'name': '_eno_feed_trig'},
             {'type': 'point_trend', 'target': '_feed_dd_1_negative', 'name': '_feed_dd_1_negative_trig'},
         ]
     },
     'asset_order': [  # This is our draw_order widgets will be drawn starting with the farthest back into the foreground.
-        'smoothi_bottom_backdrop',
-        'smoothi_bottom',
+        'shmacd',
+        # 'smoothi_bottom_backdrop',
+        # 'smoothi_bottom',
         'smoothi_top_backdrop',
         'smoothi_top',
         'volume',
@@ -82,7 +64,7 @@ style = {
         'points2',
         'line1',
         'line2',
-        'line3',
+        # 'line3',
         # 'line4',
         'candlesticks',
         'icing_top1',
@@ -127,7 +109,7 @@ style = {
         'hollow': []  # ['red']  # This can hole one none or both of the colors.
     },
     'line1': {
-        'matrix_override': '&_faema_100_1_9',
+        'matrix_override': '&_pure_faema_101_2_10',
         'geometry': '&_price_matrix',
         'smooth': 0,
         'width': 1,
@@ -140,7 +122,7 @@ style = {
         'alpha': 0.5
     },
     'line2': {
-        'matrix_override': '&_faema_100_1_26',
+        'matrix_override': '&_pure_faema_101_2_25',
         'geometry': '&_price_matrix',
         'smooth': 0,
         'width': 1,
@@ -152,35 +134,67 @@ style = {
         'rad': 2,
         'alpha': 0.5
     },
-    'line3': {
-        'matrix_override': '&_faobv_1_12',
-        'geometry': '&_price_matrix',
-        'smooth': 4,
-        'width': 1,
-        'color1': 'deepskyblue',
-        'color2': 'violet',
-        'triggers': '&_faobv_1_12_trig',
-        'linetype': 'scatter',
+    # 'line3': {
+    #     'matrix_override': '&_faobv_1_12',
+    #     'geometry': '&_price_matrix',
+    #     'smooth': 4,
+    #     'width': 1,
+    #     'color1': 'deepskyblue',
+    #     'color2': 'violet',
+    #     'triggers': '&_faobv_1_12_trig',
+    #     'linetype': 'scatter',
+    #     'lineinterpol': 2,
+    #     'rad': 2,
+    #     'alpha': 0.5
+    # },
+    # 'line4': {
+    #     'matrix_override': '&_price_obv',
+    #     'geometry': '&_price_matrix',
+    #     'smooth': 4,
+    #     'width': 1,
+    #     'color1': 'yellow',
+    #     'color2': 'yellow',
+    #     # 'triggers': '&_ema_26_trig',
+    #     'linetype': 'scatter',
+    #     'lineinterpol': 2,
+    #     'rad': 2,
+    #     'alpha': 0.5
+    # },
+    'shmacd': {  # noqa
+        'geometry': '&_feed_price_matrix',
+        'height': 110,
+        'graph_type': 'prices',
+        'tb': 'b',
+        'smooth': 0,
         'lineinterpol': 2,
-        'rad': 2,
-        'alpha': 0.5
-    },
-    'line4': {
-        'matrix_override': '&_price_obv',
-        'geometry': '&_price_matrix',
-        'smooth': 4,
-        'width': 1,
-        'color1': 'yellow',
-        'color2': 'yellow',
-        # 'triggers': '&_ema_26_trig',
-        'linetype': 'scatter',
-        'lineinterpol': 2,
-        'rad': 2,
-        'alpha': 0.5
+        'offset': 317,
+        'padding': (75, 75, 0, 25),
+        'aa': (10, 0),
+        'lengths': (26, 25, 75),
+        # 'extra': 100,
+        'blend_1': '&_feed_pure_normal_101_2',
+        'blend_2': '&_pure_faema_101_2_10',
+        'kwargs': {
+            '0': {
+                'alphamask': False,
+                'alpha': 0.7,
+                'grad': ('violet', 'purple', 'v'),
+                'outline': None,
+                'fill': 'violet'
+            },
+            '1':
+            {
+                'alphamask': False,
+                'alpha': 0.5,
+                'grad': ('deepskyblue', 'blue', 'v'),
+                'outline': None,
+                'fill': 'deepskyblue'
+            },
+        }
     },
     'smoothi_bottom': {
         'geometry': '&_feed_price_matrix',
-        'matrix_override': '&_feed_normal_100_1',
+        'matrix_override': '&_feed_pure_normal_101_2',
         'height': 93,
         'fill': 'aqua',
         'grad': ('deepskyblue', 'blue', 'v'),  # Gradient.
@@ -197,7 +211,7 @@ style = {
     },
     'smoothi_bottom_backdrop': {
         'geometry': '&_feed_price_matrix',
-        'matrix_override': '&_faema_100_1_9',
+        'matrix_override': '&_pure_faema_101_2_10',
         'height': 93,
         'fill': 'aqua',
         'grad': ('violet', 'purple', 'v'),  # Gradient.

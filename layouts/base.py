@@ -95,6 +95,7 @@ class Layout(gp.Diagram):
         self.icon_alerts4 = gp.IconAlert(self, cache)
         self.macd1 = gp.MACD(self, cache)
         self.macd2 = gp.MACD(self, cache)
+        self.shmacd = gp.SmoothiHybridMACD(self, cache)
         self.flats1 = gp.BarChartH(self, cache)
         self.flats2 = gp.BarChartH(self, cache)
         self.chart_background = gp.Background(self, cache)

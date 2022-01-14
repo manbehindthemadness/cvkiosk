@@ -52,8 +52,9 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 181
         ]
     },
     'asset_order': [  # This is our draw_order widgets will be drawn starting with the farthest back into the foreground.
-        'smoothi_bottom_backdrop',
-        'smoothi_bottom',
+        'shmacd',
+        # 'smoothi_bottom_backdrop',
+        # 'smoothi_bottom',
         'smoothi_top_backdrop',
         'smoothi_top',
         'volume',
@@ -142,6 +143,38 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 181
     #     'rad': 2,
     #     'alpha': 0.5
     # },
+    'shmacd': {
+        'geometry': '&_feed_price_matrix',
+        'height': 60,
+        'graph_type': 'prices',
+        'tb': 'b',
+        'smooth': 0,
+        'lineinterpol': 2,
+        'offset': 150,
+        'padding': (0, 0, 0, 0),
+        'aa': (10, 0),
+        'lengths': (26, 25, 75),
+        # 'extra': 100,
+        'blend_1': '&_feed_pure_normal_101_2',
+        'blend_2': '&_pure_faema_101_2_10',
+        'kwargs': {
+            '0': {
+                'alphamask': False,
+                'alpha': 0.7,
+                'grad': ('violet', 'purple', 'v'),
+                'outline': None,
+                'fill': 'violet'
+            },
+            '1':
+            {
+                'alphamask': False,
+                'alpha': 0.5,
+                'grad': ('deepskyblue', 'blue', 'v'),
+                'outline': None,
+                'fill': 'deepskyblue'
+            },
+        }
+    },
     'smoothi_bottom': {
         'geometry': '&_feed_price_matrix',
         'matrix_override': '&_feed_pure_normal_101_2',
