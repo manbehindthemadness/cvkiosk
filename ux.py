@@ -199,7 +199,7 @@ class OnScreen(tk.Tk):
 
     def solve_indicators(self):
         """
-        This will go though and trigger the math processes to add our indicator coordinated into the main style.
+        This will go through and trigger the math processes to add our indicator coordinated into the main style.
         """
         self.style['main']['_ac'] = self.price_matrix.price_matrix[-1]  # pull this early in the event we need it for an indicator.
         for indicator in self.indicators:
