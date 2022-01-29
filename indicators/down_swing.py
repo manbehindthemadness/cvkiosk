@@ -45,10 +45,12 @@ class DownSwing(Indicator):
                 solution.append(point)
             else:
                 tap = 0
-                if point > tap:
+                if point < tap:
                     tap = point
                 solution.append(tap)
-        solution[1::2] = np.multiply(solution[1::2], -1)
+        # solution[1::2] = np.multiply(solution[1::2], -1)
+        test = solution[1::2]  # noqa
+        # solution[1::2] = np.subtract(solution[1::2], max(solution[1::2]))
         self.solution = np.array(solution)
         self.style['main'][name] = self.solution
         self.style['main'][name + '_trig'] = np.array(self.solution[1::2])
