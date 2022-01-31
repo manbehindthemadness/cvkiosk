@@ -280,7 +280,7 @@ class OnScreen(tk.Tk):
         x2 = np.add(x1, self.layout.winfo_width())
         y2 = np.add(y1, self.layout.winfo_height())
         coords = (x1, y1, x2, y2,)
-        th = threading.Thread(target=self.screen_cap, args=(coords, False))
+        th = threading.Thread(target=self.screen_cap, args=(coords, False), daemon=True)
         th.start()
         th.join()
         return self

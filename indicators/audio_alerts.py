@@ -53,7 +53,7 @@ class Alert(Indicator):
         if self.source[-1] and not self.alert_triggered:
             print('-------------------TRIGGERING ALERT')
             if settings['use_sound']:
-                thread = threading.Thread(target=self.sound_alert, args=())
+                thread = threading.Thread(target=self.sound_alert, args=(), daemon=True)
                 thread.start()
             self.alert_triggered = True
         else:
