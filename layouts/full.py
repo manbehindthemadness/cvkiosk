@@ -38,6 +38,7 @@ class Format(Layout):
             'icing_bottom1',
             'icing_bottom2',
             'onions1',
+            'onions2',
             'points1',
             'points2',
             'macd1',

@@ -40,6 +40,9 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 400
         ],
         'triggers': [  # noqa
             {'type': 'updown', 'base': '_pure_faema_101_2_25', 'target': '_pure_faema_101_2_10', 'name': '_ema_9_trig'},
+            {'type': 'hybrid_scale', 'averages': ['_feed_pure_normal_101_2', '_pure_faema_101_2_10'], 'lengths': (26, 25, 75), 'name': '_hi_mac'},  # Onions.
+            {'type': 'crossup', 'base': '_hi_mac_1', 'target': '_hi_mac_2', 'name': '_hi_mac_up_trig', 'rad': 50},  # Onions.
+            {'type': 'crossdown', 'base': '_hi_mac_1', 'target': '_hi_mac_2', 'name': '_hi_mac_down_trig', 'rad': 50},  # Onions.
             {'type': 'crossup', 'base': '_pure_faema_101_2_25', 'target': '_pure_faema_101_2_10', 'name': '_ema_9_point_trig_down'},
             {'type': 'crossdown', 'base': '_pure_faema_101_2_25', 'target': '_pure_faema_101_2_10', 'name': '_ema_9_point_trig_up'},
             {'type': 'cross_filter', 'crossup': '_ema_9_point_trig_up', 'crossdown': '_ema_9_point_trig_down', 'limit': 10},
@@ -59,6 +62,8 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 400
         'smoothi_top_backdrop',
         'smoothi_top',
         'volume',
+        'onions1',
+        'onions2',
         'top_arrows',
         'top_arrows_invalid',
         'bottom_arrows',
@@ -138,7 +143,7 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 400
         'alpha': 0.5
     },
     'line3': {
-        'matrix_override': '&_eno_feed_101_2_10_negative',
+        'matrix_override': '&_hi_mac_2',
         'geometry': '&_price_matrix',
         'smooth': 4,
         'width': 1,
@@ -150,19 +155,19 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 400
         'rad': 2,
         'alpha': 0.5
     },
-    # 'line4': {
-    #     'matrix_override': '&_pure_faema_101_2_10',
-    #     'geometry': '&_price_matrix',
-    #     'smooth': 4,
-    #     'width': 1,
-    #     'color1': 'yellow',
-    #     'color2': 'yellow',
-    #     # 'triggers': '&_ema_26_trig',
-    #     'linetype': 'scatter',
-    #     'lineinterpol': 2,
-    #     'rad': 2,
-    #     'alpha': 0.5
-    # },
+    'line4': {
+        'matrix_override': '&_hi_mac_1',
+        'geometry': '&_price_matrix',
+        'smooth': 4,
+        'width': 1,
+        'color1': 'yellow',
+        'color2': 'yellow',
+        # 'triggers': '&_ema_26_trig',
+        'linetype': 'scatter',
+        'lineinterpol': 2,
+        'rad': 2,
+        'alpha': 0.5
+    },
     'shmacd': {  # noqa
         'geometry': '&_feed_price_matrix',
         'height': 110,
@@ -281,6 +286,32 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 400
         'color2': '#ff2e2e',
         'graph_type': 'volume',
         'tb': 'b'
+    },
+    'onions1': {
+        'geometry': '&_price_matrix',
+        'triggers': '&_hi_mac_up_trig',
+        'color': 'yellow',
+        'thickness': 2,
+        'outline': 'gold',
+        'alpha': 0.2,
+        'aa': (10, 1),
+        'multiplier': 1,
+        'cutoff': 30,
+        'tb': 'c',
+        'use_schematic': False
+    },
+    'onions2': {
+        'geometry': '&_price_matrix',
+        'triggers': '&_hi_mac_down_trig',
+        'color': 'blue',
+        'thickness': 2,
+        'outline': 'steelblue',
+        'alpha': 0.35,
+        'aa': (10, 1),
+        'multiplier': 1,
+        'cutoff': 30,
+        'tb': 'c',
+        'use_schematic': False
     },
     'top_arrows': {
         'geometry': '&_price_matrix',

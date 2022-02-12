@@ -90,7 +90,7 @@ class Triggers(Indicator):
         self.style['main'][name] = triggers
         return self
 
-    def crossup(self, base: str, target: str, name: str):
+    def crossup(self, base: str, target: str, name: str, rad: int = 1):
         """
         This is for point alerts when the target trend crosses up on the base trend.
         """
@@ -102,13 +102,13 @@ class Triggers(Indicator):
             if idx:
                 a, b = last_points
                 if a > b and bpoint < tpoint:
-                    tr = 1
+                    tr = rad
             last_points = (bpoint, tpoint)
             triggers.append(tr)
         self.style['main'][name] = triggers
         return self
 
-    def crossdown(self, base: str, target: str, name: str):
+    def crossdown(self, base: str, target: str, name: str, rad: int = 1):
         """
         This is for point alerts when the target trend crosses up on the base trend.
         """
@@ -120,7 +120,7 @@ class Triggers(Indicator):
             if idx:
                 a, b = last_points
                 if a < b and bpoint > tpoint:
-                    tr = 1
+                    tr = rad
             last_points = (bpoint, tpoint)
             triggers.append(tr)
         self.style['main'][name] = triggers
@@ -187,6 +187,43 @@ class Triggers(Indicator):
                 tr = 1
             triggers.append(tr)
         self.style['main'][name] = triggers
+        return self
+
+    def hybrid_scale(self, averages: list, lengths: tuple, name: str):
+        """
+        This will take two foreign graphs and scale them into mutual coordinates that can be used by the other triggers.
+        """
+        gp = self.gp
+        np = self.np
+        source = self.pmatrix
+
+        height = 1000
+
+        self.averages = list()
+        for ave in averages:
+            self.averages.append(self.style['main'][ave])
+        self.averages = gp.un_jag(self.averages)  # Remove jagged arrays.
+        self.averages = np.array(self.averages)
+        self.averages = gp.macd(source, lengths, self.averages[:, 1::2])  # Send only the Y coords.
+
+        self.averages = self.averages[:, -source.viewable_increment_count * 2:]  # Cut to view.
+        positive_shift = np.amin(self.averages[:, 1::2])
+        self.averages[:, 1::2] = np.subtract(self.averages[:, 1::2], positive_shift)  # Bring us back to positive.
+        ave_ys = gp.zero_v_scale_matrix(
+            self.averages[:, 1::2],
+            height,
+            source.viewable_increment_count + 2
+        )  # Get Y coords.
+        self.averages[:, 1::2] = ave_ys
+        self.averages = list(self.averages)
+        del self.averages[0]  # Remove flat line.
+
+        if name + '_0' not in self.style['main'].keys():  # Update style.
+            eg_1 = self.averages[0]
+            eg_2 = self.averages[1]
+            self.style['main'][name + '_1'] = eg_1
+            self.style['main'][name + '_2'] = eg_2
+
         return self
 
 

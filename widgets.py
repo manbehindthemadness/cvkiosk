@@ -131,7 +131,7 @@ class StatBar(tk.Frame):
 
                 lbl = self.create_or_modify(idx, self.lbls, self, height=s['height'], width=d_width)
                 tvar = eval('self.' + label)
-                lbl.configure(
+                lbl.configure(  # noqa
                     bg=s['background'],
                     fg=s['text_color'],
                     font=s['font'],

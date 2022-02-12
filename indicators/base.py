@@ -26,6 +26,7 @@ class Indicator:
     matrix_override = list()
     overrides = dict()
 
+    averages = None
     options = None
     normal_base = None
     normal_spread = None
@@ -49,6 +50,7 @@ class Indicator:
     polarity = None
 
     kw = [
+        'averages',
         'overrides',
         'normal_base',
         'normal_spread',
