@@ -93,6 +93,8 @@ def run_dash(settings):
 
         tell = Path(base + 'chart.png')
         exist = False
+        good = 10
+        err = None
         while not exist:  # TODO: This needs to be performed via image content matching.
             if tell.is_file():
                 try:
@@ -102,8 +104,11 @@ def run_dash(settings):
                     old_name = name
                     list_of_images = [name]
                     exist = True
-                except FileNotFoundError:
+                except FileNotFoundError as err:
                     pass
+            good -= 1
+            if not good:
+                log('unable to copy file, error:', err)
             time.sleep(0.5)
         log('file copy success')
 
