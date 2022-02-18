@@ -109,7 +109,7 @@ def run_dash(settings):
                     pass
             good -= 1
             if not good:
-                log('unable to copy file, error:', name)
+                log('unable to copy file, error:', name, 'base file exists?', tell.is_file())
             time.sleep(0.5)
         log('file copy success')
 
