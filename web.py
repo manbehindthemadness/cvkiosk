@@ -100,7 +100,7 @@ def run_dash(settings):
                 try:
                     shutil.copy(base + 'chart.png', base + name)
                     if old_name:
-                        os.remove(base + old_name)
+                        os.remove(base + old_name)  # Is this causing our problem???
                     old_name = name
                     list_of_images = [name]
                     exist = True
