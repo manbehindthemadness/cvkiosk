@@ -89,13 +89,13 @@ def run_dash(settings):
         """
         global old_name
         global list_of_images
-        name = str(random.randint(0, 20000)) + '.png'
 
         tell = Path(base + 'chart.png')
         exist = False
         good = 10
-        err = None
+        name = None
         while not exist:  # TODO: This needs to be performed via image content matching.
+            name = str(random.randint(0, 20000)) + '.png'
             if tell.is_file():
                 try:
                     shutil.copy(base + 'chart.png', base + name)
@@ -105,10 +105,11 @@ def run_dash(settings):
                     list_of_images = [name]
                     exist = True
                 except FileNotFoundError as err:
+                    log('file copy error', err)
                     pass
             good -= 1
             if not good:
-                log('unable to copy file, error:', err)
+                log('unable to copy file, error:', name)
             time.sleep(0.5)
         log('file copy success')
 
