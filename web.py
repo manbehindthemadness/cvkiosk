@@ -27,6 +27,7 @@ image_directory = './www'
 base = 'www/'
 list_of_images = [os.path.basename(x) for x in glob.glob('{}*.png'.format(base))]
 static_image_route = '/www/'
+loading = True
 
 
 def clean_images(alll: bool = False):
@@ -89,8 +90,16 @@ def run_dash(settings):
         """
         global old_name
         global list_of_images
+        global loading
 
         tell = Path(base + 'chart.png')
+        loading = True
+        if loading:
+            log('system loading')
+        while loading and not tell.is_file():
+            log('waiting...')
+            time.sleep(2)
+        loading = False
         exist = False
         good = 10
         name = None
@@ -108,8 +117,7 @@ def run_dash(settings):
                     list_of_images = [name]
                     exist = True
                 except FileNotFoundError as err:
-                    if str(tell.is_file()):
-                        log('file copy error', err)
+                    log('file copy error', err)
                     pass
             good -= 1
             if not good:
