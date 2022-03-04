@@ -108,7 +108,8 @@ def run_dash(settings):
                     list_of_images = [name]
                     exist = True
                 except FileNotFoundError as err:
-                    log('file copy error', err)
+                    if str(tell.is_file()):
+                        log('file copy error', err)
                     pass
             good -= 1
             if not good:
