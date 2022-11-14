@@ -2,9 +2,6 @@
 """
 This file is part of the cvkiosk package.
 Copyright (c) 2021 Kevin Eales.
-
-This program is experimental and proprietary, redistribution is prohibited.
-Please see the license file for more details.
 -----------------------------------------------------------------------------------------------------------------------
 
 This is basically a rewrite of the pisugar2 stuff into something remotely usable...

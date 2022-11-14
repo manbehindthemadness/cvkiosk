@@ -1,10 +1,7 @@
 # -*- coding: UTF-8 -*-
 """
 This file is part of the cvkiosk package.
-Copyright (c) 2021 Kevin Eales.
-
-This program is experimental and proprietary, redistribution is prohibited.
-Please see the license file for more details.
+Copyright (c) 2021 Kevin Eales
 ------------------------------------------------------------------------------------------------------------------------
 This is a unique indicator that need to be run LAST. This is because it requires the output of the other indicators to
     already be solved in order to work.

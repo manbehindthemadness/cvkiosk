@@ -2,9 +2,6 @@
 """
 This file is part of the cvkiosk package.
 Copyright (c) 2021 Kevin Eales.
-
-This program is experimental and proprietary, redistribution is prohibited.
-Please see the license file for more details.
 ------------------------------------------------------------------------------------------------------------------------
 TODO: We need to go over every inch of this and confirm we are actually cleaning up our images
         https://github.com/pythonprofilers/memory_profiler

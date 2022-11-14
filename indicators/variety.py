@@ -2,9 +2,6 @@
 """
 This file is part of the cvkiosk package.
 Copyright (c) 2021 Kevin Eales.
-
-This program is experimental and proprietary, redistribution is prohibited.
-Please see the license file for more details.
 ------------------------------------------------------------------------------------------------------------------------
 This a graph on feed-hit variety and won't work unless chart_variety is enabled in settings.
 """
