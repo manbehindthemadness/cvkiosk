@@ -316,7 +316,7 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 400
         'offset': 10,  # This is the distance the arrow will appear from the coordinate.
         'fill': 'magenta',
         'thickness': 1,  # Line thickness.
-        'arrow': 'first',  # This is the end of the line that thhe arrow will attach.
+        'arrow': 'first',  # This is the end of the line that the arrow will attach.
         'arrowshape': (7, 7, 4),  # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
         'matrix_override': '&_cu',  # This allows us to pass alternate alert "triggers" instead of just geometry.
         'triggers': '&_ema_26_point_trig_down',
@@ -333,7 +333,7 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 400
         'offset': 10,  # This is the distance the arrow will appear from the coordinate.
         'fill': '#380136',
         'thickness': 1,  # Line thickness.
-        'arrow': 'first',  # This is the end of the line that thhe arrow will attach.
+        'arrow': 'first',  # This is the end of the line that the arrow will attach.
         'arrowshape': (7, 7, 4),  # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
         'matrix_override': '&_cu',  # This allows us to pass alternate alert "triggers" instead of just geometry.
         'triggers': '&_ema_26_point_trig_down_invalid',
