@@ -127,6 +127,7 @@ def run_dash(settings):
         try:
             with open("www/alerts.log", "r") as file:
                 alerts = file.read()
+                print('file read', alerts)
         except FileNotFoundError:
             pass
         return html.Img(id='graph', src='/www/' + name, style={'width': '100%'}), html.H1(
