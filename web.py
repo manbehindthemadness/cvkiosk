@@ -125,7 +125,7 @@ def run_dash(settings):
             time.sleep(0.5)
         log('file copy success')
         try:
-            with open("www/alerts.log", "r") as file:
+            with open("www/log/alerts.log", "r") as file:
                 alerts = file.read()
                 print('file read', alerts)
         except FileNotFoundError:
@@ -134,7 +134,7 @@ def run_dash(settings):
             id='H1',
             children=alerts,
             style={
-                'textAlign': 'center', 'marginTop': 3, 'marginBottom': 3, 'font-size': 12,
+                'textAlign': 'center', 'marginTop': 3, 'marginBottom': 3, 'font-size': 0, 'display': None,
                 }
             ),
 
