@@ -39,11 +39,11 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 181
             {'type': 'updown', 'base': '_pure_faema_101_2_25', 'target': '_pure_faema_101_2_10', 'name': '_ema_9_trig'},
             {'type': 'crossup', 'base': '_pure_faema_101_2_25', 'target': '_pure_faema_101_2_10', 'name': '_ema_9_point_trig_down'},
             {'type': 'crossdown', 'base': '_pure_faema_101_2_25', 'target': '_pure_faema_101_2_10', 'name': '_ema_9_point_trig_up'},
-            {'type': 'cross_filter', 'crossup': '_ema_9_point_trig_up', 'crossdown': '_ema_9_point_trig_down', 'limit': 10},
+            {'type': 'cross_filter', 'crossup': '_ema_9_point_trig_up', 'crossdown': '_ema_9_point_trig_down', 'limit': 10, 'log_alerts': 1},
             {'type': 'updown', 'base': '_ac', 'target': '_pure_faema_101_2_25', 'name': '_ema_26_trig'},
             {'type': 'crossup', 'base': '_ac', 'target': '_pure_faema_101_2_25', 'name': '_ema_26_point_trig_up'},
             {'type': 'crossdown', 'base': '_ac', 'target': '_pure_faema_101_2_25', 'name': '_ema_26_point_trig_down'},
-            {'type': 'cross_filter', 'crossup': '_ema_26_point_trig_up', 'crossdown': '_ema_26_point_trig_down', 'limit': 10},
+            {'type': 'cross_filter', 'crossup': '_ema_26_point_trig_up', 'crossdown': '_ema_26_point_trig_down', 'limit': 10, 'log_alerts': 1},
             {'type': 'trend', 'target': '_eno_feed_101_2_10_negative', 'name': '_eno_feed_trig'},
             {'type': 'point_trend', 'target': '_feed_dd_1_negative', 'name': '_feed_dd_1_negative_trig'},
         ]
@@ -310,7 +310,7 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 181
         'arrow': 'first',  # This is the end of the line that thhe arrow will attach.
         'arrowshape': (5, 5, 2),  # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
         'matrix_override': '&_cl',  # This allows us to pass alternate alert "triggers" instead of just geometry.
-        'triggers': '&_ema_26_point_trig_up',
+        'triggers': '&_ema_26_point_trig_up_invalid',
         'tb': 'b',
         'signal': 'TR.UP',
         'icon': 'img/icons/x1.png',  # Schematic view icon.
