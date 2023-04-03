@@ -7,6 +7,8 @@ This is a unique indicator that need to be run LAST. This is because it requires
     already be solved in order to work.
 
 TODO: We may want to reverse some of these indicators depending on the FGI.
+
+IMPORTANT, the trigger arrays are in the order of the candlesticks first being the oldest last newest.
 """
 
 from indicators.base import Indicator
@@ -71,7 +73,7 @@ class Triggers(Indicator):
                 pts[1::2],
                 200,
                 vic
-            )
+                )
             return pts
 
         base, target = self.adjust_length(base, target)
@@ -98,7 +100,7 @@ class Triggers(Indicator):
             tr = 0
             if idx:
                 a, b = last_points
-                if a > b and bpoint < tpoint:
+                if a >= b and bpoint < tpoint:
                     tr = rad
             last_points = (bpoint, tpoint)
             triggers.append(tr)
@@ -116,7 +118,7 @@ class Triggers(Indicator):
             tr = 0
             if idx:
                 a, b = last_points
-                if a < b and bpoint > tpoint:
+                if a <= b and bpoint > tpoint:
                     tr = rad
             last_points = (bpoint, tpoint)
             triggers.append(tr)
@@ -154,6 +156,8 @@ class Triggers(Indicator):
         self.style['main'][crossup + '_invalid'] = cup_invalid
         self.style['main'][crossdown] = cdown
         self.style['main'][crossdown + '_invalid'] = cdown_invalid
+        self.log_alert(self.kwargs['crossup'], cup)
+        self.log_alert(self.kwargs['crossdown'], cdown)
         return self
 
     def trend(self, target: str, name: str):
@@ -210,7 +214,7 @@ class Triggers(Indicator):
             self.averages[:, 1::2],
             height,
             source.viewable_increment_count + 2
-        )  # Get Y coords.
+            )  # Get Y coords.
         self.averages[:, 1::2] = ave_ys
         self.averages = list(self.averages)
         del self.averages[0]  # Remove flat line.

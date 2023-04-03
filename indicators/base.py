@@ -5,17 +5,24 @@ Copyright (c) 2021 Kevin Eales.
 ------------------------------------------------------------------------------------------------------------------------
 This is the base indicator class.
 """
-
+import datetime
 import graphiend as gp
 import numpy as np
 from utils import get_args
 from mergedeep import merge
+# from collections import OrderedDict
+
+
+LOGGED_ALERTS = dict()
+LOGGED_NOTIFICATIONS = list()
 
 
 class Indicator:
     """
     Inherited base indicator class.
     """
+    enable_log_alerts = False
+
     name = None
     source = None
     source_type = None
@@ -62,6 +69,7 @@ class Indicator:
         'repeat',
         'suffix',
         'guides',
+        'log_alerts',  # This is for the alerts we will send over to Denniks.
     ]
 
     def_options = {
@@ -97,6 +105,10 @@ class Indicator:
         self.options = options
         self.style = style
         self.kwargs = kwargs
+        if 'log_alerts' in self.kwargs.keys():
+            if self.kwargs['log_alerts']:
+                self.enable_log_alerts = True
+            del self.kwargs['log_alerts']
         cmd = str()
         for kw in self.kw:
             cmd += 'self.' + kw + ', '
@@ -111,7 +123,7 @@ class Indicator:
     def collect(self, pmatrix, fmatrix):
         """
         This will collect all the extra processed coordinate streams in the ChartToPix instances and add them into
-            our style so they can be called by the widgets.
+            our style, so they can be called by the widgets.
         """
 
         def itr(ext: dict, prefix: str) -> dict:
@@ -146,6 +158,45 @@ class Indicator:
         This is a dummy method used for options overrides.
         """
         self.collect(*args)
+        return self
+
+    def log_alert(self, name: str, triggers: list):
+        """
+        This will add an entry into the logged_alerts cache, so we can evaluate it remotely.
+
+        from collections import OrderedDict
+
+        # create an OrderedDict with some unsorted data
+        data = OrderedDict([('apple', 10), ('orange', 5), ('banana', 20)])
+
+        # sort the OrderedDict by value (in ascending order)
+        sorted_data = OrderedDict(sorted(data.items(), key=lambda x: x[1]))
+
+        print(sorted_data)
+        # Output: OrderedDict([('orange', 5), ('apple', 10), ('banana', 20)])
+
+
+        Data Model:
+
+        {
+            <alert_name>: [<timestamp>, ...]
+        }
+
+        """
+        global LOGGED_ALERTS
+        global LOGGED_NOTIFICATIONS
+        if self.enable_log_alerts and name not in LOGGED_NOTIFICATIONS:
+            print(f'logging enabled on {name}')
+            LOGGED_NOTIFICATIONS.append(name)
+        if self.enable_log_alerts and triggers[-1]:
+            now = datetime.datetime.now()
+            rounded_minute = (now.minute // 15) * 15
+            stamp = str(now.replace(minute=rounded_minute, second=0, microsecond=0))
+            if name not in LOGGED_ALERTS.keys():
+                LOGGED_ALERTS[name] = list()
+            if stamp not in LOGGED_ALERTS[name]:
+                print(f'logging alert: {name}, {stamp}')
+                LOGGED_ALERTS[name].append(stamp)
         return self
 
 
