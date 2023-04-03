@@ -2,3 +2,4 @@
 /.imgcache/
 /www/*.png
 /cfg.ini
+/www/log/alerts.log

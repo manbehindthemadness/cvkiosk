@@ -20,12 +20,21 @@ import bs4
 import socket
 from subprocess import Popen, PIPE
 import numpy as np
+from pathlib import Path
 
 import graphiend as gp # noqa
 
 WORKING_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__)))
 logging.getLogger().setLevel(logging.INFO)
 FGI = 0
+
+
+def overwrite_to_file(filename: Path, data: str):
+    """
+    This will write/overwrite a line of text to a file.
+    """
+    with open(filename.as_posix(), 'w') as file:
+        file.write(data)
 
 
 def test_o_random(view_arry: list, alerts: int) -> list:

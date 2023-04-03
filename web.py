@@ -19,6 +19,7 @@ import os
 import logging
 import sys
 
+alerts = str()
 old_name = str()
 image_directory = './www'
 base = 'www/'
@@ -51,6 +52,7 @@ def run_dash(settings):
     Launches debug webserver.
     :return: Nothing.
     """
+    global alerts
     logger = logging.getLogger('ext_dash')
     logger.addHandler(logging.StreamHandler(stream=sys.stdout))
     if settings['debug_web']:
@@ -88,6 +90,7 @@ def run_dash(settings):
         global old_name
         global list_of_images
         global loading
+        global alerts
 
         tell = Path(base + 'chart.png')
         loading = True
@@ -121,12 +124,18 @@ def run_dash(settings):
                 log('unable to copy file, error:', name, 'base file exists?', str(tell.is_file()))
             time.sleep(0.5)
         log('file copy success')
-
-        return html.Img(id='graph', src='/www/' + name, style={'width': '100%'}),
-
-    # Add a static image route that serves images from desktop
-    # Be *very* careful here - you don't want to serve arbitrary files
-    # from your computer or server
+        try:
+            with open("www/alerts.log", "r") as file:
+                alerts = file.read()
+        except FileNotFoundError:
+            pass
+        return html.Img(id='graph', src='/www/' + name, style={'width': '100%'}), html.H1(
+            id='H1',
+            children=alerts,
+            style={
+                'textAlign': 'center', 'marginTop': 3, 'marginBottom': 3, 'font-size': 12,
+                }
+            ),
 
     @app.server.route('{}<image_path>.png'.format(static_image_route))
     def serve_image(image_path):
@@ -136,10 +145,8 @@ def run_dash(settings):
         :return:
         """
         global list_of_images
+        # print('image_path', image_path)  # This is just the name without the extension...
         image_name = '{}.png'.format(image_path)
-        # if image_name not in list_of_images:
-        if '.png' not in image_name:
-            raise Exception(str(image_name) + ' is excluded from the allowed static files'.format(image_path))
         return flask.send_from_directory(image_directory, image_name)
 
     app.run_server(host='0.0.0.0')
