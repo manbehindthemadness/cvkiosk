@@ -8,12 +8,12 @@ This is the base indicator class.
 import datetime
 import graphiend as gp
 import numpy as np
-from utils import get_args
+from utils import get_args, overwrite_to_file, WORKING_DIR
+from pathlib import Path
 from mergedeep import merge
-# from collections import OrderedDict
 
 
-LOGGED_ALERTS = dict()
+LOGGED_ALERTS = list()
 LOGGED_NOTIFICATIONS = list()
 
 
@@ -185,18 +185,19 @@ class Indicator:
         """
         global LOGGED_ALERTS
         global LOGGED_NOTIFICATIONS
+        message = str()
         if self.enable_log_alerts and name not in LOGGED_NOTIFICATIONS:
             print(f'logging enabled on {name}')
             LOGGED_NOTIFICATIONS.append(name)
         if self.enable_log_alerts and triggers[-1]:
-            now = datetime.datetime.now()
-            rounded_minute = (now.minute // 15) * 15
-            stamp = str(now.replace(minute=rounded_minute, second=0, microsecond=0))
-            if name not in LOGGED_ALERTS.keys():
-                LOGGED_ALERTS[name] = list()
-            if stamp not in LOGGED_ALERTS[name]:
-                print(f'logging alert: {name}, {stamp}')
-                LOGGED_ALERTS[name].append(stamp)
+            now = datetime.datetime.utcnow()
+            stamp = str(now.replace(minute=0, second=0, microsecond=0))
+            if stamp not in LOGGED_ALERTS:
+                print(f'logging alert: {name}, {stamp}')  # TODO: Remove after debugging.
+                message = f'{name}|{stamp}'
+                LOGGED_ALERTS.append(message)
+        overwrite_to_file(Path(WORKING_DIR) / 'www/alerts.log', message)
+
         return self
 
 
