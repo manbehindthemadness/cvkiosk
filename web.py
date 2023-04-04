@@ -146,7 +146,6 @@ def run_dash(settings):
         :return:
         """
         global list_of_images
-        # print('image_path', image_path)  # This is just the name without the extension...
         image_name = '{}.png'.format(image_path)
         return flask.send_from_directory(image_directory, image_name)
 

@@ -192,12 +192,12 @@ class Indicator:
         if self.enable_log_alerts and triggers[-1]:
             now = datetime.datetime.utcnow()
             stamp = str(now.replace(minute=0, second=0, microsecond=0))
-            if stamp not in LOGGED_ALERTS:
+            message = f'{name}|{stamp}'
+            if message not in LOGGED_ALERTS:
                 print(f'logging alert: {name}, {stamp}')  # TODO: Remove after debugging.
-                message = f'{name}|{stamp}'
                 LOGGED_ALERTS.append(message)
-        overwrite_to_file(Path(WORKING_DIR) / 'www/alerts.log', message)
-
+        overwrite_to_file(Path(WORKING_DIR) / 'www/alerts.log', ', '.join(LOGGED_ALERTS))
+        LOGGED_ALERTS = LOGGED_ALERTS[-4:]  # Preserve memory.
         return self
 
 
