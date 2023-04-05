@@ -7,7 +7,7 @@ Copyright (c) 2021 Kevin Eales.
 """
 
 
-style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 181
+style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 180
     'main': {  # The elements in the 'main' section must be defined for the style to parse.
         'style_name': 'tutorial',  # Name style for organization.
         # Configure global settings in relation to screen size and what have you.

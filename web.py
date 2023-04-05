@@ -22,10 +22,16 @@ import sys
 alerts = str()
 old_name = str()
 image_directory = './www'
+log_directory = './www/'
 base = 'www/'
 list_of_images = [os.path.basename(x) for x in glob.glob('{}*.png'.format(base))]
 static_image_route = '/www/'
 loading = True
+
+static_log_route = '/www/log/'
+
+list_of_logs = [os.path.basename(x) for x in glob.glob('{}*.log'.format(base))]
+print(list_of_images)
 
 
 def clean_images(alll: bool = False):
@@ -147,6 +153,15 @@ def run_dash(settings):
         """
         global list_of_images
         image_name = '{}.png'.format(image_path)
+        print('SERVING CHART')
         return flask.send_from_directory(image_directory, image_name)
+
+    @app.server.route('/alerts.log')
+    def serve_log():
+        """
+        Fucking docstring
+        """
+        print('SERVING LOG', log_directory)
+        return flask.send_from_directory(log_directory, 'alerts.log')
 
     app.run_server(host='0.0.0.0')
