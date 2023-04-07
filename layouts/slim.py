@@ -35,6 +35,8 @@ class Format(Layout):
             'onions1',
             'points1',
             'points2',
+            'points1_invalid',
+            'points2_invalid',
             'line1',
             'line2',
             'line3',

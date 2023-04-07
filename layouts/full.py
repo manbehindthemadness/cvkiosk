@@ -38,6 +38,8 @@ class Format(Layout):
             'onions2',
             'points1',
             'points2',
+            'points1_invalid',
+            'points2_invalid',
             'macd1',
             'macd2',
             'flats1',
