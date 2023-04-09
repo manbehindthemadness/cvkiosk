@@ -4,10 +4,14 @@ This file is part of the cvkiosk package.
 Copyright (c) 2021 Kevin Eales.
 ------------------------------------------------------------------------------------------------------------------------
 
+Remember to solve the chart size as an EVEN number of the screenwidth divided by price_increment plus the largest moving average.
+
+(1920/6) + 100 = 420
+
 """
 
 
-style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 400
+style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 420
     'main': {  # The elements in the 'main' section must be defined for the style to parse.
         'style_name': 'full_dark',  # Name style for organization.
         # Configure global settings in relation to screen size and what have you.
@@ -42,11 +46,11 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 400
             {'type': 'crossdown', 'base': '_hi_mac_1', 'target': '_hi_mac_2', 'name': '_hi_mac_down_trig', 'rad': 50},  # Onions.
             {'type': 'crossup', 'base': '_pure_faema_101_2_25', 'target': '_pure_faema_101_2_10', 'name': '_ema_9_point_trig_down'},
             {'type': 'crossdown', 'base': '_pure_faema_101_2_25', 'target': '_pure_faema_101_2_10', 'name': '_ema_9_point_trig_up'},
-            {'type': 'cross_filter', 'crossup': '_ema_9_point_trig_up', 'crossdown': '_ema_9_point_trig_down', 'limit': 10, 'log_alerts': 1},
+            {'type': 'cross_filter', 'crossup': '_ema_9_point_trig_up', 'crossdown': '_ema_9_point_trig_down', 'limit': 5, 'log_alerts': 1},
             {'type': 'updown', 'base': '_ac', 'target': '_pure_faema_101_2_25', 'name': '_ema_26_trig'},
             {'type': 'crossup', 'base': '_ac', 'target': '_pure_faema_101_2_25', 'name': '_ema_26_point_trig_up'},
             {'type': 'crossdown', 'base': '_ac', 'target': '_pure_faema_101_2_25', 'name': '_ema_26_point_trig_down'},
-            {'type': 'cross_filter', 'crossup': '_ema_26_point_trig_up', 'crossdown': '_ema_26_point_trig_down', 'limit': 10, 'log_alerts': 1},
+            {'type': 'cross_filter', 'crossup': '_ema_26_point_trig_up', 'crossdown': '_ema_26_point_trig_down', 'limit': 5, 'log_alerts': 1},
             {'type': 'trend', 'target': '_eno_feed_101_2_10_negative', 'name': '_eno_feed_trig'},
             {'type': 'point_trend', 'target': '_feed_dd_1_negative', 'name': '_feed_dd_1_negative_trig'},
         ]
