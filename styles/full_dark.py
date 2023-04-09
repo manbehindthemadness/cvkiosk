@@ -337,7 +337,7 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 420
         'geometry': '&_price_matrix',
         'height': 25,
         'offset': 10,  # This is the distance the arrow will appear from the coordinate.
-        'fill': '#70016c',
+        'fill': 'blue',
         'thickness': 1,  # Line thickness.
         'arrow': 'first',  # This is the end of the line that the arrow will attach.
         'arrowshape': (7, 7, 4),  # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
@@ -371,7 +371,7 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 420
         'geometry': '&_price_matrix',
         'height': 25,
         'offset': 10,  # This is the distance the arrow will appear from the coordinate.
-        'fill': '#00736f',
+        'fill': 'blue',
         'thickness': 1,  # Line thickness.
         'arrow': 'first',  # This is the end of the line that the arrow will attach.
         'arrowshape': (7, 7, 4),  # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
@@ -402,7 +402,7 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 420
     'points1_invalid': {
         'geometry': '&_price_matrix',
         'triggers': '&_ema_9_point_trig_down_invalid',
-        'color': '#380136',
+        'color': 'blue',
         'rad': 4,
         'alpha': 0.9,
         'offset': 25,
@@ -432,7 +432,7 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 420
     'points2_invalid': {
         'geometry': '&_price_matrix',
         'triggers': '&_ema_9_point_trig_up_invalid',
-        'color': '#013836',
+        'color': 'blue',
         'rad': 4,
         'alpha': 0.9,
         'offset': 25,
