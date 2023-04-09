@@ -4,6 +4,10 @@ This file is part of the cvkiosk package.
 Copyright (c) 2021 Kevin Eales.
 ------------------------------------------------------------------------------------------------------------------------
 
+Remember to solve the chart size as an EVEN number of the screenwidth divided by price_increment plus the largest moving average.
+
+(320/4) + 100 = 180
+
 """
 
 
@@ -273,7 +277,7 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 180
         'geometry': '&_price_matrix',
         'height': 10,
         'offset': 10,  # This is the distance the arrow will appear from the coordinate.
-        'fill': '#380136',
+        'fill': '#3d02e0',
         'thickness': 1,  # Line thickness.
         'arrow': 'first',  # This is the end of the line that thhe arrow will attach.
         'arrowshape': (4, 4, 1),  # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
@@ -307,7 +311,7 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 180
         'geometry': '&_price_matrix',
         'height': 10,
         'offset': 10,  # This is the distance the arrow will appear from the coordinate.
-        'fill': '#013836',
+        'fill': '#3d02e0',
         'thickness': 1,  # Line thickness.
         'arrow': 'first',  # This is the end of the line that thhe arrow will attach.
         'arrowshape': (5, 5, 2),  # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
@@ -338,7 +342,7 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 180
     'points1_invalid': {
         'geometry': '&_price_matrix',
         'triggers': '&_ema_9_point_trig_down_invalid',
-        'color': '#380136',
+        'color': '#3d02e0',
         'rad': 3,
         'alpha': 0.9,
         'offset': 25,
@@ -368,7 +372,7 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 180
     'points2_invalid': {
         'geometry': '&_price_matrix',
         'triggers': '&_ema_9_point_trig_up_invalid',
-        'color': '#013836',
+        'color': '#3d02e0',
         'rad': 3,
         'alpha': 0.9,
         'offset': 25,

@@ -337,7 +337,7 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 420
         'geometry': '&_price_matrix',
         'height': 25,
         'offset': 10,  # This is the distance the arrow will appear from the coordinate.
-        'fill': 'blue',
+        'fill': '#3d02e0',
         'thickness': 1,  # Line thickness.
         'arrow': 'first',  # This is the end of the line that the arrow will attach.
         'arrowshape': (7, 7, 4),  # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
@@ -371,7 +371,7 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 420
         'geometry': '&_price_matrix',
         'height': 25,
         'offset': 10,  # This is the distance the arrow will appear from the coordinate.
-        'fill': 'blue',
+        'fill': '#3d02e0',
         'thickness': 1,  # Line thickness.
         'arrow': 'first',  # This is the end of the line that the arrow will attach.
         'arrowshape': (7, 7, 4),  # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
@@ -390,7 +390,7 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 420
         'color': 'magenta',
         'rad': 4,
         'alpha': 1.0,
-        'offset': 25,
+        'offset': 40,
         'tb': 't',
         'direction': 'up',
         'icon': 'img/icons/minus.png',
@@ -402,10 +402,10 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 420
     'points1_invalid': {
         'geometry': '&_price_matrix',
         'triggers': '&_ema_9_point_trig_down_invalid',
-        'color': 'blue',
+        'color': '#3d02e0',
         'rad': 4,
         'alpha': 0.9,
-        'offset': 25,
+        'offset': 40,
         'tb': 't',
         'direction': 'up',
         'icon': 'img/icons/minus.png',
@@ -420,7 +420,7 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 420
         'color': 'cyan',
         'rad': 4,
         'alpha': 1.0,
-        'offset': 25,
+        'offset': 40,
         'tb': 'b',
         'direction': 'down',
         'icon': 'img/icons/minus.png',
@@ -432,10 +432,10 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 420
     'points2_invalid': {
         'geometry': '&_price_matrix',
         'triggers': '&_ema_9_point_trig_up_invalid',
-        'color': 'blue',
+        'color': '#3d02e0',
         'rad': 4,
         'alpha': 0.9,
-        'offset': 25,
+        'offset': 40,
         'tb': 'b',
         'direction': 'down',
         'icon': 'img/icons/minus.png',
