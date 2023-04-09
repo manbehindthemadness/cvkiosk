@@ -320,7 +320,7 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 420
         'geometry': '&_price_matrix',
         'height': 25,
         'offset': 10,  # This is the distance the arrow will appear from the coordinate.
-        'fill': 'magenta',
+        'fill': '#ff00f6',
         'thickness': 1,  # Line thickness.
         'arrow': 'first',  # This is the end of the line that the arrow will attach.
         'arrowshape': (7, 7, 4),  # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
@@ -337,7 +337,7 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 420
         'geometry': '&_price_matrix',
         'height': 25,
         'offset': 10,  # This is the distance the arrow will appear from the coordinate.
-        'fill': '#380136',
+        'fill': '#70016c',
         'thickness': 1,  # Line thickness.
         'arrow': 'first',  # This is the end of the line that the arrow will attach.
         'arrowshape': (7, 7, 4),  # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
@@ -354,7 +354,7 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 420
         'geometry': '&_price_matrix',
         'height': 25,
         'offset': 10,  # This is the distance the arrow will appear from the coordinate.
-        'fill': 'cyan',
+        'fill': '#00fff6',
         'thickness': 1,  # Line thickness.
         'arrow': 'first',  # This is the end of the line that the arrow will attach.
         'arrowshape': (7, 7, 4),  # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
@@ -371,7 +371,7 @@ style = {  # REMEMBER TO USE THIS WITH A CHART LENGTH OF 420
         'geometry': '&_price_matrix',
         'height': 25,
         'offset': 10,  # This is the distance the arrow will appear from the coordinate.
-        'fill': '#013836',
+        'fill': '#00736f',
         'thickness': 1,  # Line thickness.
         'arrow': 'first',  # This is the end of the line that the arrow will attach.
         'arrowshape': (7, 7, 4),  # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
