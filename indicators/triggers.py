@@ -131,7 +131,7 @@ class Triggers(Indicator):
         """
         s = self.style['main']
         np = self.np
-        cup, cdown = s[crossup], s[crossdown]
+        cup, cdown = s[crossup], s[crossdown]  # TODO: Verify these are being passed properly...
         cup_invalid, cdown_invalid = list(cup), list(cdown)  # Collect invalidated signals.
         for idx, (up, down) in enumerate(zip(cup, cdown)):
             if idx < limit:
@@ -139,12 +139,14 @@ class Triggers(Indicator):
                 stop = idx
             else:
                 start = np.subtract(idx, limit)
-                stop = idx  # np.subtract(idx, 1)
+                stop = idx
             if up or down:
                 "set both lists [start:stop] to zero"
                 block = [0] * int(np.subtract(stop, start))
                 cup[start:stop] = block
                 cdown[start:stop] = block
+                if up and down:  # Prevent conflicts.
+                    cup[idx] = cdown[idx] = 0
         # Collect the invalidated signals.
         for idx, (inval_up, inval_down, val_up, val_down) in enumerate(zip(cup_invalid, cdown_invalid, cup, cdown)):
             if inval_up and val_up:
