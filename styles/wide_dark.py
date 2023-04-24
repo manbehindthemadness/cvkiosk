@@ -279,9 +279,26 @@ style = {
         'tb': 't',
         'signal': 'TR.DN',
         'icon': 'img/icons/minus_circle.png',  # Schematic view icon.
-        'icon_fill': 'white',  # Icon color.
-        'tag_fill': 'white',  # Schematic text color.
+        'icon_fill': 'green',  # Icon color.
+        'tag_fill': 'black',  # Schematic text color.
         'use_schematic': True  # Toggle schematics.
+    },
+    'top_arrows_invalid': {
+        'geometry': '&_price_matrix',
+        'height': 10,
+        'offset': 10,  # This is the distance the arrow will appear from the coordinate.
+        'fill': '#3d02e0',
+        'thickness': 1,  # Line thickness.
+        'arrow': 'first',  # This is the end of the line that thhe arrow will attach.
+        'arrowshape': (4, 4, 1),  # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
+        'matrix_override': '&_cu',  # This allows us to pass alternate alert "triggers" instead of just geometry.
+        'triggers': '&_ema_26_point_trig_down_invalid',
+        'tb': 't',
+        'signal': 'TR.DN',
+        'icon': 'img/icons/minus_circle.png',  # Schematic view icon.
+        'icon_fill': 'green',  # Icon color.
+        'tag_fill': 'black',  # Schematic text color.
+        'use_schematic': False  # Toggle schematics.
     },
     'bottom_arrows': {
         'geometry': '&_price_matrix',
@@ -289,46 +306,93 @@ style = {
         'offset': 10,  # This is the distance the arrow will appear from the coordinate.
         'fill': 'cyan',
         'thickness': 1,  # Line thickness.
-        'arrow': 'first',  # This is the end of the line that the arrow will attach.
+        'arrow': 'first',  # This is the end of the line that thhe arrow will attach.
         'arrowshape': (5, 5, 2),  # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
         'matrix_override': '&_cl',  # This allows us to pass alternate alert "triggers" instead of just geometry.
         'triggers': '&_ema_26_point_trig_up',
         'tb': 'b',
         'signal': 'TR.UP',
         'icon': 'img/icons/x1.png',  # Schematic view icon.
-        'icon_fill': 'white',  # Icon color.
-        'tag_fill': 'white',  # Schematic text color.
+        'icon_fill': 'red',  # Icon color.
+        'tag_fill': 'black',  # Schematic text color.
         'use_schematic': True  # Toggle schematics.
+    },
+    'bottom_arrows_invalid': {
+        'geometry': '&_price_matrix',
+        'height': 10,
+        'offset': 10,  # This is the distance the arrow will appear from the coordinate.
+        'fill': '#3d02e0',
+        'thickness': 1,  # Line thickness.
+        'arrow': 'first',  # This is the end of the line that thhe arrow will attach.
+        'arrowshape': (5, 5, 2),  # https://anzeljg.github.io/rin2/book2/2405/docs/tkinter/create_line.html
+        'matrix_override': '&_cl',  # This allows us to pass alternate alert "triggers" instead of just geometry.
+        'triggers': '&_ema_26_point_trig_up_invalid',
+        'tb': 'b',
+        'signal': 'TR.UP',
+        'icon': 'img/icons/x1.png',  # Schematic view icon.
+        'icon_fill': 'red',  # Icon color.
+        'tag_fill': 'black',  # Schematic text color.
+        'use_schematic': False  # Toggle schematics.
     },
     'points1': {
         'geometry': '&_price_matrix',
         'triggers': '&_ema_9_point_trig_down',
         'color': 'magenta',
         'rad': 3,
-        'alpha': 0.9,
-        'offset': 10,
+        'alpha': 1.0,
+        'offset': 25,
         'tb': 't',
         'direction': 'up',
         'icon': 'img/icons/minus.png',
         'icon_fill': 'white',
         'tag_fill': 'white',
         'signal': 'MT.DN',
-        'use_schematic': True
+        'use_schematic': False
+    },
+    'points1_invalid': {
+        'geometry': '&_price_matrix',
+        'triggers': '&_ema_9_point_trig_down_invalid',
+        'color': '#3d02e0',
+        'rad': 3,
+        'alpha': 0.9,
+        'offset': 25,
+        'tb': 't',
+        'direction': 'up',
+        'icon': 'img/icons/minus.png',
+        'icon_fill': 'white',
+        'tag_fill': 'white',
+        'signal': 'MT.DN',
+        'use_schematic': False
     },
     'points2': {
         'geometry': '&_price_matrix',
         'triggers': '&_ema_9_point_trig_up',
         'color': 'cyan',
         'rad': 3,
-        'alpha': 0.9,
-        'offset': 10,
+        'alpha': 1.0,
+        'offset': 25,
         'tb': 'b',
         'direction': 'down',
         'icon': 'img/icons/minus.png',
         'icon_fill': 'white',
         'tag_fill': 'white',
         'signal': 'MT.UP',
-        'use_schematic': True
+        'use_schematic': False
+    },
+    'points2_invalid': {
+        'geometry': '&_price_matrix',
+        'triggers': '&_ema_9_point_trig_up_invalid',
+        'color': '#3d02e0',
+        'rad': 3,
+        'alpha': 0.9,
+        'offset': 25,
+        'tb': 'b',
+        'direction': 'down',
+        'icon': 'img/icons/minus.png',
+        'icon_fill': 'white',
+        'tag_fill': 'white',
+        'signal': 'MT.UP',
+        'use_schematic': False
     },
     'icing_top1': {
         'geometry': '&_price_matrix',
