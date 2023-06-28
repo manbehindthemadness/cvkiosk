@@ -34,11 +34,6 @@ def loadimage(file):
     """
     Loads an image into memory and then closes the file.
     """
-    # with open(file, 'rb', 0) as file:
-    #     image = Image.open(file)
-    #     image.load()
-    #     file.close()
-    #     del file
     image = Image.open(file)
     return ImageTk.PhotoImage(image)
 

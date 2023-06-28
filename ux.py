@@ -27,6 +27,7 @@ from utils import (
     matrix_parser,
     matrix_sorter,
     get_index,
+    filter_wicks,
 )
 from indicators.base import Dummy
 from uxutils import ScrCap
@@ -112,7 +113,7 @@ class OnScreen(tk.Tk):
 
     def refresh_api(self):
         """
-        This will refresh the imformation from the api.
+        This will refresh the information from the api.
         """
         try:
             self.chart_data = self.api.get_chart()
@@ -132,7 +133,8 @@ class OnScreen(tk.Tk):
 
         NOTE: The extras options will allow us to add in custom post processing for our feed values
         """
-        matrix = np.array(matrix)
+        matrix = np.array(matrix).astype(np.float)
+        matrix = filter_wicks(matrix)
         focus = self.settings['chart_focus']
         if not focus:
             focus = 'BTC'

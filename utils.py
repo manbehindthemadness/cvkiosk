@@ -470,3 +470,19 @@ def get_median(arry: np.array) -> [int, float]:
     This will return the most common element in a list
     """
     return max(set(arry), key=arry.count)
+
+
+def filter_wicks(matrix: np.ndarray, multiplier: [int, float] = 2) -> np.ndarray:
+    """
+    This will filter out impossible spike values that occasionally pollute the data.
+    """
+    range_max = np.max(matrix[:, 4])
+    range_min = np.min(matrix[:, 4])
+    high_limit = np.multiply(range_max, multiplier)
+    low_limit = np.divide(range_min, multiplier)
+
+    condition_high = matrix[:, 2] >= high_limit  # Filter highs.
+    matrix[condition_high, 2] = matrix[condition_high, 1]
+    condition_low = matrix[:, 3] >= low_limit  # Filter lows.
+    matrix[condition_low, 3] = matrix[condition_low, 4]
+    return matrix
