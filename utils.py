@@ -476,13 +476,21 @@ def filter_wicks(matrix: np.ndarray, multiplier: [int, float] = 2) -> np.ndarray
     """
     This will filter out impossible spike values that occasionally pollute the data.
     """
+    np.set_printoptions(formatter={'float': '{:f}'.format})
     range_max = np.max(matrix[:, 4])
     range_min = np.min(matrix[:, 4])
     high_limit = np.multiply(range_max, multiplier)
     low_limit = np.divide(range_min, multiplier)
 
+    old_matrix = np.array(matrix)
     condition_high = matrix[:, 2] >= high_limit  # Filter highs.
     matrix[condition_high, 2] = matrix[condition_high, 1]
-    condition_low = matrix[:, 3] >= low_limit  # Filter lows.
+    condition_low = matrix[:, 3] <= low_limit  # Filter lows.
     matrix[condition_low, 3] = matrix[condition_low, 4]
+
+    for idx, (o, n) in enumerate(zip(old_matrix, matrix)):
+        if not np.array_equal(o, n):
+            print(idx, 'dropping problematic data, range:', high_limit, low_limit)
+            print('original data:\n', o)
+            print('altered data:\n', n)
     return matrix
