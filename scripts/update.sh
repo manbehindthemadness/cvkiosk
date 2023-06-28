@@ -6,6 +6,8 @@ backup_location="$backup_path""$backup_folder"
 py=/opt/venv/bin/python
 pi=/opt/venv/bin/pip
 
+git config --global --add safe.directory /opt/cvkiosk
+
 mkdir /media/git 2> /dev/null
 mount -t cifs //10.4.222.20/git /media/git -o username=fakeuser,noexec,password=FakePassword1!
 

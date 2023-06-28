@@ -127,14 +127,15 @@ class OnScreen(tk.Tk):
         self.variety, self.alerts, self.price_chart, self.feed_chart = cd.variety, cd.alerts, cd.chart, cd.feed
         return self
 
-    def solve_matrices(self, matrix: [list, np.array], options: dict, prefix: str = '') -> np.array:
+    def solve_matrices(self, matrix: [list, np.array], options: dict, prefix: str = '', filter: bool = False) -> np.array:
         """
         This will convert price data into sweet sweet pixels.
 
         NOTE: The extras options will allow us to add in custom post processing for our feed values
         """
         matrix = np.array(matrix).astype(np.float)
-        matrix = filter_wicks(matrix)
+        if filter:
+            matrix = filter_wicks(matrix)
         focus = self.settings['chart_focus']
         if not focus:
             focus = 'BTC'
@@ -243,7 +244,7 @@ class OnScreen(tk.Tk):
         self.style['main']['_variety'] = self.variety
         self.matrices = dict()
         options = self.process_indicators()
-        self.price_matrix = self.solve_matrices(self.price_chart, options['popt'])
+        self.price_matrix = self.solve_matrices(self.price_chart, options['popt'], filter=True)
         self.feed_matrix = self.solve_matrices(self.feed_chart, options['fopt'], 'feed')
         self.style['main']['_drf'] = [str(np.round(float(self.feed_chart[-1][-1]), 3))]
         self.solve_indicators()
